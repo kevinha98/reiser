@@ -7,8 +7,8 @@ interface RuteStop {
   cx: number
   cy: number
   farge: string
-  labelX: number
-  labelY: number
+  // label offset direction: 'right' | 'left'
+  labelSide: 'right' | 'left'
 }
 
 const STOPP: RuteStop[] = [
@@ -16,43 +16,43 @@ const STOPP: RuteStop[] = [
     id: 'bkk',
     navn: 'Bangkok',
     periode: '12–15 aug',
-    cx: 462,
-    cy: 148,
+    cx: 430,
+    cy: 155,
     farge: '#f59e0b',
-    labelX: 480,
-    labelY: 143,
+    labelSide: 'right',
   },
   {
     id: 'samui',
     navn: 'Koh Samui',
     periode: '15–22 aug',
-    cx: 498,
-    cy: 288,
+    cx: 510,
+    cy: 295,
     farge: '#38bdf8',
-    labelX: 516,
-    labelY: 283,
+    labelSide: 'right',
   },
   {
     id: 'phuket',
     navn: 'Phuket',
     periode: '22–29 aug',
-    cx: 378,
-    cy: 368,
+    cx: 340,
+    cy: 375,
     farge: '#34d399',
-    labelX: 396,
-    labelY: 363,
+    labelSide: 'left',
   },
 ]
 
-// Thailand landmass silhouette (very simplified artistic polygon)
+// Thailand landmass — slimmer, more accurate silhouette
 const THAILAND_PATH =
-  'M 380,20 C 420,30 460,50 480,80 C 500,110 510,140 500,170 C 490,200 475,220 470,250 C 465,280 470,300 480,320 C 490,340 500,355 498,375 C 496,395 480,410 465,420 C 450,430 435,435 420,445 C 405,455 395,465 380,475 C 365,485 350,488 335,480 C 320,472 310,455 305,435 C 300,415 300,395 295,375 C 290,355 280,340 270,325 C 260,310 255,295 252,278 C 249,261 250,245 248,228 C 246,211 240,195 238,178 C 236,161 240,145 250,132 C 260,119 275,112 285,100 C 295,88 298,72 305,58 C 312,44 322,32 335,24 C 348,16 363,14 380,20 Z'
+  'M 400,22 C 430,28 455,48 468,78 C 480,108 478,138 472,165 C 466,192 455,210 452,235 C 449,260 455,282 460,305 C 465,328 468,348 462,368 C 456,388 442,402 428,412 C 414,422 400,428 386,436 C 372,444 358,448 344,440 C 330,432 320,416 314,398 C 308,380 308,360 302,342 C 296,324 284,310 275,296 C 266,282 260,268 258,252 C 256,236 258,220 256,204 C 254,188 248,174 246,158 C 244,142 248,128 256,116 C 264,104 276,98 286,88 C 296,78 300,64 308,52 C 316,40 326,30 338,25 C 350,20 370,18 400,22 Z'
 
-// Dashed route connecting stops
-const RUTE_PATH = 'M 462,148 L 498,288 L 378,368 L 462,148'
+// Island-hop route: BKK → Samui → Phuket (open path, no closing triangle)
+const RUTE_PATH = 'M 430,155 C 450,200 500,240 510,295 C 510,295 460,330 340,375'
+
+// Return leg Phuket → Bangkok
+const RETUR_PATH = 'M 340,375 Q 320,260 430,155'
 
 // Flight arc from CPH (top-left, off-screen) to Bangkok
-const FLY_PATH = 'M 40,18 Q 200,-30 462,148'
+const FLY_PATH = 'M 42,22 Q 180,-20 430,155'
 
 export function KartSeksjon() {
   return (
@@ -96,14 +96,23 @@ export function KartSeksjon() {
               style={{ display: 'block' }}
               aria-label="Kart over Thailand-reiserute"
             >
-              {/* Subtle dot-grid background */}
               <defs>
                 <pattern id="grid-dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
                   <circle cx="0" cy="0" r="1" fill="rgba(255,255,255,0.04)" />
                 </pattern>
-                {/* Glow filter */}
-                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
+                <radialGradient id="depth" cx="55%" cy="45%" r="60%">
+                  <stop offset="0%" stopColor="rgba(15,20,30,0)" />
+                  <stop offset="100%" stopColor="rgba(4,6,10,0.5)" />
+                </radialGradient>
+                <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <filter id="glow-soft" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="8" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
@@ -111,185 +120,167 @@ export function KartSeksjon() {
                 </filter>
               </defs>
 
-              {/* Background */}
-              <rect width="700" height="500" fill="rgba(8,11,16,0.4)" />
+              {/* Background layers */}
+              <rect width="700" height="500" fill="rgba(8,11,16,0.5)" />
               <rect width="700" height="500" fill="url(#grid-dots)" />
-
-              {/* Subtle radial gradient for depth */}
-              <radialGradient id="depth" cx="55%" cy="45%" r="60%">
-                <stop offset="0%" stopColor="rgba(15,20,30,0)" />
-                <stop offset="100%" stopColor="rgba(4,6,10,0.6)" />
-              </radialGradient>
               <rect width="700" height="500" fill="url(#depth)" />
 
-              {/* Thailand silhouette — very low opacity */}
-              <path d={THAILAND_PATH} fill="rgba(100,116,139,0.06)" stroke="rgba(100,116,139,0.10)" strokeWidth="1" />
-
-              {/* Gulf of Thailand suggestion */}
+              {/* Thailand landmass silhouette — very subtle */}
               <path
-                d="M 498,288 Q 560,320 580,400 Q 590,450 570,480"
-                fill="none"
-                stroke="rgba(56,189,248,0.06)"
-                strokeWidth="60"
-                strokeLinecap="round"
+                d={THAILAND_PATH}
+                fill="rgba(100,116,139,0.05)"
+                stroke="rgba(100,116,139,0.12)"
+                strokeWidth="1"
               />
 
-              {/* Andaman Sea suggestion */}
-              <path
-                d="M 378,368 Q 310,380 290,430 Q 275,470 280,490"
-                fill="none"
-                stroke="rgba(56,189,248,0.05)"
-                strokeWidth="50"
-                strokeLinecap="round"
-              />
+              {/* Sea labels — text only, no heavy strokes */}
+              <text x="590" y="320" fill="rgba(56,189,248,0.18)" fontSize="9" fontFamily="DM Sans, sans-serif" textAnchor="middle">
+                Gulf of Thailand
+              </text>
+              <text x="220" y="400" fill="rgba(56,189,248,0.15)" fontSize="9" fontFamily="DM Sans, sans-serif" textAnchor="middle">
+                Andaman Sea
+              </text>
 
-              {/* CPH label */}
-              <motion.g
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <circle cx="40" cy="18" r="3" fill="rgba(148,163,184,0.5)" />
-                <text
-                  x="50"
-                  y="14"
-                  fill="rgba(148,163,184,0.6)"
-                  fontSize="10"
-                  fontFamily="DM Sans, sans-serif"
-                  fontWeight="500"
-                >
+              {/* CPH dot + label — static, no whileInView inside SVG */}
+              <g opacity="1">
+                <circle cx="42" cy="22" r="3" fill="rgba(148,163,184,0.45)" />
+                <text x="52" y="18" fill="rgba(148,163,184,0.65)" fontSize="10" fontFamily="DM Sans, sans-serif" fontWeight="500">
                   CPH
                 </text>
-                <text
-                  x="50"
-                  y="24"
-                  fill="rgba(100,116,139,0.6)"
-                  fontSize="8"
-                  fontFamily="DM Sans, sans-serif"
-                >
+                <text x="52" y="28" fill="rgba(100,116,139,0.55)" fontSize="8" fontFamily="DM Sans, sans-serif">
                   11. aug · Business Class
                 </text>
-              </motion.g>
+              </g>
 
-              {/* Flight arc CPH → Bangkok */}
+              {/* Flight arc CPH → Bangkok — Framer Motion path animation works on SVG paths */}
               <motion.path
                 d={FLY_PATH}
                 fill="none"
-                stroke="rgba(245,158,11,0.35)"
+                stroke="rgba(245,158,11,0.5)"
                 strokeWidth="1.5"
                 strokeDasharray="6 5"
                 initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.8, delay: 0.4, ease: 'easeInOut' }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 2.0, delay: 0.3, ease: 'easeInOut' }}
               />
 
-              {/* Plane icon along flight path */}
+              {/* Plane icon midpoint */}
               <motion.text
-                x="220"
-                y="50"
-                fontSize="14"
+                x="195"
+                y="52"
+                fontSize="13"
                 textAnchor="middle"
                 initial={{ opacity: 0 }}
-                whileInView={{ opacity: 0.7 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 2.0 }}
+                animate={{ opacity: 0.75 }}
+                transition={{ duration: 0.4, delay: 2.1 }}
               >
                 ✈
               </motion.text>
 
-              {/* Route between stops */}
+              {/* Island-hop route: BKK → Samui → Phuket */}
               <motion.path
                 d={RUTE_PATH}
                 fill="none"
-                stroke="rgba(148,163,184,0.25)"
+                stroke="rgba(200,210,220,0.30)"
                 strokeWidth="1.5"
                 strokeDasharray="5 4"
                 initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 2.2, delay: 0.8, ease: 'easeInOut' }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 2.0, delay: 0.9, ease: 'easeInOut' }}
               />
 
-              {/* Location stops */}
-              {STOPP.map((stop, i) => (
-                <motion.g
-                  key={stop.id}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 1.2 + i * 0.25 }}
-                  style={{ originX: stop.cx, originY: stop.cy }}
-                >
-                  {/* Outer glow ring */}
-                  <circle
-                    cx={stop.cx}
-                    cy={stop.cy}
-                    r="18"
-                    fill="none"
-                    stroke={stop.farge}
-                    strokeWidth="0.5"
-                    opacity={0.2}
-                  />
-                  {/* Mid ring */}
-                  <circle
-                    cx={stop.cx}
-                    cy={stop.cy}
-                    r="10"
-                    fill="none"
-                    stroke={stop.farge}
-                    strokeWidth="1"
-                    opacity={0.35}
-                  />
-                  {/* Core dot */}
-                  <circle
-                    cx={stop.cx}
-                    cy={stop.cy}
-                    r="4.5"
-                    fill={stop.farge}
-                    filter="url(#glow)"
-                    opacity={0.9}
-                  />
-                  {/* City name */}
-                  <text
-                    x={stop.labelX}
-                    y={stop.labelY}
-                    fill="rgba(255,255,255,0.85)"
-                    fontSize="12"
-                    fontFamily="DM Sans, sans-serif"
-                    fontWeight="600"
-                  >
-                    {stop.navn}
-                  </text>
-                  {/* Periode */}
-                  <text
-                    x={stop.labelX}
-                    y={stop.labelY + 13}
-                    fill="rgba(100,116,139,0.8)"
-                    fontSize="9"
-                    fontFamily="DM Sans, sans-serif"
-                  >
-                    {stop.periode}
-                  </text>
-                </motion.g>
-              ))}
-
-              {/* Return arrow indicator */}
+              {/* Return leg: Phuket → Bangkok */}
+              <motion.path
+                d={RETUR_PATH}
+                fill="none"
+                stroke="rgba(245,158,11,0.22)"
+                strokeWidth="1"
+                strokeDasharray="4 6"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 1.5, delay: 2.5, ease: 'easeInOut' }}
+              />
               <motion.text
-                x="430"
-                y="255"
-                fontSize="9"
-                fill="rgba(100,116,139,0.5)"
+                x="358"
+                y="262"
+                fontSize="8"
+                fill="rgba(245,158,11,0.45)"
                 fontFamily="DM Sans, sans-serif"
                 textAnchor="middle"
                 initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 2.4, duration: 0.4 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 3.8, duration: 0.4 }}
               >
                 retur 29. aug
               </motion.text>
+
+              {/* Location stops — plain g elements, opacity animated via inline style trick.
+                  whileInView is unreliable inside SVG — use animate with delay instead. */}
+              {STOPP.map((stop, i) => {
+                const isLeft = stop.labelSide === 'left'
+                const lx = isLeft ? stop.cx - 16 : stop.cx + 16
+                const textAnchor = isLeft ? 'end' : 'start'
+                return (
+                  <motion.g
+                    key={stop.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 1.4 + i * 0.3 }}
+                  >
+                    {/* Outer pulse ring */}
+                    <circle
+                      cx={stop.cx}
+                      cy={stop.cy}
+                      r="20"
+                      fill="none"
+                      stroke={stop.farge}
+                      strokeWidth="0.75"
+                      opacity={0.18}
+                    />
+                    {/* Mid ring */}
+                    <circle
+                      cx={stop.cx}
+                      cy={stop.cy}
+                      r="11"
+                      fill="none"
+                      stroke={stop.farge}
+                      strokeWidth="1"
+                      opacity={0.35}
+                    />
+                    {/* Core dot */}
+                    <circle
+                      cx={stop.cx}
+                      cy={stop.cy}
+                      r="5.5"
+                      fill={stop.farge}
+                      filter="url(#glow)"
+                    />
+                    {/* City name */}
+                    <text
+                      x={lx}
+                      y={stop.cy - 4}
+                      fill="rgba(255,255,255,0.90)"
+                      fontSize="12"
+                      fontFamily="DM Sans, sans-serif"
+                      fontWeight="600"
+                      textAnchor={textAnchor}
+                    >
+                      {stop.navn}
+                    </text>
+                    {/* Period */}
+                    <text
+                      x={lx}
+                      y={stop.cy + 9}
+                      fill="rgba(100,116,139,0.85)"
+                      fontSize="9"
+                      fontFamily="DM Sans, sans-serif"
+                      textAnchor={textAnchor}
+                    >
+                      {stop.periode}
+                    </text>
+                  </motion.g>
+                )
+              })}
             </svg>
 
             {/* Legend */}

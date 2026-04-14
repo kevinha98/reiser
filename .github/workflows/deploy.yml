@@ -32,6 +32,8 @@ jobs:
 
       - name: Bygg
         run: npm run build
+        env:
+          VITE_RADICAL_API_KEY: ${{ secrets.VITE_RADICAL_API_KEY }}
 
       - name: Last opp artifact
         uses: actions/upload-pages-artifact@v3
