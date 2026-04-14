@@ -95,14 +95,7 @@ export function Budsjett() {
                     whileInView={{ width: `${andel}%` }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, delay: i * 0.1 + 0.3, ease: 'easeOut' }}
-                    className="h-full rounded-full"
-                    style={{
-                      background: i % 2 === 0
-                        ? 'linear-gradient(90deg, #d99b26, #f5dfa8)'
-                        : i === 1
-                          ? 'linear-gradient(90deg, #0284c7, #38bdf8)'
-                          : 'linear-gradient(90deg, #16a34a, #4ade80)',
-                    }}
+                    className="h-full rounded-full bg-amber-500/60"
                   />
                 </div>
               </div>
@@ -136,7 +129,6 @@ export function Budsjett() {
               </div>
               <div className="text-right flex-shrink-0">
                 <p className="text-slate-200 text-sm tabular-nums font-medium">{formatNOK(u.totalt)}</p>
-                <p className="text-slate-500 text-xs">{u.betaltAv ?? '—'}</p>
               </div>
               <div className="flex-shrink-0">
                 {u.oppgjort
