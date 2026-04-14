@@ -28,7 +28,7 @@ export default function App() {
         </main>
 
         <footer className="pb-16 text-center">
-          <p className="text-slate-700 text-xs">Min Ferie · Thailand 2025 · Kevin & Hilde</p>
+          <p className="text-slate-700 text-xs">Min Ferie · Thailand 2026 · Kevin & Hilde</p>
         </footer>
       </div>
     </div>

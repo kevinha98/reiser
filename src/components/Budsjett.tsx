@@ -35,7 +35,7 @@ export function Budsjett() {
           style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
           Budsjett
         </h2>
-        <p className="text-slate-400 text-sm">Registrerte utgifter pr. 14. april 2026</p>
+        <p className="text-slate-400 text-sm">Registrerte utgifter pr. 14. april 2026 (for 2026-turen)</p>
       </motion.div>
 
       {/* Summary cards */}

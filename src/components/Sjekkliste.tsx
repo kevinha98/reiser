@@ -4,7 +4,7 @@ import { CheckCircle2, Circle, Plus, Trash2, RotateCcw } from 'lucide-react'
 import type { SjekklisteElement } from '../data'
 import { STANDARD_SJEKKLISTE } from '../data'
 
-const STORAGE_KEY = 'min-ferie-sjekkliste-v1'
+const STORAGE_KEY = 'min-ferie-sjekkliste-v2'
 
 function lastFraStorage(): SjekklisteElement[] {
   try {

@@ -12,7 +12,7 @@ interface ReiseEvent {
 
 const TIDSLINJE: ReiseEvent[] = [
   {
-    dato: 'Man 11. aug',
+    dato: 'Tir 11. aug',
     dagNr: 0,
     tittel: 'Avreise fra CPH',
     undertittel: 'CPH → BKK · kl. 11:30',
@@ -28,7 +28,7 @@ const TIDSLINJE: ReiseEvent[] = [
     farge: 'gold',
   },
   {
-    dato: 'Fre 15. aug',
+    dato: 'Lør 15. aug',
     dagNr: 5,
     tittel: 'Fly til Koh Samui',
     undertittel: 'Lamai Coconut Beach Resort · 7 netter',
@@ -36,7 +36,7 @@ const TIDSLINJE: ReiseEvent[] = [
     farge: 'ocean',
   },
   {
-    dato: 'Fre 22. aug',
+    dato: 'Lør 22. aug',
     dagNr: 12,
     tittel: 'Fly til Phuket',
     undertittel: 'Chanalai Flora Resort, Kata Beach · 7 netter',
@@ -52,7 +52,7 @@ const TIDSLINJE: ReiseEvent[] = [
     farge: 'gold',
   },
   {
-    dato: 'Man 1. sep',
+    dato: 'Tir 1. sep',
     dagNr: 22,
     tittel: 'Hjemreise til CPH',
     undertittel: 'BKK → CPH · kl. 12:05 → 22:30',
@@ -102,7 +102,7 @@ export function Tidslinje() {
           style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
           Reiseplan
         </h2>
-        <p className="text-slate-400 text-sm">11. august – 1. september 2025</p>
+        <p className="text-slate-400 text-sm">11. august – 1. september 2026</p>
       </motion.div>
 
       <div className="glass rounded-2xl p-6 relative overflow-hidden">

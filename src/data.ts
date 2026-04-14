@@ -1,4 +1,4 @@
-// ─── Thailand 2025 — Reisedata ───────────────────────────────────────────────
+// ─── Thailand 2026 — Reisedata ───────────────────────────────────────────────
 
 export interface Destinasjon {
   id: string
@@ -38,8 +38,8 @@ export interface SjekklisteElement {
 // ─── Reisedatoer ──────────────────────────────────────────────────────────────
 
 export const REISEDATOER = {
-  avreiseDato: '2025-08-11',   // mandag
-  hjemkomstDato: '2025-09-01', // mandag
+  avreiseDato: '2026-08-11',   // tirsdag
+  hjemkomstDato: '2026-09-01', // tirsdag
   avreiseFly: 'CPH → BKK • 11. aug kl. 11:30 → 12. aug kl. 09:30',
   hjemkomstFly: 'BKK → CPH • 1. sep kl. 12:05 → 22:30',
   totaltNetter: 20,
@@ -52,8 +52,8 @@ export const DESTINASJONER: Destinasjon[] = [
     id: 'bangkok-1',
     navn: 'Bangkok',
     periode: '12.–15. aug',
-    datoFra: '2025-08-12',
-    datoTil: '2025-08-15',
+    datoFra: '2026-08-12',
+    datoTil: '2026-08-15',
     netter: 3,
     hotell: 'Hope Land Hotel Sukhumvit 8',
     farge: 'gold',
@@ -64,8 +64,8 @@ export const DESTINASJONER: Destinasjon[] = [
     id: 'koh-samui',
     navn: 'Koh Samui',
     periode: '15.–22. aug',
-    datoFra: '2025-08-15',
-    datoTil: '2025-08-22',
+    datoFra: '2026-08-15',
+    datoTil: '2026-08-22',
     netter: 7,
     hotell: 'Lamai Coconut Beach Resort',
     farge: 'ocean',
@@ -76,8 +76,8 @@ export const DESTINASJONER: Destinasjon[] = [
     id: 'phuket',
     navn: 'Phuket',
     periode: '22.–29. aug',
-    datoFra: '2025-08-22',
-    datoTil: '2025-08-29',
+    datoFra: '2026-08-22',
+    datoTil: '2026-08-29',
     netter: 7,
     hotell: 'Chanalai Flora Resort, Kata Beach',
     farge: 'jungle',
@@ -88,8 +88,8 @@ export const DESTINASJONER: Destinasjon[] = [
     id: 'bangkok-2',
     navn: 'Bangkok II',
     periode: '29. aug – 1. sep',
-    datoFra: '2025-08-29',
-    datoTil: '2025-09-01',
+    datoFra: '2026-08-29',
+    datoTil: '2026-09-01',
     netter: 3,
     hotell: 'Mandarin Hotel, Managed by Centre Point',
     farge: 'gold',

@@ -79,7 +79,7 @@ export function Header() {
           className="inline-flex items-center gap-2 glass-gold rounded-full px-4 py-1.5 mb-6"
         >
           <MapPin size={13} className="text-amber-400" />
-          <span className="text-xs text-amber-300 font-medium tracking-wide uppercase">Thailand 2025</span>
+          <span className="text-xs text-amber-300 font-medium tracking-wide uppercase">Thailand 2026</span>
         </motion.div>
 
         {/* Title */}
@@ -99,7 +99,7 @@ export function Header() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-slate-400 text-sm sm:text-base mb-10 max-w-lg mx-auto"
         >
-          {REISEDATOER.avreiseFly} · {REISEDATOER.totaltNetter} netter
+          {REISEDATOER.avreiseFly} · {REISEDATOER.totaltNetter} netter · 2026
         </motion.p>
 
         {/* Countdown or travelling indicator */}
