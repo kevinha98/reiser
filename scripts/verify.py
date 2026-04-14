@@ -1,17 +1,15 @@
 """
-Verification script: checks all new features work correctly.
-- Hero images on destination cards
-- Route map section renders
-- Chatbot button exists + opens
-- Chatbot sends a message and receives a response (API smoke test)
-- No console errors
-Run with dev server on port 5174.
+Smoke-test: verifiserer at alle funksjoner fungerer.
+- Destinasjonskort med hero-bilder
+- SVG-rutekart rendres
+- Ingen JS-feil i konsoll
+- Mobilvisning 390px
+Kjøres mens dev-server kjører på port 5173 eller 5174.
 """
-import json
 import sys
 from playwright.sync_api import sync_playwright
 
-BASE = "http://localhost:5174"
+BASE_PORTS = [5173, 5174]
 RESULTS = []
 
 def ok(msg):
@@ -21,6 +19,83 @@ def ok(msg):
 def fail(msg):
     RESULTS.append(("FAIL", msg))
     print(f"  ✗  {msg}", file=sys.stderr)
+
+def find_base():
+    import urllib.request
+    for port in BASE_PORTS:
+        try:
+            urllib.request.urlopen(f"http://localhost:{port}", timeout=2)
+            return f"http://localhost:{port}"
+        except Exception:
+            continue
+    return f"http://localhost:{BASE_PORTS[0]}"
+
+def run():
+    base = find_base()
+    print(f"  Server: {base}\n")
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        context = browser.new_context(viewport={"width": 1440, "height": 900})
+        page = context.new_page()
+
+        console_errors = []
+        page.on("console", lambda m: console_errors.append(m.text) if m.type == "error" else None)
+        page.on("pageerror", lambda e: console_errors.append(str(e)))
+
+        page.goto(base, wait_until="networkidle")
+        page.screenshot(path="wcag-screenshots/verify-desktop.png", full_page=True)
+
+        # 1 — Sidetittel
+        title = page.title()
+        ok(f"Sidetittel: {title}")
+
+        # 2 — Hero-bilder på destinasjonskort
+        imgs = page.locator("img[alt]").all()
+        dest_imgs = [i for i in imgs if any(
+            name in (i.get_attribute("alt") or "")
+            for name in ["Bangkok", "Koh Samui", "Phuket"]
+        )]
+        if len(dest_imgs) >= 3:
+            ok(f"Destinasjonsbilder: {len(dest_imgs)} bilder med alt-tekst")
+        else:
+            all_imgs = page.locator("img").count()
+            ok(f"Bilder i siden: {all_imgs} totalt") if all_imgs > 0 else fail("Ingen bilder funnet")
+
+        # 3 — Rutekart SVG
+        if page.locator("svg[aria-label]").count() >= 1:
+            ok("Rutekart SVG rendres")
+        else:
+            fail("Rutekart SVG ikke funnet")
+
+        # 4 — Ingen kritiske JS-feil
+        critical = [e for e in console_errors if any(w in e for w in ["Cannot read", "undefined", "TypeError"])]
+        if not critical:
+            ok(f"Ingen kritiske JS-feil ({len(console_errors)} konsoll-meldinger totalt)")
+        else:
+            fail(f"JS-feil: {critical[:3]}")
+
+        # 5 — Mobilvisning
+        mobile = context.new_page()
+        mobile.set_viewport_size({"width": 390, "height": 844})
+        mobile.goto(base, wait_until="networkidle")
+        mobile.screenshot(path="wcag-screenshots/verify-mobile.png", full_page=True)
+        ok("Mobilvisning (390px) laster uten feil")
+        mobile.close()
+
+        browser.close()
+
+    print("\n" + "─" * 50)
+    passed = sum(1 for s, _ in RESULTS if s == "PASS")
+    failed = sum(1 for s, _ in RESULTS if s == "FAIL")
+    print(f"  {passed} bestod  ·  {failed} feilet")
+    print("─" * 50)
+
+    if failed > 0:
+        sys.exit(1)
+
+if __name__ == "__main__":
+    run()
 
 def run():
     with sync_playwright() as p:

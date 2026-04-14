@@ -1,168 +1,146 @@
-﻿# 🌴 Min Ferie — Thailand 2026
+# ?? Min Ferie � Thailand 2026
 
-A modern, luxury travel dashboard for a Thailand trip (August–September 2026). Built with React 19, Framer Motion 11, and Tailwind CSS. Features an interactive destination overview, animated route map, live countdown, budget tracker, interactive checklist, and an AI travel assistant.
+Et moderne reisedashboard for en Thailand-tur (august�september 2026). Bygget med React 19, Framer Motion og Tailwind CSS. Gir en interaktiv oversikt over destinasjoner, animert rutekart, nedtelling, budsjettoversikt og sjekkliste.
 
 > **Live demo:** [kevinha98.github.io/reiser](https://kevinha98.github.io/reiser/)
 
 ---
 
-## ✨ Features
+## Funksjoner
 
-| Feature | Description |
-|---|---|
-| **Live Countdown** | Real-time countdown timer to departure (CPH → BKK, 11 Aug 2026) |
-| **Destination Cards** | 3D-tilt luxury destination cards with curated photography |
-| **Route Map** | Animated SVG map showing the full journey across Thailand |
-| **Timeline** | Chronological view of all flights and hotel check-ins |
-| **Budget Tracker** | Summary of costs split by transport and accommodation |
-| **Checklist** | Interactive pre-travel checklist with localStorage persistence |
-| **AI Assistant** | Floating chatbot powered by Claude Sonnet (Radical Gateway) |
-
----
-
-## 🗺️ Itinerary
-
-| Dates | Destination | Hotel | Nights |
-|---|---|---|---|
-| 11 Aug | Departure CPH → BKK (Business Class) | — | — |
-| 12–15 Aug | Bangkok | Hope Land Hotel Sukhumvit 8 | 3 |
-| 15–22 Aug | Koh Samui | Lamai Coconut Beach Resort | 7 |
-| 22–29 Aug | Phuket | Chanalai Flora Resort, Kata Beach | 7 |
-| 29 Aug – 1 Sep | Bangkok | Mandarin Hotel Centre Point | 3 |
-| 1 Sep | Return BKK → CPH (Business Class) | — | — |
+| Funksjon | Beskrivelse |
+| --- | --- |
+| **Nedtelling** | Sanntids nedtelling til avreise (CPH ? BKK, 11. aug 2026) |
+| **Destinasjonskort** | 3D-tilt-kort med luksusbilder for hvert reisestopp |
+| **Rutekart** | Animert SVG-kart som viser hele reiseruten gjennom Thailand |
+| **Reiseplan** | Kronologisk oversikt over fly og hotell-innsjekk |
+| **Budsjettoversikt** | Totalkostnader fordelt p� transport og overnatting |
+| **Sjekkliste** | Interaktiv sjekkliste med lokal lagringstilstand |
 
 ---
 
-## 🛠️ Tech Stack
+## Reiseplan
 
-| Layer | Technology |
-|---|---|
-| **Framework** | [React 19](https://react.dev/) + [TypeScript 6](https://www.typescriptlang.org/) |
-| **Build** | [Vite 8](https://vitejs.dev/) with `base: './'` for GitHub Pages |
-| **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) + custom glass utilities |
-| **Animation** | [Framer Motion 11](https://www.framer.com/motion/) — 3D tilt, path drawing, entrance animations |
-| **Icons** | [Lucide React](https://lucide.dev/) |
-| **Fonts** | DM Sans (600/700) + Inter (400/500) via Google Fonts |
-| **AI** | [Radical Gateway](https://gateway.raicode.no) → Claude Sonnet (`eu-sonnet-4-6`) |
-| **Deploy** | [GitHub Actions](https://github.com/features/actions) → [GitHub Pages](https://pages.github.com/) |
-| **State** | `localStorage` key `min-ferie-sjekkliste-v2` for checklist persistence |
+| Datoer | Destinasjon | Hotell | Netter |
+| --- | --- | --- | --- |
+| 11. aug | Avreise CPH ? BKK (Business Class) | � | � |
+| 12.�15. aug | Bangkok | Hope Land Hotel Sukhumvit 8 | 3 |
+| 15.�22. aug | Koh Samui | Lamai Coconut Beach Resort | 7 |
+| 22.�29. aug | Phuket | Chanalai Flora Resort, Kata Beach | 7 |
+| 29. aug � 1. sep | Bangkok | Mandarin Hotel Centre Point | 3 |
+| 1. sep | Hjemreise BKK ? CPH (Business Class) | � | � |
 
 ---
 
-## 🚀 Getting Started
+## Teknisk stack
 
-### Prerequisites
+| Lag | Teknologi |
+| --- | --- |
+| **Rammeverk** | [React 19](https://react.dev/) + [TypeScript 6](https://www.typescriptlang.org/) |
+| **Byggverkt�y** | [Vite 8](https://vitejs.dev/) med `base: './'` for GitHub Pages |
+| **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) + egne glass-verkt�yklasser |
+| **Animasjon** | [Framer Motion 11](https://www.framer.com/motion/) � 3D-tilt, strekanimering, inngangsanimasjoner |
+| **Ikoner** | [Lucide React](https://lucide.dev/) |
+| **Fonter** | DM Sans (600/700) + Inter (400/500) via Google Fonts |
+| **Bilder** | Unsplash CDN � kuraterte luksusbilder per destinasjon |
+| **Publisering** | [GitHub Actions](https://github.com/features/actions) ? [GitHub Pages](https://pages.github.com/) |
+| **Tilstand** | `localStorage` med n�kkel `min-ferie-sjekkliste-v2` for sjekkliste |
 
-- [Node.js](https://nodejs.org/) v18+ (tested on v22.14.0)
-- npm (or pnpm/yarn)
+---
 
-### Install & run
+## Kom i gang
+
+### Krav
+
+- [Node.js](https://nodejs.org/) v18+ (testet p� v22.14.0)
+- npm
+
+### Installasjon og oppstart
 
 ```bash
-# Clone
+# Klon repoet
 git clone https://github.com/kevinha98/reiser.git
 cd reiser
 
-# Install dependencies
+# Installer avhengigheter
 npm install
 
-# Start dev server
+# Start dev-server
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### AI Chatbot setup
-
-The AI travel assistant requires a Radical Gateway API key.
-
-1. Copy the example env file:
-   ```bash
-   cp .env.local.example .env.local
-   ```
-
-2. Edit `.env.local` and replace `your_api_key_here` with your key:
-   ```
-   VITE_RADICAL_API_KEY=your_actual_api_key
-   ```
-
-3. Get an API key from [gateway.raicode.no](https://gateway.raicode.no) (Azure AD or personal token).
-
-> **Note:** Without an API key, all other features work. The chatbot button shows a "key missing" notice.
+�pne [http://localhost:5173](http://localhost:5173) i nettleseren.
 
 ---
 
-## 📁 Project Structure
-
-```
-min-ferie/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # GitHub Actions → Pages deployment
-├── public/                     # Static assets
-├── src/
-│   ├── api/
-│   │   └── chatApi.ts          # Radical Gateway API wrapper
-│   ├── components/
-│   │   ├── Budsjett.tsx        # Budget summary + expense table
-│   │   ├── Chatbot.tsx         # Floating AI chat panel
-│   │   ├── Destinasjoner.tsx   # Destination cards grid
-│   │   ├── DestinasjonKort.tsx # 3D-tilt destination card
-│   │   ├── Header.tsx          # Hero section + countdown
-│   │   ├── KartSeksjon.tsx     # Animated SVG route map
-│   │   ├── Sjekkliste.tsx      # Interactive checklist
-│   │   └── Tidslinje.tsx       # Journey timeline
-│   ├── App.tsx                 # Root layout
-│   ├── data.ts                 # Single source of truth for all trip data
-│   ├── index.css               # Tailwind + custom glass utilities
-│   └── main.tsx                # Entry point
-├── .env.local                  # Local env vars (gitignored)
-├── .env.local.example          # Template for API key setup
-├── index.html
-├── package.json
-├── tailwind.config.js
-├── tsconfig.json
-└── vite.config.ts
-```
-
----
-
-## 🏗️ Build & Deploy
+## Bygg og publisering
 
 ```bash
-# Production build
-npm run build         # Outputs to ./dist/
+# Produksjonsbygg (genererer til ./dist/)
+npm run build
 
-# Preview production build locally
+# Forh�ndsvis produksjonsbygget lokalt
 npm run preview
 ```
 
-**Automatic deployment** via GitHub Actions on every push to `main`:
+**Automatisk publisering** via GitHub Actions ved push til `main`:
 
-```yaml
-# .github/workflows/deploy.yml
-# Runs: npm ci → npm run build → deploy ./dist to GitHub Pages
+```
+push til main ? npm ci ? npm run build ? deploy ./dist ? GitHub Pages
 ```
 
-The `base: './'` in `vite.config.ts` ensures asset paths work correctly on GitHub Pages.
+`base: './'` i `vite.config.ts` sikrer at stier fungerer korrekt p� GitHub Pages.
 
 ---
 
-## 🎨 Design System
+## Prosjektstruktur
 
-### Colors
+```text
+min-ferie/
++-- .github/
+�   +-- workflows/
+�       +-- deploy.yml          # GitHub Actions ? Pages-publisering
++-- public/                     # Statiske filer
++-- scripts/
+�   +-- verify.py               # Playwright smoke-test
+�   +-- verify_map.py           # Visuell kartverifisering
++-- src/
+�   +-- components/
+�   �   +-- Budsjett.tsx        # Budsjettoversikt og utgiftstabell
+�   �   +-- Destinasjoner.tsx   # Rutenett med destinasjonskort
+�   �   +-- DestinasjonKort.tsx # 3D-tilt destinasjonskort med bilde
+�   �   +-- Header.tsx          # Hero-seksjon med nedtelling
+�   �   +-- KartSeksjon.tsx     # Animert SVG-rutekart
+�   �   +-- Sjekkliste.tsx      # Interaktiv sjekkliste
+�   �   +-- Tidslinje.tsx       # Kronologisk reiseplan
+�   +-- App.tsx                 # Rotoppsett
+�   +-- data.ts                 # Eneste kilde til sannhet for reisedata
+�   +-- index.css               # Tailwind + egne glass-verkt�yklasser
+�   +-- main.tsx                # Inngangspunkt
++-- index.html
++-- package.json
++-- tailwind.config.js
++-- tsconfig.json
++-- vite.config.ts
+```
 
-| Token | Value | Usage |
-|---|---|---|
-| Background | `#080b10` | Page background |
-| Gold | `amber-400` `#f59e0b` | Bangkok, primary accent |
-| Ocean | `sky-400` `#38bdf8` | Koh Samui |
-| Jungle | `emerald-400` `#34d399` | Phuket |
-| Text primary | `white` | Headings |
-| Text secondary | `slate-400/500` | Body, labels |
-| Text muted | `slate-600/700` | Subtitles |
+---
 
-### Glass Utility
+## Designsystem
+
+### Farger
+
+| Token | Verdi | Bruk |
+| --- | --- | --- |
+| Bakgrunn | `#080b10` | Sidebunn |
+| Gull | `amber-400` `#f59e0b` | Bangkok, prim�r aksent |
+| Hav | `sky-400` `#38bdf8` | Koh Samui |
+| Jungel | `emerald-400` `#34d399` | Phuket |
+| Prim�r tekst | `white` | Overskrifter |
+| Sekund�r tekst | `slate-400/500` | Br�dtekst, etiketter |
+| Nedtonet tekst | `slate-600/700` | Undertekster |
+
+### Glass-verkt�yklasse
 
 ```css
 .glass {
@@ -172,44 +150,35 @@ The `base: './'` in `vite.config.ts` ensures asset paths work correctly on GitHu
 }
 ```
 
-### Typography
+### Typografi
 
-- **Display/Headings:** DM Sans, weight 600
-- **Body:** Inter, weight 400/500
-- **Mono/Numbers:** Tabular nums via Tailwind `tabular-nums`
+- **Overskrifter:** DM Sans, vekt 600
+- **Br�dtekst:** Inter, vekt 400/500
+- **Tall:** Tabular nums via Tailwind `tabular-nums`
 
 ---
 
-## ♿ Accessibility
+## Tilgjengelighet
 
-WCAG 2.1 AA compliant (audited with [axe-core](https://github.com/dequelabs/axe-core) 4.9.1 via Playwright):
+WCAG 2.1 AA-kompatibel (verifisert med [axe-core](https://github.com/dequelabs/axe-core) 4.9.1 via Playwright):
 
-- ✅ 0 violations on desktop (1440px) and mobile (390px)
-- ✅ Decorative elements marked `aria-hidden="true"`
-- ✅ All interactive elements have accessible labels
-- ✅ Sufficient color contrast ratios
+- ? 0 brudd p� desktop (1440px) og mobil (390px)
+- ? Dekorative elementer markert med `aria-hidden="true"`
+- ? Alle interaktive elementer har tilgjengelige etiketter
+- ? Tilstrekkelig fargekontrast
 
-Re-run audit (requires dev server running on port 5173):
+Kj�r smoke-test (krever dev-server p� port 5173 eller 5174):
 
 ```bash
-python scripts/wcag_audit.py
+python scripts/verify.py
 ```
 
 ---
 
-## 🔒 Security
+## Lisens
 
-- **API keys** are stored in `.env.local` (gitignored), never committed
-- **No server-side code** — fully static export
-- **CSP-friendly** — no inline scripts beyond Vite's bundle
-- **HTTPS-only** external requests (Unsplash CDN, Radical Gateway)
+Privat prosjekt � ikke lisensiert for offentlig bruk.
 
 ---
 
-## 📝 License
-
-Private project — not licensed for public use.
-
----
-
-*Built with ❤️ using React, Framer Motion, and Claude Sonnet*
+*Bygget med React, Framer Motion og Tailwind CSS*
