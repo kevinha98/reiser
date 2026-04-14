@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send, Loader2, AlertCircle, Trash2 } from 'lucide-react'
+// AlertCircle kept for error bubbles in messages
 import { sendChatMessage, type ChatMessage } from '../api/chatApi'
 
 interface DisplayMessage {
@@ -18,7 +19,6 @@ export function Chatbot() {
   const abortRef = useRef<AbortController | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
-  const apiKeyMissing = !import.meta.env.VITE_RADICAL_API_KEY
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -69,10 +69,7 @@ export function Chatbot() {
     } catch (err) {
       if ((err as Error).name === 'AbortError') return
 
-      const errMsg =
-        (err as Error).message === 'API_KEY_MISSING'
-          ? 'API-nøkkel mangler. Legg til VITE_RADICAL_API_KEY i .env.local.'
-          : `Feil: ${(err as Error).message}`
+      const errMsg = `Feil: ${(err as Error).message}`
 
       setMessages((prev) => [
         ...prev,
@@ -201,16 +198,9 @@ export function Chatbot() {
                     style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Hva lurer du på?
                   </p>
-                  {apiKeyMissing ? (
-                    <p className="text-amber-600/80 text-xs mt-2 flex items-center gap-1.5">
-                      <AlertCircle size={11} />
-                      API-nøkkel mangler i .env.local
-                    </p>
-                  ) : (
-                    <p className="text-slate-600 text-xs">
-                      Restauranter, aktiviteter, pakketips...
-                    </p>
-                  )}
+                  <p className="text-slate-600 text-xs">
+                    Restauranter, aktiviteter, pakketips...
+                  </p>
                 </div>
               )}
 

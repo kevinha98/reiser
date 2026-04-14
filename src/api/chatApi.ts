@@ -11,7 +11,9 @@ export interface ChatOptions {
   signal?: AbortSignal
 }
 
-const GATEWAY_URL = 'https://gateway.raicode.no/v1/chat/completions'
+// Relative URL — proxied via Netlify Function in prod, Vite proxy in dev.
+// The actual API key is injected server-side; it never touches the browser bundle.
+const GATEWAY_URL = '/api/chat'
 const MODEL = 'eu-sonnet-4-6'
 
 const SYSTEM_PROMPT = `Du er en personlig reiseassistent for en luksusferie til Thailand i august–september 2026.
@@ -29,17 +31,10 @@ Du kan hjelpe med absolutt alt som kan tenkes å være nyttig for denne reisen o
 Svar på det språket brukeren bruker (norsk eller engelsk). Du er varm, kunnskapsrik og entusiastisk som en erfaren luksuriøs reisekonsulent. Svar fritt og utdypende — ikke hold deg tilbake. Du kan og bør svare på spørsmål utenfor reisen også.`
 
 export async function sendChatMessage(options: ChatOptions): Promise<string> {
-  const apiKey = import.meta.env.VITE_RADICAL_API_KEY as string | undefined
-
-  if (!apiKey) {
-    throw new Error('API_KEY_MISSING')
-  }
-
   const response = await fetch(GATEWAY_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: MODEL,
