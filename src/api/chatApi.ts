@@ -1,4 +1,10 @@
 // ─── Radical Gateway — Chat API ───────────────────────────────────────────────
+// Gateway (gateway.raicode.no) is an enterprise server-side API with no CORS
+// support. It cannot be called from any browser directly.
+//
+// Local dev: requests to /api/chat are proxied by Vite → gateway (server-to-server)
+// GitHub Pages: no proxy available → throw PROXY_UNAVAILABLE so UI shows a
+//               clear message instead of a cryptic "Failed to fetch".
 
 export interface ChatMessage {
   role: 'user' | 'assistant' | 'system'
@@ -11,9 +17,14 @@ export interface ChatOptions {
   signal?: AbortSignal
 }
 
-// Relative URL — proxied via Netlify Function in prod, Vite proxy in dev.
-// The actual API key is injected server-side; it never touches the browser bundle.
-const GATEWAY_URL = '/api/chat'
+// True when running on the actual deployed GitHub Pages site (not localhost)
+export function isProxyAvailable(): boolean {
+  if (typeof window === 'undefined') return true // SSR / build time — assume OK
+  const host = window.location.hostname
+  return host === 'localhost' || host === '127.0.0.1' || host.endsWith('.local')
+}
+
+const GATEWAY_URL = '/api/chat' // Vite proxy rewrites this to the gateway in dev
 const MODEL = 'eu-sonnet-4-6'
 
 const SYSTEM_PROMPT = `Du er en personlig reiseassistent for en luksusferie til Thailand i august–september 2026.
@@ -31,6 +42,10 @@ Du kan hjelpe med absolutt alt som kan tenkes å være nyttig for denne reisen o
 Svar på det språket brukeren bruker (norsk eller engelsk). Du er varm, kunnskapsrik og entusiastisk som en erfaren luksuriøs reisekonsulent. Svar fritt og utdypende — ikke hold deg tilbake. Du kan og bør svare på spørsmål utenfor reisen også.`
 
 export async function sendChatMessage(options: ChatOptions): Promise<string> {
+  if (!isProxyAvailable()) {
+    throw new Error('PROXY_UNAVAILABLE')
+  }
+
   const response = await fetch(GATEWAY_URL, {
     method: 'POST',
     headers: {

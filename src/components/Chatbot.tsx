@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send, Loader2, AlertCircle, Trash2 } from 'lucide-react'
 // AlertCircle kept for error bubbles in messages
-import { sendChatMessage, type ChatMessage } from '../api/chatApi'
+import { sendChatMessage, isProxyAvailable, type ChatMessage } from '../api/chatApi'
 
 interface DisplayMessage {
   id: string
@@ -19,6 +19,7 @@ export function Chatbot() {
   const abortRef = useRef<AbortController | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const proxyAvailable = isProxyAvailable()
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -69,7 +70,10 @@ export function Chatbot() {
     } catch (err) {
       if ((err as Error).name === 'AbortError') return
 
-      const errMsg = `Feil: ${(err as Error).message}`
+      const errMsg =
+        (err as Error).message === 'PROXY_UNAVAILABLE'
+          ? 'Chatbot er kun tilgjengelig ved lokal utvikling (localhost). Gateway krever server-side proxy.'
+          : `Feil: ${(err as Error).message}`
 
       setMessages((prev) => [
         ...prev,
@@ -198,9 +202,15 @@ export function Chatbot() {
                     style={{ fontFamily: "'DM Sans', sans-serif" }}>
                     Hva lurer du på?
                   </p>
-                  <p className="text-slate-600 text-xs">
-                    Restauranter, aktiviteter, pakketips...
-                  </p>
+                  {proxyAvailable ? (
+                    <p className="text-slate-600 text-xs">
+                      Restauranter, aktiviteter, pakketips...
+                    </p>
+                  ) : (
+                    <p className="text-amber-600/70 text-xs mt-1 leading-relaxed max-w-[200px]">
+                      Kun tilgjengelig lokalt.<br />Start med <code className="text-amber-500/80">npm run dev</code>.
+                    </p>
+                  )}
                 </div>
               )}
 
@@ -274,9 +284,9 @@ export function Chatbot() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Still et spørsmål…"
+                  placeholder={proxyAvailable ? 'Still et spørsmål…' : 'Ikke tilgjengelig her'}
                   rows={1}
-                  disabled={loading}
+                  disabled={loading || !proxyAvailable}
                   className="flex-1 bg-transparent text-sm text-white placeholder-slate-600 resize-none outline-none leading-relaxed"
                   style={{
                     fontFamily: "'DM Sans', sans-serif",
@@ -287,7 +297,7 @@ export function Chatbot() {
                 />
                 <button
                   onClick={handleSend}
-                  disabled={!input.trim() || loading}
+                  disabled={!input.trim() || loading || !proxyAvailable}
                   aria-label="Send melding"
                   className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed"
                   style={{
