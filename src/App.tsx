@@ -1,8 +1,10 @@
 ﻿import { Header } from './components/Header'
 import { Destinasjoner } from './components/Destinasjoner'
+import { KartSeksjon } from './components/KartSeksjon'
 import { Tidslinje } from './components/Tidslinje'
 import { Budsjett } from './components/Budsjett'
 import { Sjekkliste } from './components/Sjekkliste'
+import { Chatbot } from './components/Chatbot'
 
 export default function App() {
   return (
@@ -12,6 +14,7 @@ export default function App() {
 
         <main>
           <Destinasjoner />
+          <KartSeksjon />
           <Tidslinje />
           <Budsjett />
           <Sjekkliste />
@@ -21,6 +24,9 @@ export default function App() {
           <p className="text-slate-700 text-xs">Thailand · 2026</p>
         </footer>
       </div>
+
+      {/* Floating AI chatbot — fixed overlay */}
+      <Chatbot />
     </div>
   )
 }

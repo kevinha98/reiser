@@ -59,10 +59,30 @@ export function DestinasjonKort({ destinasjon, indeks }: DestinasjonKortProps) {
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
         whileHover={{ scale: 1.015 }}
         transition={{ duration: 0.25 }}
-        className="glass rounded-2xl p-6 cursor-default h-full"
+        className="glass rounded-2xl overflow-hidden cursor-default h-full"
       >
+        {/* Hero image */}
+        {destinasjon.bilder?.[0] && (
+          <div className="relative h-44 w-full overflow-hidden">
+            <img
+              src={destinasjon.bilder[0]}
+              alt={destinasjon.navn}
+              className="w-full h-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                const el = e.target as HTMLImageElement
+                el.style.display = 'none'
+              }}
+            />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(to bottom, transparent 30%, rgba(8,11,16,0.85) 100%)' }}
+              aria-hidden="true"
+            />
+          </div>
+        )}
         {/* Content lifted in Z */}
-        <div style={{ transform: 'translateZ(16px)' }}>
+        <div className="px-5 pt-4 pb-5" style={{ transform: 'translateZ(16px)' }}>
           {/* Accent dot + period */}
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2.5">

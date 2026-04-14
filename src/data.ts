@@ -59,6 +59,7 @@ export const DESTINASJONER: Destinasjon[] = [
     farge: 'gold',
     emoji: '🏙️',
     beskrivelse: 'Pulserende by, streetfood og tempelrunder',
+    bilder: ['https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=900&q=80'],
   },
   {
     id: 'koh-samui',
@@ -71,6 +72,7 @@ export const DESTINASJONER: Destinasjon[] = [
     farge: 'ocean',
     emoji: '🌴',
     beskrivelse: 'Tropisk øy med hvite strender og turkist hav',
+    bilder: ['https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=900&q=80'],
   },
   {
     id: 'phuket',
@@ -83,6 +85,7 @@ export const DESTINASJONER: Destinasjon[] = [
     farge: 'jungle',
     emoji: '🏖️',
     beskrivelse: 'Kata Beach, snorkling og solnedganger',
+    bilder: ['https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?auto=format&fit=crop&w=900&q=80'],
   },
   {
     id: 'bangkok-2',
@@ -95,6 +98,7 @@ export const DESTINASJONER: Destinasjon[] = [
     farge: 'gold',
     emoji: '🌆',
     beskrivelse: 'Siste dager — shopping, mat og avslapping',
+    bilder: ['https://images.unsplash.com/photo-1563492065599-3520f775eeed?auto=format&fit=crop&w=900&q=80'],
   },
 ]
 
