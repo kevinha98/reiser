@@ -1,6 +1,6 @@
-# ?? Min Ferie — Thailand 2026
+# Min Ferie â€” Thailand 2026
 
-Et moderne reisedashboard for en Thailand-tur (august–september 2026). Bygget med React 19, Framer Motion og Tailwind CSS. Gir en interaktiv oversikt over destinasjoner, animert rutekart, nedtelling, budsjettoversikt og sjekkliste.
+Et moderne reisedashboard for en Thailand-tur (augustâ€“september 2026). Bygget med React 19, Framer Motion og Tailwind CSS. Gir en interaktiv oversikt over destinasjoner, animert rutekart, nedtelling, budsjettoversikt og sjekkliste.
 
 > **Live demo:** [kevinha98.github.io/reiser](https://kevinha98.github.io/reiser/)
 
@@ -14,7 +14,7 @@ Et moderne reisedashboard for en Thailand-tur (august–september 2026). Bygget me
 | **Destinasjonskort** | 3D-tilt-kort med luksusbilder for hvert reisestopp |
 | **Rutekart** | Animert SVG-kart som viser hele reiseruten gjennom Thailand |
 | **Reiseplan** | Kronologisk oversikt over fly og hotell-innsjekk |
-| **Budsjettoversikt** | Totalkostnader fordelt på transport og overnatting |
+| **Budsjettoversikt** | Totalkostnader fordelt pÃ¥ transport og overnatting |
 | **Sjekkliste** | Interaktiv sjekkliste med lokal lagringstilstand |
 
 ---
@@ -23,12 +23,12 @@ Et moderne reisedashboard for en Thailand-tur (august–september 2026). Bygget me
 
 | Datoer | Destinasjon | Hotell | Netter |
 | --- | --- | --- | --- |
-| 11. aug | Avreise CPH ? BKK (Business Class) | — | — |
-| 12.–15. aug | Bangkok | Hope Land Hotel Sukhumvit 8 | 3 |
-| 15.–22. aug | Koh Samui | Lamai Coconut Beach Resort | 7 |
-| 22.–29. aug | Phuket | Chanalai Flora Resort, Kata Beach | 7 |
-| 29. aug – 1. sep | Bangkok | Mandarin Hotel Centre Point | 3 |
-| 1. sep | Hjemreise BKK ? CPH (Business Class) | — | — |
+| 11. aug | Avreise CPH ? BKK (Business Class) | â€” | â€” |
+| 12.â€“15. aug | Bangkok | Hope Land Hotel Sukhumvit 8 | 3 |
+| 15.â€“22. aug | Koh Samui | Lamai Coconut Beach Resort | 7 |
+| 22.â€“29. aug | Phuket | Chanalai Flora Resort, Kata Beach | 7 |
+| 29. aug â€“ 1. sep | Bangkok | Mandarin Hotel Centre Point | 3 |
+| 1. sep | Hjemreise BKK ? CPH (Business Class) | â€” | â€” |
 
 ---
 
@@ -37,14 +37,14 @@ Et moderne reisedashboard for en Thailand-tur (august–september 2026). Bygget me
 | Lag | Teknologi |
 | --- | --- |
 | **Rammeverk** | [React 19](https://react.dev/) + [TypeScript 6](https://www.typescriptlang.org/) |
-| **Byggverktøy** | [Vite 8](https://vitejs.dev/) med `base: './'` for GitHub Pages |
-| **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) + egne glass-verktøyklasser |
-| **Animasjon** | [Framer Motion 11](https://www.framer.com/motion/) — 3D-tilt, strekanimering, inngangsanimasjoner |
+| **ByggverktÃ¸y** | [Vite 8](https://vitejs.dev/) med `base: './'` for GitHub Pages |
+| **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) + egne glass-verktÃ¸yklasser |
+| **Animasjon** | [Framer Motion 11](https://www.framer.com/motion/) â€” 3D-tilt, strekanimering, inngangsanimasjoner |
 | **Ikoner** | [Lucide React](https://lucide.dev/) |
 | **Fonter** | DM Sans (600/700) + Inter (400/500) via Google Fonts |
-| **Bilder** | Unsplash CDN — kuraterte luksusbilder per destinasjon |
+| **Bilder** | Unsplash CDN â€” kuraterte luksusbilder per destinasjon |
 | **Publisering** | [GitHub Actions](https://github.com/features/actions) ? [GitHub Pages](https://pages.github.com/) |
-| **Tilstand** | `localStorage` med nøkkel `min-ferie-sjekkliste-v2` for sjekkliste |
+| **Tilstand** | `localStorage` med nÃ¸kkel `min-ferie-sjekkliste-v2` for sjekkliste |
 
 ---
 
@@ -52,7 +52,7 @@ Et moderne reisedashboard for en Thailand-tur (august–september 2026). Bygget me
 
 ### Krav
 
-- [Node.js](https://nodejs.org/) v18+ (testet på v22.14.0)
+- [Node.js](https://nodejs.org/) v18+ (testet pÃ¥ v22.14.0)
 - npm
 
 ### Installasjon og oppstart
@@ -69,7 +69,7 @@ npm install
 npm run dev
 ```
 
-Åpne [http://localhost:5173](http://localhost:5173) i nettleseren.
+Ã…pne [http://localhost:5173](http://localhost:5173) i nettleseren.
 
 ---
 
@@ -79,7 +79,7 @@ npm run dev
 # Produksjonsbygg (genererer til ./dist/)
 npm run build
 
-# Forhåndsvis produksjonsbygget lokalt
+# ForhÃ¥ndsvis produksjonsbygget lokalt
 npm run preview
 ```
 
@@ -89,7 +89,7 @@ npm run preview
 push til main ? npm ci ? npm run build ? deploy ./dist ? GitHub Pages
 ```
 
-`base: './'` i `vite.config.ts` sikrer at stier fungerer korrekt på GitHub Pages.
+`base: './'` i `vite.config.ts` sikrer at stier fungerer korrekt pÃ¥ GitHub Pages.
 
 ---
 
@@ -98,25 +98,25 @@ push til main ? npm ci ? npm run build ? deploy ./dist ? GitHub Pages
 ```text
 min-ferie/
 +-- .github/
-¦   +-- workflows/
-¦       +-- deploy.yml          # GitHub Actions ? Pages-publisering
+Â¦   +-- workflows/
+Â¦       +-- deploy.yml          # GitHub Actions ? Pages-publisering
 +-- public/                     # Statiske filer
 +-- scripts/
-¦   +-- verify.py               # Playwright smoke-test
-¦   +-- verify_map.py           # Visuell kartverifisering
+Â¦   +-- verify.py               # Playwright smoke-test
+Â¦   +-- verify_map.py           # Visuell kartverifisering
 +-- src/
-¦   +-- components/
-¦   ¦   +-- Budsjett.tsx        # Budsjettoversikt og utgiftstabell
-¦   ¦   +-- Destinasjoner.tsx   # Rutenett med destinasjonskort
-¦   ¦   +-- DestinasjonKort.tsx # 3D-tilt destinasjonskort med bilde
-¦   ¦   +-- Header.tsx          # Hero-seksjon med nedtelling
-¦   ¦   +-- KartSeksjon.tsx     # Animert SVG-rutekart
-¦   ¦   +-- Sjekkliste.tsx      # Interaktiv sjekkliste
-¦   ¦   +-- Tidslinje.tsx       # Kronologisk reiseplan
-¦   +-- App.tsx                 # Rotoppsett
-¦   +-- data.ts                 # Eneste kilde til sannhet for reisedata
-¦   +-- index.css               # Tailwind + egne glass-verktøyklasser
-¦   +-- main.tsx                # Inngangspunkt
+Â¦   +-- components/
+Â¦   Â¦   +-- Budsjett.tsx        # Budsjettoversikt og utgiftstabell
+Â¦   Â¦   +-- Destinasjoner.tsx   # Rutenett med destinasjonskort
+Â¦   Â¦   +-- DestinasjonKort.tsx # 3D-tilt destinasjonskort med bilde
+Â¦   Â¦   +-- Header.tsx          # Hero-seksjon med nedtelling
+Â¦   Â¦   +-- KartSeksjon.tsx     # Animert SVG-rutekart
+Â¦   Â¦   +-- Sjekkliste.tsx      # Interaktiv sjekkliste
+Â¦   Â¦   +-- Tidslinje.tsx       # Kronologisk reiseplan
+Â¦   +-- App.tsx                 # Rotoppsett
+Â¦   +-- data.ts                 # Eneste kilde til sannhet for reisedata
+Â¦   +-- index.css               # Tailwind + egne glass-verktÃ¸yklasser
+Â¦   +-- main.tsx                # Inngangspunkt
 +-- index.html
 +-- package.json
 +-- tailwind.config.js
@@ -133,14 +133,14 @@ min-ferie/
 | Token | Verdi | Bruk |
 | --- | --- | --- |
 | Bakgrunn | `#080b10` | Sidebunn |
-| Gull | `amber-400` `#f59e0b` | Bangkok, primær aksent |
+| Gull | `amber-400` `#f59e0b` | Bangkok, primÃ¦r aksent |
 | Hav | `sky-400` `#38bdf8` | Koh Samui |
 | Jungel | `emerald-400` `#34d399` | Phuket |
-| Primær tekst | `white` | Overskrifter |
-| Sekundær tekst | `slate-400/500` | Brødtekst, etiketter |
+| PrimÃ¦r tekst | `white` | Overskrifter |
+| SekundÃ¦r tekst | `slate-400/500` | BrÃ¸dtekst, etiketter |
 | Nedtonet tekst | `slate-600/700` | Undertekster |
 
-### Glass-verktøyklasse
+### Glass-verktÃ¸yklasse
 
 ```css
 .glass {
@@ -153,7 +153,7 @@ min-ferie/
 ### Typografi
 
 - **Overskrifter:** DM Sans, vekt 600
-- **Brødtekst:** Inter, vekt 400/500
+- **BrÃ¸dtekst:** Inter, vekt 400/500
 - **Tall:** Tabular nums via Tailwind `tabular-nums`
 
 ---
@@ -162,12 +162,12 @@ min-ferie/
 
 WCAG 2.1 AA-kompatibel (verifisert med [axe-core](https://github.com/dequelabs/axe-core) 4.9.1 via Playwright):
 
-- ? 0 brudd på desktop (1440px) og mobil (390px)
+- ? 0 brudd pÃ¥ desktop (1440px) og mobil (390px)
 - ? Dekorative elementer markert med `aria-hidden="true"`
 - ? Alle interaktive elementer har tilgjengelige etiketter
 - ? Tilstrekkelig fargekontrast
 
-Kjør smoke-test (krever dev-server på port 5173 eller 5174):
+KjÃ¸r smoke-test (krever dev-server pÃ¥ port 5173 eller 5174):
 
 ```bash
 python scripts/verify.py
@@ -177,7 +177,7 @@ python scripts/verify.py
 
 ## Lisens
 
-Privat prosjekt — ikke lisensiert for offentlig bruk.
+Privat prosjekt â€” ikke lisensiert for offentlig bruk.
 
 ---
 
