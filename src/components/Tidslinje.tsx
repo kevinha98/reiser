@@ -1,8 +1,8 @@
 ﻿import { motion } from "framer-motion"
-import { Plane, MapPin, Scissors, Dumbbell } from "lucide-react"
+import { Plane, MapPin, Scissors, Dumbbell, Anchor } from "lucide-react"
 
 interface Aktivitet {
-  type: "skredder" | "muaythai"
+  type: "skredder" | "muaythai" | "dagstur"
   navn: string
   detaljer: string[]
   bookingUrl?: string
@@ -69,6 +69,18 @@ const TIDSLINJE: ReiseEvent[] = [
         ],
         bookingUrl: "https://www.klook.com/activity/127117-koh-samui-muay-thai-boxing-introduction-class-for-beginners/",
       },
+      {
+        type: "dagstur",
+        navn: "Koh Tao dagstur",
+        farge: "#818cf8",
+        detaljer: [
+          "Lomprayah katamaran · Pralarn Pier → Mae Haad",
+          "~1t 30 min å reise (ca. 1 000 THB t/r)",
+          "John-Suwan Viewpoint, Ao Tanot Bay, Chalok Bay",
+          "Avganger 08:00 og 10:30 — retur 12:00 eller 15:00",
+        ],
+        bookingUrl: "https://www.lomprayah.com/booking?type=oneway&from=11&to=9",
+      },
     ],
   },
   {
@@ -90,16 +102,6 @@ const TIDSLINJE: ReiseEvent[] = [
           "Man–fre 06:00–19:00 · Lør 07:00–18:00",
         ],
         bookingUrl: "https://tigermuaythai.com/",
-      },
-      {
-        type: "skredder",
-        navn: "Skredder",
-        farge: "#34d399",
-        detaljer: [
-          "Patong-området · 9 km (Grab)",
-          "Dress 7 000–14 000 THB / Skjorte 1 200–2 500 THB",
-          "Sammenlign minst tre butikker",
-        ],
       },
     ],
   },
@@ -141,7 +143,7 @@ const FARGE_MAP = {
 }
 
 function AktivitetKort({ a }: { a: Aktivitet }) {
-  const Icon = a.type === "skredder" ? Scissors : Dumbbell
+  const Icon = a.type === "skredder" ? Scissors : a.type === "dagstur" ? Anchor : Dumbbell
   return (
     <div
       className="rounded-xl px-3 py-2.5"
