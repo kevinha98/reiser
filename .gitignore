@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+wcag-screenshots/
+scripts/debug_*.png
+scripts/debug_*.py
