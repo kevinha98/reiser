@@ -1,5 +1,6 @@
 ﻿import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { Dumbbell, MapPin, Clock, PersonStanding, ChevronRight } from "lucide-react"
 
 interface GymInfo {
   navn: string
@@ -20,9 +21,8 @@ interface Destinasjon {
   by: string
   hotell: string
   farge: string
-  gyms: GymInfo[]
-  stadioner: { navn: string; program: string; billett: string; avstand: string }[]
   tips: string
+  gyms: GymInfo[]
 }
 
 const DESTINASJONER: Destinasjon[] = [
@@ -31,25 +31,21 @@ const DESTINASJONER: Destinasjon[] = [
     by: "Koh Samui",
     hotell: "Lamai Coconut Beach Resort",
     farge: "#38bdf8",
-    tips: "Best case! Punch It Gym er i samme Lamai-omrade som hotellet. Jobb dit langs strandveien tidlig morgen.",
+    tips: "Punch It Gym er i samme Lamai-omradet som hotellet. Flat rute langs strandveien — mulig morgenjog.",
     gyms: [
       {
         navn: "Punch It Gym",
         adresse: "Maret, Lamai Beach, Koh Samui",
-        distanse: "~1,5-2,5 km",
-        tid: "~10-15 min (taxi) / ~12 min (jog)",
-        pris: "700 THB gruppe / 1 800 THB privat",
+        distanse: "1,5–2,5 km",
+        tid: "10–15 min (taxi) / 12 min (jog)",
+        pris: "700 THB gruppe — 1 800 THB privat",
         jogge: "ja",
-        joggeTid: "~12 min langs flat strandvei",
-        notat: "Flatt underlag langs kystveien (Route 4169). Flat rute - perfekt morgenjog kl. 06:00-07:30 for 08:30-klassen.",
+        joggeTid: "12 min langs flat strandvei",
+        notat: "Flatt underlag langs kystveien. Perfekt morgenjog 06:00–07:30 for 08:30-klassen.",
         bookingUrl: "https://www.klook.com/activity/127117-koh-samui-muay-thai-boxing-introduction-class-for-beginners/",
-        klasser: ["Gruppe 90 min", "Privat 1t", "Nybegynner OK"],
-        program: "Man-fre + son kl. 08:30 og 18:00 (lor stengt)",
+        klasser: ["Gruppe 90 min", "Privat 1t", "Nybegynner"],
+        program: "Man–fre + son kl. 08:30 og 18:00. Lordag stengt.",
       },
-    ],
-    stadioner: [
-      { navn: "Phetchbuncha Stadium", program: "Alle dager unntatt tor", billett: "1 500-2 500 THB", avstand: "~10 km / 20 min (taxi)" },
-      { navn: "Samui International Stadium", program: "Alle dager unntatt tor", billett: "1 500-3 000 THB", avstand: "~10 km / 20 min (taxi)" },
     ],
   },
   {
@@ -57,46 +53,46 @@ const DESTINASJONER: Destinasjon[] = [
     by: "Phuket",
     hotell: "Chanalai Flora Resort, Kata Beach",
     farge: "#34d399",
-    tips: "Tiger Muay Thai er nermest. Jogging dit er mulig men krever at du takler Kata Hill (60m stigning). Jogg dit som warm-up, ta Grab hjem.",
+    tips: "Tiger Muay Thai er naermest. Jogging dit er mulig men krever Kata Hill (60 m stigning). Jobb dit som warm-up, ta Grab hjem.",
     gyms: [
       {
         navn: "Tiger Muay Thai",
         adresse: "7/35 Moo 5, Soi Ta-iad, Ao Chalong, Phuket",
-        distanse: "~5 km",
-        tid: "~10-12 min (Grab)",
-        pris: "Fra ~600 THB / klasse",
+        distanse: "5 km",
+        tid: "10–12 min (Grab)",
+        pris: "Fra 600 THB / klasse",
         jogge: "mulig",
-        joggeTid: "~35-40 min - inkl. Kata Hill (60m stigning)",
-        notat: "Et av Phukets storste turistgym. Apent man-lor. Grab hjem anbefales etter trening.",
+        joggeTid: "35–40 min inkl. Kata Hill (60 m stigning)",
+        notat: "Et av Phukets storste turistgym. Apent man–lor. Grab hjem anbefales etter trening.",
         bookingUrl: "https://tigermuaythai.com/",
         klasser: ["Gruppe", "Nybegynner", "MMA", "1-til-1"],
-        program: "Man-fre 06:00-19:00, lor 07:00-18:00",
+        program: "Man–fre 06:00–19:00. Lordag 07:00–18:00.",
       },
       {
         navn: "RC Rachai Muay Thai",
-        adresse: "Patong-omradet, Phuket",
-        distanse: "~9 km",
-        tid: "~18-22 min (Grab)",
-        pris: "Fra ~600 THB / klasse",
+        adresse: "Patong, Phuket",
+        distanse: "9 km",
+        tid: "18–22 min (Grab)",
+        pris: "Fra 600 THB / klasse",
         jogge: "nei",
         notat: "For langt til a jogge. Grab anbefales.",
         bookingUrl: "https://www.getyourguide.com/patong-l93618/patong-muay-thai-boxing-class-at-rachai-muay-thai-gym-t1090639/",
         klasser: ["Gruppe", "Nybegynner"],
       },
     ],
-    stadioner: [
-      { navn: "Bangla Boxing Stadium", program: "Hver kveld", billett: "1 300-2 200 THB", avstand: "~9 km / 18-22 min (Grab)" },
-      { navn: "Patong Boxing Stadium", program: "Man-lor", billett: "1 300-2 000 THB", avstand: "~9 km / 18-22 min (Grab)" },
-      { navn: "Rawai Boxing Stadium", program: "Fredag", billett: "Varierer", avstand: "~8 km / 15 min (Grab)" },
-      { navn: "Sinbi Boxing Stadium", program: "Ons & lor", billett: "Varierer", avstand: "~8 km / 15 min (Grab)" },
-    ],
   },
 ]
 
-function JoggeIkon({ status }: { status: "ja" | "mulig" | "nei" }) {
-  if (status === "ja") return <span title="Kan jogge dit">👟</span>
-  if (status === "mulig") return <span title="Mulig a jogge dit">⚠️</span>
-  return <span title="Ikke anbefalt a jogge">🚗</span>
+const JOGGE_LABEL: Record<string, string> = {
+  ja: "Kan jogge dit",
+  mulig: "Mulig, men krevende",
+  nei: "Ta Grab",
+}
+
+const JOGGE_COLOR: Record<string, string> = {
+  ja: "#34d399",
+  mulig: "#f59e0b",
+  nei: "rgba(100,116,139,0.6)",
 }
 
 export function MuayThai() {
@@ -107,41 +103,53 @@ export function MuayThai() {
     <section className="py-20 px-4">
       <div className="max-w-5xl mx-auto">
 
-        {/* Heading */}
+        {/* Heading — left-aligned */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-12 text-center"
+          transition={{ duration: 0.45 }}
+          className="mb-10"
         >
-          <p
-            className="text-slate-600 text-xs uppercase tracking-[0.2em] mb-3"
-            style={{ fontFamily: "'DM Sans', sans-serif" }}
-          >
-            Aktiviteter
-          </p>
+          <div className="flex items-center gap-3 mb-4">
+            <div
+              className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.07)",
+              }}
+            >
+              <Dumbbell size={15} className="text-slate-400" strokeWidth={1.5} />
+            </div>
+            <p
+              className="text-slate-600 text-xs uppercase tracking-[0.2em]"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+              Aktiviteter
+            </p>
+          </div>
           <h2
-            className="text-white text-3xl"
+            className="text-white text-3xl mb-2"
             style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}
           >
             Muay Thai
           </h2>
           <p
-            className="text-slate-500 text-sm mt-3"
+            className="text-slate-500 text-sm max-w-lg"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
-            Gyms og kamparenaer nær hotellene — med reisedistanse og joggbarhet
+            Gyms naer hotellene med reisedistanse og joggbarhet.
           </p>
         </motion.div>
 
-        {/* Dest tabs */}
+        {/* Tabs */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="flex gap-2 mb-6 flex-wrap"
+          transition={{ duration: 0.35 }}
+          className="flex gap-2 mb-6"
         >
           {DESTINASJONER.map((d) => (
             <button
@@ -150,9 +158,9 @@ export function MuayThai() {
               className="px-4 py-2 rounded-full text-sm transition-all"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
-                background: aktivDest === d.id ? d.farge + "22" : "rgba(255,255,255,0.04)",
-                border: `1px solid ${aktivDest === d.id ? d.farge + "55" : "rgba(255,255,255,0.07)"}`,
-                color: aktivDest === d.id ? d.farge : "rgba(100,116,139,0.9)",
+                background: aktivDest === d.id ? d.farge + "20" : "rgba(255,255,255,0.04)",
+                border: `1px solid ${aktivDest === d.id ? d.farge + "50" : "rgba(255,255,255,0.07)"}`,
+                color: aktivDest === d.id ? d.farge : "rgba(100,116,139,0.85)",
                 fontWeight: aktivDest === d.id ? 600 : 400,
               }}
             >
@@ -164,99 +172,118 @@ export function MuayThai() {
         <AnimatePresence mode="wait">
           <motion.div
             key={aktivDest}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22 }}
+            transition={{ type: "spring", stiffness: 120, damping: 20 }}
           >
-            {/* Hotel + tips banner */}
+            {/* Context strip */}
             <div
-              className="glass rounded-2xl px-5 py-4 mb-4"
-              style={{ borderColor: dest.farge + "20" }}
+              className="rounded-xl px-4 py-3 mb-4 flex items-start gap-3"
+              style={{
+                background: "rgba(255,255,255,0.02)",
+                border: `1px solid ${dest.farge}18`,
+              }}
             >
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full flex-shrink-0 mt-1.5" style={{ background: dest.farge }} />
-                <div>
-                  <p
-                    className="text-slate-400 text-xs mb-0.5"
-                    style={{ fontFamily: "'DM Sans', sans-serif" }}
-                  >
-                    Hotell: <span className="text-white">{dest.hotell}</span>
-                  </p>
-                  <p
-                    className="text-slate-500 text-xs"
-                    style={{ fontFamily: "'DM Sans', sans-serif" }}
-                  >
-                    💡 {dest.tips}
-                  </p>
-                </div>
+              <div
+                className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5"
+                style={{ background: dest.farge }}
+              />
+              <div style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                <span className="text-slate-600 text-[11px]">Hotell: </span>
+                <span className="text-slate-400 text-[11px]">{dest.hotell}</span>
+                <p className="text-slate-600 text-[11px] mt-0.5">{dest.tips}</p>
               </div>
             </div>
 
-            {/* Gyms */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            {/* Gym cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {dest.gyms.map((gym) => (
                 <div
                   key={gym.navn}
-                  className="glass rounded-2xl p-5"
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                  className="rounded-2xl p-5 flex flex-col"
+                  style={{
+                    background: "rgba(255,255,255,0.025)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
+                    backdropFilter: "blur(12px)",
+                    fontFamily: "'DM Sans', sans-serif",
+                  }}
                 >
-                  <div className="flex items-start justify-between mb-3">
+                  {/* Header row */}
+                  <div className="flex items-start justify-between mb-4">
                     <div>
-                      <h3 className="text-white font-semibold text-base">{gym.navn}</h3>
+                      <h3 className="text-white font-semibold text-sm leading-tight">{gym.navn}</h3>
                       <p className="text-slate-600 text-[11px] mt-0.5">{gym.adresse}</p>
                     </div>
-                    <div className="text-lg ml-2 flex-shrink-0">
-                      <JoggeIkon status={gym.jogge} />
-                    </div>
+                    <span
+                      className="text-[10px] px-2 py-0.5 rounded-full ml-3 flex-shrink-0"
+                      style={{
+                        background: JOGGE_COLOR[gym.jogge] + "15",
+                        color: JOGGE_COLOR[gym.jogge],
+                        border: `1px solid ${JOGGE_COLOR[gym.jogge]}30`,
+                      }}
+                    >
+                      {JOGGE_LABEL[gym.jogge]}
+                    </span>
                   </div>
 
-                  {/* Distance + time grid */}
+                  {/* Stats */}
                   <div className="grid grid-cols-2 gap-2 mb-3">
                     <div
-                      className="rounded-xl p-2.5"
-                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                      className="rounded-lg p-2.5"
+                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
                     >
                       <p className="text-slate-600 text-[9px] uppercase tracking-wider mb-0.5">Distanse</p>
-                      <p className="text-white text-xs font-medium">{gym.distanse}</p>
+                      <p className="text-white text-xs font-medium tabular-nums">{gym.distanse}</p>
                     </div>
                     <div
-                      className="rounded-xl p-2.5"
-                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                      className="rounded-lg p-2.5"
+                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}
                     >
                       <p className="text-slate-600 text-[9px] uppercase tracking-wider mb-0.5">Reisetid</p>
                       <p className="text-white text-xs font-medium">{gym.tid}</p>
                     </div>
                   </div>
 
-                  {/* Jogge row */}
+                  {/* Jogging note */}
                   {gym.joggeTid && (
                     <div
-                      className="rounded-xl px-3 py-2 mb-3"
+                      className="rounded-lg px-3 py-2 mb-3 flex items-center gap-2"
                       style={{
-                        background: gym.jogge === "ja" ? "rgba(52,211,153,0.06)" : "rgba(245,158,11,0.06)",
-                        border: `1px solid ${gym.jogge === "ja" ? "rgba(52,211,153,0.15)" : "rgba(245,158,11,0.15)"}`,
+                        background: JOGGE_COLOR[gym.jogge] + "08",
+                        border: `1px solid ${JOGGE_COLOR[gym.jogge]}20`,
                       }}
                     >
-                      <p className="text-[10px]" style={{ color: gym.jogge === "ja" ? "#34d399" : "#f59e0b" }}>
-                        🏃 {gym.joggeTid}
-                      </p>
+                      <PersonStanding size={11} style={{ color: JOGGE_COLOR[gym.jogge], flexShrink: 0 }} strokeWidth={1.5} />
+                      <p className="text-[10px]" style={{ color: JOGGE_COLOR[gym.jogge] }}>{gym.joggeTid}</p>
                     </div>
                   )}
 
-                  {/* Pris */}
-                  <p className="text-slate-400 text-xs mb-1">💰 {gym.pris}</p>
+                  {/* Price + schedule */}
+                  <div className="space-y-1.5 mb-3">
+                    <div className="flex items-center gap-2">
+                      <MapPin size={11} className="text-slate-700 flex-shrink-0" strokeWidth={1.5} />
+                      <span className="text-slate-500 text-[11px]">{gym.pris}</span>
+                    </div>
+                    {gym.program && (
+                      <div className="flex items-center gap-2">
+                        <Clock size={11} className="text-slate-700 flex-shrink-0" strokeWidth={1.5} />
+                        <span className="text-slate-600 text-[10px]">{gym.program}</span>
+                      </div>
+                    )}
+                  </div>
 
-                  {/* Klasser */}
+                  {/* Tags */}
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {gym.klasser.map((k) => (
                       <span
                         key={k}
                         className="text-[10px] px-2 py-0.5 rounded-full"
                         style={{
-                          background: dest.farge + "15",
+                          background: dest.farge + "12",
                           color: dest.farge,
-                          border: `1px solid ${dest.farge}30`,
+                          border: `1px solid ${dest.farge}28`,
                         }}
                       >
                         {k}
@@ -264,71 +291,22 @@ export function MuayThai() {
                     ))}
                   </div>
 
-                  {gym.program && (
-                    <p className="text-slate-600 text-[10px] mb-3">📅 {gym.program}</p>
-                  )}
-
-                  <p className="text-slate-500 text-[11px] mb-3">{gym.notat}</p>
+                  <p className="text-slate-600 text-[11px] leading-relaxed mb-3 flex-1">{gym.notat}</p>
 
                   {gym.bookingUrl && (
                     <a
                       href={gym.bookingUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all"
-                      style={{
-                        background: dest.farge + "18",
-                        color: dest.farge,
-                        border: `1px solid ${dest.farge}35`,
-                      }}
+                      className="inline-flex items-center gap-1 text-[11px] transition-opacity hover:opacity-80 mt-auto"
+                      style={{ color: dest.farge, fontFamily: "'DM Sans', sans-serif" }}
                     >
-                      Book her →
+                      Book
+                      <ChevronRight size={11} strokeWidth={2} />
                     </a>
                   )}
                 </div>
               ))}
-            </div>
-
-            {/* Stadiums */}
-            <div className="glass rounded-2xl p-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-              <p
-                className="text-slate-600 text-[10px] uppercase tracking-[0.2em] mb-4"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
-              >
-                🥊 Se kamp — Arenaer
-              </p>
-              <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                {dest.stadioner.map((s, i) => (
-                  <div key={i} className="py-3 first:pt-0 last:pb-0">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <p className="text-white text-xs font-medium truncate">{s.navn}</p>
-                        <p className="text-slate-600 text-[10px] mt-0.5">{s.program}</p>
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                        <p className="text-slate-400 text-[11px]">{s.billett}</p>
-                        <p className="text-slate-700 text-[10px]">{s.avstand}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <p className="text-slate-700 text-[10px] mt-4 pt-3 border-t" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                Kampstart typisk 20:00–21:00. Book billetter via GetYourGuide eller Klook pa forhand.
-              </p>
-            </div>
-
-            {/* Jogge-legend */}
-            <div className="mt-3 flex gap-4 flex-wrap px-1">
-              <span className="text-slate-700 text-[10px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                👟 Kan jogge dit
-              </span>
-              <span className="text-slate-700 text-[10px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                ⚠️ Mulig, men krevende
-              </span>
-              <span className="text-slate-700 text-[10px]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                🚗 Ta Grab
-              </span>
             </div>
           </motion.div>
         </AnimatePresence>

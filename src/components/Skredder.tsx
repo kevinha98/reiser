@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Scissors, MapPin, Tag, Clock, Ruler } from 'lucide-react'
+import { Scissors, MapPin, Tag, Clock, Ruler, Shirt } from 'lucide-react'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -14,6 +14,7 @@ interface Skredder {
   leveringstid: string
   avstand: string
   tips: string[]
+  skjorteTips?: string[]
   advarsel?: string
 }
 
@@ -34,6 +35,13 @@ const SKREDDERE: Skredder[] = [
       'Sjekk at sømmer er håndstied, ikke maskinsydd',
       'Be om stoff-attest (100 % ull vs. blanding)',
     ],
+    skjorteTips: [
+      'Velg 2-ply poplin eller oxford-bomull — holder formen',
+      'Semi-spread krage er tryggeste valg for norsk bruk',
+      'Mål-attest: brystkrets, midjeomfang, skulder, ermlengde',
+      'Bestill 2–3 skjorter på én gang — rabatt og ett malsett',
+      'Leveringstid 24–48 t — nok tid i begge Bangkok-opphold',
+    ],
   },
   {
     rank: 2,
@@ -47,7 +55,7 @@ const SKREDDERE: Skredder[] = [
     avstand: 'Patong-området ~9 km (Grab)',
     tips: [
       'Patong har mange skreddere — sammenlign minst tre',
-      'Unngå butikker som tilbyr "ferdig om 2 timer"',
+      'Unngå butikker som tilbyr ferdig om 2 timer',
     ],
     advarsel: 'Svært varierende kvalitet i Patong',
   },
@@ -199,9 +207,9 @@ function VinnerKort({ s }: { s: Skredder }) {
         </p>
       </div>
 
-      {/* Tips */}
+      {/* General tips */}
       <div
-        className="rounded-xl p-4 flex-1"
+        className="rounded-xl p-4 mb-3"
         style={{
           background: s.farge + '08',
           border: `1px solid ${s.farge}20`,
@@ -232,6 +240,44 @@ function VinnerKort({ s }: { s: Skredder }) {
           ))}
         </ul>
       </div>
+
+      {/* Shirt-specific tips */}
+      {s.skjorteTips && (
+        <div
+          className="rounded-xl p-4 flex-1"
+          style={{
+            background: 'rgba(255,255,255,0.025)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
+          }}
+        >
+          <div className="flex items-center gap-2 mb-3">
+            <Shirt size={12} className="text-slate-500 flex-shrink-0" strokeWidth={1.5} />
+            <p
+              className="text-[10px] uppercase tracking-[0.2em] text-slate-500"
+              style={{ fontFamily: "'DM Sans', sans-serif" }}
+            >
+              Skjorter — Bangkok spesifikt
+            </p>
+          </div>
+          <ul className="space-y-2">
+            {s.skjorteTips.map((tip, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <div
+                  className="w-1 h-1 rounded-full flex-shrink-0 mt-1.5"
+                  style={{ background: 'rgba(255,255,255,0.2)' }}
+                />
+                <span
+                  className="text-slate-500 text-[11px] leading-relaxed"
+                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                >
+                  {tip}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </motion.div>
   )
 }
