@@ -219,10 +219,10 @@ export function KartSeksjon() {
 
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 16, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
           className="mb-12 text-center"
         >
           <p
@@ -247,10 +247,10 @@ export function KartSeksjon() {
 
         {/* Map glass card */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ type: "spring", duration: 0.5, bounce: 0, delay: 0.08 }}
           className="glass rounded-2xl overflow-hidden"
         >
           {/* SVG map */}
@@ -532,7 +532,7 @@ export function KartSeksjon() {
                           {b.netter}n
                         </span>
                       </div>
-                      <p className="text-slate-300 text-xs mb-3">🏨 {b.hotell}</p>
+                      <p className="text-slate-300 text-xs mb-3">Hotell: {b.hotell}</p>
                       <div
                         className="space-y-1 pt-2 border-t"
                         style={{ borderColor: "rgba(255,255,255,0.05)" }}
@@ -553,11 +553,12 @@ export function KartSeksjon() {
             style={{ borderColor: "rgba(255,255,255,0.04)" }}
           >
             {STOPP.map((stop) => (
-              <button
+              <motion.button
                 key={stop.id}
                 onClick={() => toggleStopp(stop.id)}
-                className="flex items-center gap-2 py-0.5 transition-opacity"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-2 py-0.5"
+                style={{ fontFamily: "'DM Sans', sans-serif", transition: 'opacity 120ms ease-out' }}
               >
                 <div
                   className="w-2 h-2 rounded-full flex-shrink-0"
@@ -574,7 +575,7 @@ export function KartSeksjon() {
                 >
                   {stop.navn} · {stop.periodeKort}
                 </span>
-              </button>
+              </motion.button>
             ))}
             <div className="flex items-center gap-2">
               <div className="w-4 h-px border-t border-dashed border-amber-500/40" />
@@ -590,14 +591,14 @@ export function KartSeksjon() {
 
         {/* International flight cards */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ type: "spring", duration: 0.45, bounce: 0, delay: 0.1 }}
           className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"
         >
-          <FlygKort tittel="✈ Utreise · Tirsdag 11. aug" ben={UTREISE} />
-          <FlygKort tittel="✈ Hjemreise · 1–2. sep" ben={HJEMREISE} />
+          <FlygKort tittel="Utreise · Tirsdag 11. aug" ben={UTREISE} />
+          <FlygKort tittel="Hjemreise · 1–2. sep" ben={HJEMREISE} />
         </motion.div>
 
       </div>

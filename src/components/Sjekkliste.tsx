@@ -69,7 +69,7 @@ function SjekklisteRad({ element, onToggle, onSlett }: SjekklisteRadProps) {
       </button>
 
       <span
-        className={`flex-1 text-sm transition-all duration-300 ${
+        className={`flex-1 text-sm transition-[color,text-decoration-color] duration-200 ${
           element.fullfort ? 'line-through text-slate-600' : 'text-slate-300'
         }`}
       >
@@ -148,10 +148,10 @@ export function Sjekkliste() {
   return (
     <section className="px-4 mb-20 max-w-5xl mx-auto">
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 16, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.4 }}
+        transition={{ type: "spring", duration: 0.45, bounce: 0.1 }}
         className="mb-8"
       >
         <div className="flex items-end justify-between">
@@ -178,7 +178,7 @@ export function Sjekkliste() {
             className="h-full rounded-full"
             style={{ background: 'linear-gradient(90deg, #10b981, #34d399)' }}
             animate={{ width: `${fremgang}%` }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
+            transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
           />
         </div>
       </motion.div>
@@ -186,17 +186,19 @@ export function Sjekkliste() {
       {/* Category tabs */}
       <div className="flex gap-2 overflow-x-auto scrollbar-hidden mb-6 pb-1">
         {alleKategorier.map((kat) => (
-          <button
+          <motion.button
             key={kat}
             onClick={() => setAktivKategori(kat)}
-            className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-sm font-medium transition-all cursor-pointer ${
+            whileTap={{ scale: 0.95 }}
+            className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-sm font-medium cursor-pointer ${
               aktivKategori === kat
                 ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
                 : 'text-slate-500 hover:text-slate-300 border border-transparent hover:border-white/10'
             }`}
+            style={{ transition: 'background-color 120ms ease-out, color 120ms ease-out, border-color 120ms ease-out' }}
           >
             {kat}
-          </button>
+          </motion.button>
         ))}
       </div>
 
@@ -250,7 +252,8 @@ export function Sjekkliste() {
                   onChange={(e) => setNyttElement(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && leggTilElement()}
                   placeholder="Nytt element..."
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500/50 focus:bg-white/8 transition-all"
+                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500/50 focus:bg-white/8"
+                  style={{ transition: 'border-color 150ms ease-out, background-color 150ms ease-out' }}
                   autoFocus
                 />
                 <select
@@ -287,7 +290,8 @@ export function Sjekkliste() {
             >
               <button
                 onClick={() => setVisLeggTil(true)}
-                className="w-full flex items-center gap-2 px-6 py-3.5 text-slate-500 hover:text-slate-300 hover:bg-white/[0.02] transition-all text-sm cursor-pointer"
+                className="w-full flex items-center gap-2 px-6 py-3.5 text-slate-500 hover:text-slate-300 hover:bg-white/[0.02] text-sm cursor-pointer"
+                style={{ transition: 'color 120ms ease-out, background-color 120ms ease-out' }}
               >
                 <Plus size={15} />
                 Legg til element

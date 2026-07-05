@@ -28,14 +28,14 @@ function NedtellingEnhet({ verdi, etikett, forsinkelse }: NedtellingEnhetProps) 
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: forsinkelse, duration: 0.5, ease: 'easeOut' }}
+      transition={{ delay: forsinkelse, duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
       className="flex flex-col items-center"
     >
       <motion.div
         key={verdi}
-        initial={{ rotateX: -90, opacity: 0 }}
-        animate={{ rotateX: 0, opacity: 1 }}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
+        initial={{ rotateX: -90, opacity: 0, scale: 0.96 }}
+        animate={{ rotateX: 0, opacity: 1, scale: 1 }}
+        transition={{ duration: 0.18, ease: [0.23, 1, 0.32, 1] }}
         className="glass rounded-xl w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mb-2"
         style={{ transformStyle: 'preserve-3d' }}
       >
@@ -66,9 +66,9 @@ export function Header() {
       <div className="relative max-w-5xl mx-auto text-center">
         {/* Tags row */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: -10, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
           className="inline-flex items-center gap-3 mb-8"
         >
           <div className="inline-flex items-center gap-1.5 border border-white/10 rounded-full px-3.5 py-1.5">
@@ -83,9 +83,9 @@ export function Header() {
 
         {/* Title */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          initial={{ opacity: 0, y: 16, scale: 0.97 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.4, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
           className="font-display text-4xl sm:text-5xl text-white mb-4 leading-tight tracking-tight"
           style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}
         >
@@ -95,7 +95,7 @@ export function Header() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
           className="text-slate-500 text-sm mb-12 max-w-lg mx-auto"
         >
           {REISEDATOER.avreiseFly} · {REISEDATOER.totaltNetter} netter

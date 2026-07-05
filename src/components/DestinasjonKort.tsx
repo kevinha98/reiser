@@ -46,10 +46,10 @@ export function DestinasjonKort({ destinasjon, indeks }: DestinasjonKortProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 20, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.45, delay: indeks * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ type: 'spring', duration: 0.5, bounce: 0.1, delay: indeks * 0.07 }}
       className="perspective-1000"
     >
       <motion.div
@@ -58,7 +58,7 @@ export function DestinasjonKort({ destinasjon, indeks }: DestinasjonKortProps) {
         onMouseLeave={onMouseLeave}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
         whileHover={{ scale: 1.015 }}
-        transition={{ duration: 0.25 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         className="glass rounded-2xl overflow-hidden cursor-default h-full"
       >
         {/* Hero image */}

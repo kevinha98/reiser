@@ -25,11 +25,10 @@ export function Budsjett() {
   return (
     <section className="px-4 mb-16 max-w-5xl mx-auto">
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 16, scale: 0.98 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.4 }}
-        className="mb-8"
+        transition={{ type: 'spring', duration: 0.45, bounce: 0.1 }}
       >
         <h2 className="font-display font-600 text-2xl text-white mb-1"
           style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
@@ -56,7 +55,7 @@ export function Budsjett() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.07 }}
+            transition={{ type: 'spring', duration: 0.4, bounce: 0, delay: i * 0.06 }}
             className="glass rounded-2xl p-4"
           >
             <div className="flex items-center gap-2 mb-2">
@@ -76,7 +75,7 @@ export function Budsjett() {
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.2 }}
+        transition={{ type: 'spring', duration: 0.45, bounce: 0, delay: 0.15 }}
         className="glass rounded-2xl p-6 mb-6"
       >
         <h3 className="text-slate-300 text-sm font-medium mb-6">Fordeling overnatting</h3>
@@ -94,7 +93,7 @@ export function Budsjett() {
                     initial={{ width: 0 }}
                     whileInView={{ width: `${andel}%` }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: i * 0.1 + 0.3, ease: 'easeOut' }}
+                    transition={{ duration: 0.6, delay: i * 0.08 + 0.2, ease: [0.23, 1, 0.32, 1] }}
                     className="h-full rounded-full bg-amber-500/60"
                   />
                 </div>
@@ -109,7 +108,7 @@ export function Budsjett() {
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: 0.3 }}
+        transition={{ type: 'spring', duration: 0.45, bounce: 0, delay: 0.2 }}
         className="glass rounded-2xl overflow-hidden"
       >
         <div className="px-6 py-4 border-b border-white/5">

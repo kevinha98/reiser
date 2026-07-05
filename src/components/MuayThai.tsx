@@ -105,10 +105,10 @@ export function MuayThai() {
 
         {/* Heading — left-aligned */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 16, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.45 }}
+          transition={{ type: "spring", duration: 0.5, bounce: 0.1 }}
           className="mb-10"
         >
           <div className="flex items-center gap-3 mb-4">
@@ -145,27 +145,29 @@ export function MuayThai() {
 
         {/* Tabs */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.35 }}
+          transition={{ type: "spring", duration: 0.4, bounce: 0 }}
           className="flex gap-2 mb-6"
         >
           {DESTINASJONER.map((d) => (
-            <button
+            <motion.button
               key={d.id}
               onClick={() => setAktivDest(d.id)}
-              className="px-4 py-2 rounded-full text-sm transition-all"
+              whileTap={{ scale: 0.96 }}
+              className="px-4 py-2 rounded-full text-sm"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 background: aktivDest === d.id ? d.farge + "20" : "rgba(255,255,255,0.04)",
                 border: `1px solid ${aktivDest === d.id ? d.farge + "50" : "rgba(255,255,255,0.07)"}`,
                 color: aktivDest === d.id ? d.farge : "rgba(100,116,139,0.85)",
                 fontWeight: aktivDest === d.id ? 600 : 400,
+                transition: "background-color 150ms ease-out, border-color 150ms ease-out, color 150ms ease-out",
               }}
             >
               {d.by}
-            </button>
+            </motion.button>
           ))}
         </motion.div>
 
