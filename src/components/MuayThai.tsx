@@ -27,42 +27,6 @@ interface Destinasjon {
 
 const DESTINASJONER: Destinasjon[] = [
   {
-    id: "bkk",
-    by: "Bangkok",
-    hotell: "Hope Land Hotel Sukhumvit 8",
-    farge: "#f59e0b",
-    tips: "Ikke jogg i gatene - for varmt og kaotisk. Jobb i Benjakitti Park (1,5 km fra hotellet) om morgenen, ta Grab til gym.",
-    gyms: [
-      {
-        navn: "FITFAC",
-        adresse: "Sukhumvit soi 20-23, Bangkok",
-        distanse: "~1,5 km",
-        tid: "5-10 min",
-        pris: "Fra ~500 THB / klasse",
-        jogge: "nei",
-        notat: "1-til-1 klasse tilgjengelig. Inkl. gratis Muay Thai-shorts.",
-        bookingUrl: "https://www.getyourguide.com/bangkok-l169/bangkok-learn-1-1-muay-thai-free-muaythai-shorts-pickup-t438453/",
-        klasser: ["1-til-1", "Nybegynner"],
-      },
-      {
-        navn: "Tocayah Fight Club",
-        adresse: "Sentral Bangkok",
-        distanse: "~3-5 km",
-        tid: "10-20 min",
-        pris: "Fra ~600 THB / klasse",
-        jogge: "nei",
-        notat: "Gruppetrening i profesjonelt kampgym.",
-        bookingUrl: "https://www.getyourguide.com/bangkok-l169/bangkok-muay-thai-training-experience-in-professional-gym-t959570/",
-        klasser: ["Gruppe", "Nybegynner", "Mellomniva"],
-      },
-    ],
-    stadioner: [
-      { navn: "Rajadamnern Stadium", program: "Man-son", billett: "Fra 1 500 THB", avstand: "~7 km / 25-30 min" },
-      { navn: "Lumpinee Boxing Stadium", program: "Fre & lor", billett: "Fra 1 000 THB", avstand: "~13 km / 35-45 min" },
-      { navn: "MBK Center (gratis)", program: "1. og siste ons i mnd", billett: "GRATIS", avstand: "~3 km / 15 min (BTS)" },
-    ],
-  },
-  {
     id: "samui",
     by: "Koh Samui",
     hotell: "Lamai Coconut Beach Resort",
