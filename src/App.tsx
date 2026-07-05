@@ -4,6 +4,7 @@ import { KartSeksjon } from './components/KartSeksjon'
 import { Tidslinje } from './components/Tidslinje'
 import { Budsjett } from './components/Budsjett'
 import { MuayThai } from './components/MuayThai'
+import { Skredder } from './components/Skredder'
 import { Sjekkliste } from './components/Sjekkliste'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
           <Tidslinje />
           <Budsjett />
           <MuayThai />
+          <Skredder />
           <Sjekkliste />
         </main>
 
