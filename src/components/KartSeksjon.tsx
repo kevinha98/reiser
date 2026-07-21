@@ -8,6 +8,7 @@ interface Besok {
   datoTil: string
   netter: number
   hotell: string
+  hotellUrl: string
   ankomst: string
   avgang: string
 }
@@ -57,6 +58,7 @@ const STOPP: RuteStop[] = [
         datoTil: "15. aug",
         netter: 3,
         hotell: "Hope Land Hotel Sukhumvit 8",
+        hotellUrl: "https://www.agoda.com/hope-land-hotel-sukhumvit-8/hotel/bangkok-th.html",
         ankomst: "KL 0843 · AMS → BKK · kl. 09:30 · Sete 2D & 2F",
         avgang: "Internflight BKK → USM · 15. aug",
       },
@@ -65,6 +67,7 @@ const STOPP: RuteStop[] = [
         datoTil: "1. sep",
         netter: 3,
         hotell: "Mandarin Hotel Centre Point",
+        hotellUrl: "https://www.agoda.com/mandarin-hotel-managed-by-centre-point/hotel/bangkok-th.html",
         ankomst: "Internflight HKT → BKK · 29. aug",
         avgang: "KL 0844 · BKK → AMS · kl. 12:05",
       },
@@ -87,6 +90,7 @@ const STOPP: RuteStop[] = [
         datoTil: "22. aug",
         netter: 7,
         hotell: "Lamai Coconut Beach Resort",
+        hotellUrl: "https://www.agoda.com/lamai-coconut-beach-resort/hotel/koh-samui-th.html",
         ankomst: "Internflight BKK → USM · 15. aug",
         avgang: "Internflight USM → HKT · 22. aug",
       },
@@ -109,6 +113,7 @@ const STOPP: RuteStop[] = [
         datoTil: "29. aug",
         netter: 7,
         hotell: "Chanalai Flora Resort, Kata Beach",
+        hotellUrl: "https://www.agoda.com/chanalai-flora-resort/hotel/phuket-th.html",
         ankomst: "Internflight USM → HKT · 22. aug",
         avgang: "KL 0843 · HKT → BKK · 29. aug",
       },
@@ -532,7 +537,15 @@ export function KartSeksjon() {
                           {b.netter}n
                         </span>
                       </div>
-                      <p className="text-slate-300 text-xs mb-3">Hotell: {b.hotell}</p>
+                      <a
+                        href={b.hotellUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-300 text-xs mb-3 block hover:text-white"
+                        style={{ transition: 'color 120ms ease-out' }}
+                      >
+                        Hotell: {b.hotell}
+                      </a>
                       <div
                         className="space-y-1 pt-2 border-t"
                         style={{ borderColor: "rgba(255,255,255,0.05)" }}

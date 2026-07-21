@@ -56,7 +56,7 @@ const TIDSLINJE: ReiseEvent[] = [
     dagNr: 5,
     tittel: "Fly til Koh Samui",
     undertittel: "Lamai Coconut Beach Resort · 7 netter",
-    hotellUrl: "https://www.lamaicoconutbeachresort.com/",
+    hotellUrl: "https://www.agoda.com/lamai-coconut-beach-resort/hotel/koh-samui-th.html",
     type: "fly",
     farge: "ocean",
     aktiviteter: [
@@ -91,7 +91,7 @@ const TIDSLINJE: ReiseEvent[] = [
     dagNr: 12,
     tittel: "Fly til Phuket",
     undertittel: "Chanalai Flora Resort, Kata Beach · 7 netter",
-    hotellUrl: "https://www.chanalai.com/flora-resort/",
+    hotellUrl: "https://www.agoda.com/chanalai-flora-resort/hotel/phuket-th.html",
     type: "fly",
     farge: "jungle",
     aktiviteter: [
@@ -114,7 +114,7 @@ const TIDSLINJE: ReiseEvent[] = [
     dagNr: 19,
     tittel: "HKT -> BKK",
     undertittel: "kl. 12:55 → 14:30 · Mandarin Hotel Centre Point",
-    hotellUrl: "https://www.centrepoint.com/mandarin-hotel/",
+    hotellUrl: "https://www.agoda.com/mandarin-hotel-managed-by-centre-point/hotel/bangkok-th.html",
     type: "fly",
     farge: "gold",
     aktiviteter: [
@@ -135,6 +135,7 @@ const TIDSLINJE: ReiseEvent[] = [
     dagNr: 21,
     tittel: "Benihana · Anantara Riverside",
     undertittel: "Avskjedskveld i Bangkok",
+    hotellUrl: "https://www.agoda.com/mandarin-hotel-managed-by-centre-point/hotel/bangkok-th.html",
     type: "hotell",
     farge: "gold",
     aktiviteter: [

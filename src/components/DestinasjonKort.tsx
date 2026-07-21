@@ -108,7 +108,19 @@ export function DestinasjonKort({ destinasjon, indeks }: DestinasjonKortProps) {
           <div className="flex items-end justify-between gap-3">
             <div className="min-w-0">
               <p className="text-slate-600 text-xs uppercase tracking-wider mb-0.5">Overnatting</p>
-              <p className="text-slate-300 text-sm leading-snug truncate">{destinasjon.hotell}</p>
+              {destinasjon.hotellLink ? (
+                <a
+                  href={destinasjon.hotellLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-300 text-sm leading-snug truncate block hover:text-white transition-colors"
+                  style={{ transition: 'color 120ms ease-out' }}
+                >
+                  {destinasjon.hotell}
+                </a>
+              ) : (
+                <p className="text-slate-300 text-sm leading-snug truncate">{destinasjon.hotell}</p>
+              )}
             </div>
             <div className="flex items-center gap-1.5 flex-shrink-0">
               <Moon size={12} className="text-slate-600" />
