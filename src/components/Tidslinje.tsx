@@ -14,6 +14,7 @@ interface ReiseEvent {
   dagNr: number
   tittel: string
   undertittel?: string
+  hotellUrl?: string
   type: "fly" | "hotell" | "avreise" | "hjemkomst"
   farge: "gold" | "ocean" | "jungle" | "violet"
   aktiviteter?: Aktivitet[]
@@ -33,6 +34,7 @@ const TIDSLINJE: ReiseEvent[] = [
     dagNr: 2,
     tittel: "Ankomst Bangkok",
     undertittel: "Innsjekk · Hope Land Hotel Sukhumvit 8",
+    hotellUrl: "https://www.agoda.com/hope-land-hotel-sukhumvit-8/hotel/bangkok-th.html",
     type: "hotell",
     farge: "gold",
     aktiviteter: [
@@ -54,6 +56,7 @@ const TIDSLINJE: ReiseEvent[] = [
     dagNr: 5,
     tittel: "Fly til Koh Samui",
     undertittel: "Lamai Coconut Beach Resort · 7 netter",
+    hotellUrl: "https://www.lamaicoconutbeachresort.com/",
     type: "fly",
     farge: "ocean",
     aktiviteter: [
@@ -88,6 +91,7 @@ const TIDSLINJE: ReiseEvent[] = [
     dagNr: 12,
     tittel: "Fly til Phuket",
     undertittel: "Chanalai Flora Resort, Kata Beach · 7 netter",
+    hotellUrl: "https://www.chanalai.com/flora-resort/",
     type: "fly",
     farge: "jungle",
     aktiviteter: [
@@ -110,6 +114,7 @@ const TIDSLINJE: ReiseEvent[] = [
     dagNr: 19,
     tittel: "HKT -> BKK",
     undertittel: "kl. 12:55 → 14:30 · Mandarin Hotel Centre Point",
+    hotellUrl: "https://www.centrepoint.com/mandarin-hotel/",
     type: "fly",
     farge: "gold",
     aktiviteter: [
@@ -302,6 +307,18 @@ export function Tidslinje() {
                     >
                       {event.undertittel}
                     </p>
+                  )}
+                  {event.hotellUrl && (
+                    <a
+                      href={event.hotellUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 mt-0.5 text-[11px] hover:opacity-70 transition-opacity"
+                      style={{ color: 'rgba(148,163,184,0.55)', fontFamily: "'DM Sans', sans-serif" }}
+                    >
+                      <MapPin size={10} strokeWidth={1.5} />
+                      Hotell
+                    </a>
                   )}
                   {harAktiviteter && (
                     <div
