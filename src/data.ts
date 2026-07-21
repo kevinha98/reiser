@@ -204,7 +204,6 @@ export const STANDARD_SJEKKLISTE: Omit<SjekklisteElement, 'fullfort'>[] = [
   // Pakking
   { id: 'klær', tekst: 'Pakke klær (lett, luftig)', kategori: 'Pakking' },
   { id: 'adapter', tekst: 'Strømadapter (type A/B/C)', kategori: 'Pakking' },
-  { id: 'sim', tekst: 'Lokalt SIM-kort eller eSIM-plan', kategori: 'Pakking' },
+  { id: 'sim', tekst: 'eSIM via Saily — last ned før avreise', kategori: 'Pakking' },
   { id: 'powerbank', tekst: 'Powerbank ladet', kategori: 'Pakking' },
-  { id: 'kamera', tekst: 'Kamera / GoPro + minnekort', kategori: 'Pakking' },
 ]
