@@ -1,8 +1,8 @@
 ﻿import { motion } from "framer-motion"
-import { Plane, MapPin, Scissors, Dumbbell, Anchor } from "lucide-react"
+import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed } from "lucide-react"
 
 interface Aktivitet {
-  type: "skredder" | "muaythai" | "dagstur"
+  type: "skredder" | "muaythai" | "dagstur" | "restaurant"
   navn: string
   detaljer: string[]
   bookingUrl?: string
@@ -126,6 +126,28 @@ const TIDSLINJE: ReiseEvent[] = [
     ],
   },
   {
+    dato: "Man 31. aug",
+    dagNr: 21,
+    tittel: "Benihana · Anantara Riverside",
+    undertittel: "Avskjedskveld i Bangkok",
+    type: "hotell",
+    farge: "gold",
+    aktiviteter: [
+      {
+        type: "restaurant",
+        navn: "Benihana",
+        farge: "#f59e0b",
+        detaljer: [
+          "Anantara Riverside Bangkok Resort",
+          "257/1-3 Charoennakorn Rd, Thon Buri · Chao Phraya-bredden",
+          "Japansk teppanyaki — grillet foran gjestene",
+          "Bestill bord på forhånd — populaert blant turister",
+        ],
+        bookingUrl: "https://www.anantara.com/en/riverside-bangkok/restaurants/benihana",
+      },
+    ],
+  },
+  {
     dato: "Tir 1. sep",
     dagNr: 22,
     tittel: "Hjemreise til CPH",
@@ -143,7 +165,7 @@ const FARGE_MAP = {
 }
 
 function AktivitetKort({ a }: { a: Aktivitet }) {
-  const Icon = a.type === "skredder" ? Scissors : a.type === "dagstur" ? Anchor : Dumbbell
+  const Icon = a.type === "skredder" ? Scissors : a.type === "dagstur" ? Anchor : a.type === "restaurant" ? UtensilsCrossed : Dumbbell
   return (
     <div
       className="rounded-xl px-3 py-2.5"
