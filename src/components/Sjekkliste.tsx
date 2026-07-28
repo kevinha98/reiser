@@ -10,14 +10,18 @@ function lastFraStorage(): SjekklisteElement[] {
   try {
     const lagret = localStorage.getItem(STORAGE_KEY)
     if (lagret) return JSON.parse(lagret)
-  } catch {}
+  } catch {
+    // localStorage utilgjengelig eller korrupt — fall tilbake til standardlisten
+  }
   return STANDARD_SJEKKLISTE.map((el) => ({ ...el, fullfort: false }))
 }
 
 function lagreTilStorage(liste: SjekklisteElement[]) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(liste))
-  } catch {}
+  } catch {
+    // localStorage utilgjengelig (privat modus / full kvote) — ignorer lagring
+  }
 }
 
 const KATEGORIER = ['Transport', 'Overnatting', 'Dokumenter', 'Helse', 'Pakking', 'Annet']
