@@ -164,7 +164,7 @@ export function Sjekkliste() {
               style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
               Sjekkliste
             </h2>
-            <p className="text-slate-400 text-sm">{fullfort} av {total} fullfort</p>
+            <p className="text-slate-400 text-sm">{fullfort} av {total} fullført</p>
           </div>
           <button
             onClick={tilbakestill}
