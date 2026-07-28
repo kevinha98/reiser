@@ -133,9 +133,9 @@ const FLY_PATH = "M 34,48 Q 200,-5 430,155"
 // ─── International itinerary ──────────────────────────────────────────────────
 
 const UTREISE: FlygLeg[] = [
-  { iata: "BGO", by: "Bergen", avgang: "05:55", fly: "SK 2861", flyselskap: "SAS", klasse: "Economy" },
-  { iata: "CPH", by: "Copenhagen", ankomst: "07:20", avgang: "11:30", fly: "KL 1270", flyselskap: "KLM", klasse: "Flex", opphold: "4t 10m" },
-  { iata: "AMS", by: "Amsterdam", ankomst: "12:55", avgang: "17:15", fly: "KL 0843", flyselskap: "KLM", klasse: "Flex", opphold: "4t 20m", seter: "2D, 2F" },
+  { iata: "BGO", by: "Bergen", avgang: "05:50", fly: "SK 2861", flyselskap: "SAS", klasse: "Economy" },
+  { iata: "CPH", by: "Copenhagen", ankomst: "07:15", avgang: "11:30", fly: "KL 1270", flyselskap: "KLM", klasse: "Business", opphold: "4t 15m" },
+  { iata: "AMS", by: "Amsterdam", ankomst: "12:55", avgang: "17:15", fly: "KL 0843", flyselskap: "KLM", klasse: "Business", opphold: "4t 20m", seter: "2D, 2F" },
   { iata: "BKK", by: "Bangkok", ankomst: "09:30 (+1)" },
 ]
 

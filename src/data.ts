@@ -40,8 +40,8 @@ export interface SjekklisteElement {
 export const REISEDATOER = {
   avreiseDato: '2026-08-11',   // tirsdag
   hjemkomstDato: '2026-09-01', // tirsdag
-  avreiseFly: 'CPH → BKK • 11. aug kl. 11:30 → 12. aug kl. 09:30',
-  hjemkomstFly: 'BKK → CPH • 1. sep kl. 12:05 → 22:30',
+  avreiseFly: 'BGO → BKK • 11. aug kl. 05:50 → 12. aug kl. 09:30',
+  hjemkomstFly: 'BKK → BGO • 1. sep kl. 12:05 → 2. sep kl. 09:40',
   totaltNetter: 20,
 }
 

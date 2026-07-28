@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Plane, MapPin, Star } from 'lucide-react'
+import { Plane, CalendarDays, Star } from 'lucide-react'
 import { REISEDATOER } from '../data'
 
 function beregnNedtelling(målDato: string) {
@@ -44,7 +44,7 @@ function NedtellingEnhet({ verdi, etikett, forsinkelse }: NedtellingEnhetProps) 
           {String(verdi).padStart(2, '0')}
         </span>
       </motion.div>
-      <span className="text-xs text-slate-500 uppercase tracking-widest font-medium">{etikett}</span>
+      <span className="text-xs text-slate-400 uppercase tracking-widest font-medium">{etikett}</span>
     </motion.div>
   )
 }
@@ -71,13 +71,13 @@ export function Header() {
           transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
           className="inline-flex items-center gap-3 mb-8"
         >
-          <div className="inline-flex items-center gap-1.5 border border-white/10 rounded-full px-3.5 py-1.5">
-            <MapPin size={11} className="text-slate-500" />
-            <span className="text-xs text-slate-400 tracking-wide">Thailand 2026</span>
+          <div className="inline-flex items-center gap-1.5 border border-white/15 rounded-full px-3.5 py-1.5">
+            <CalendarDays size={12} className="text-slate-300" strokeWidth={1.75} />
+            <span className="text-xs text-slate-200 tracking-wide">11. aug – 2. sep</span>
           </div>
-          <div className="inline-flex items-center gap-1.5 border border-amber-500/25 rounded-full px-3.5 py-1.5 bg-amber-500/5">
-            <Star size={11} className="text-amber-400" fill="currentColor" />
-            <span className="text-xs text-amber-300 tracking-wide">Business Class</span>
+          <div className="inline-flex items-center gap-1.5 border border-amber-400/40 rounded-full px-3.5 py-1.5 bg-amber-500/10">
+            <Star size={12} className="text-amber-300" fill="currentColor" />
+            <span className="text-xs text-amber-200 tracking-wide font-medium">Business Class</span>
           </div>
         </motion.div>
 
@@ -86,17 +86,17 @@ export function Header() {
           initial={{ opacity: 0, y: 16, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-          className="font-display text-4xl sm:text-5xl text-white mb-4 leading-tight tracking-tight"
-          style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}
+          className="font-display text-5xl sm:text-6xl text-white mb-4 leading-tight tracking-tight"
+          style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700 }}
         >
-          Min Ferie
+          Thailand 2026
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
-          className="text-slate-500 text-sm mb-12 max-w-lg mx-auto"
+          className="text-slate-300 text-sm sm:text-base mb-12 max-w-xl mx-auto leading-relaxed"
         >
           {REISEDATOER.avreiseFly} · {REISEDATOER.totaltNetter} netter
         </motion.p>
@@ -108,17 +108,17 @@ export function Header() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-slate-500 text-xs uppercase tracking-widest mb-5"
+              className="text-slate-400 text-xs uppercase tracking-widest mb-5"
             >
               Avreise om
             </motion.p>
             <div className="flex items-start justify-center gap-4 sm:gap-6">
               <NedtellingEnhet verdi={nedtelling.dager} etikett="dager" forsinkelse={0.35} />
-              <span className="text-slate-600 text-2xl mt-4">:</span>
+              <span className="text-slate-500 text-2xl mt-4" aria-hidden="true">:</span>
               <NedtellingEnhet verdi={nedtelling.timer} etikett="timer" forsinkelse={0.4} />
-              <span className="text-slate-600 text-2xl mt-4">:</span>
+              <span className="text-slate-500 text-2xl mt-4" aria-hidden="true">:</span>
               <NedtellingEnhet verdi={nedtelling.minutter} etikett="min" forsinkelse={0.45} />
-              <span className="text-slate-600 text-2xl mt-4">:</span>
+              <span className="text-slate-500 text-2xl mt-4" aria-hidden="true">:</span>
               <NedtellingEnhet verdi={nedtelling.sekunder} etikett="sek" forsinkelse={0.5} />
             </div>
           </div>

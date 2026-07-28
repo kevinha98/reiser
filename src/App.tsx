@@ -2,6 +2,7 @@
 import { Destinasjoner } from './components/Destinasjoner'
 import { KartSeksjon } from './components/KartSeksjon'
 import { Tidslinje } from './components/Tidslinje'
+import { Lounger } from './components/Lounger'
 import { Budsjett } from './components/Budsjett'
 import { Sjekkliste } from './components/Sjekkliste'
 
@@ -15,12 +16,13 @@ export default function App() {
           <Destinasjoner />
           <KartSeksjon />
           <Tidslinje />
+          <Lounger />
           <Budsjett />
           <Sjekkliste />
         </main>
 
         <footer className="pb-16 text-center">
-          <p className="text-slate-700 text-xs">Thailand · 2026</p>
+          <p className="text-slate-500 text-xs">Thailand · 2026</p>
         </footer>
       </div>
     </div>

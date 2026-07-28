@@ -54,4 +54,27 @@
   .scrollbar-hidden::-webkit-scrollbar {
     display: none;
   }
+
+  /* WCAG AA: lighten muted text tokens so they stay legible on the #080b10 background.
+     Kept in @layer utilities so hover:/group-hover: variants (higher specificity) still win. */
+  .text-slate-700 {
+    color: #8b98ac;
+  }
+  .text-slate-600 {
+    color: #97a5b8;
+  }
+  .text-slate-500 {
+    color: #aab6c6;
+  }
+
+  /* Visible keyboard focus for all interactive elements (WCAG 2.4.7) */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  [role='button']:focus-visible {
+    outline: 2px solid #f5dfa8;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 }

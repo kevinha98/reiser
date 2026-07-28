@@ -24,8 +24,8 @@ const TIDSLINJE: ReiseEvent[] = [
   {
     dato: "Tir 11. aug",
     dagNr: 0,
-    tittel: "Avreise fra CPH",
-    undertittel: "CPH → BKK · kl. 11:30 · Business Class",
+    tittel: "Avreise fra Bergen",
+    undertittel: "BGO → CPH → AMS → BKK · kl. 05:50 · Business Class",
     type: "avreise",
     farge: "violet",
   },
@@ -156,8 +156,8 @@ const TIDSLINJE: ReiseEvent[] = [
   {
     dato: "Tir 1. sep",
     dagNr: 22,
-    tittel: "Hjemreise til CPH",
-    undertittel: "BKK → CPH · kl. 12:05 → 22:30",
+    tittel: "Hjemreise til Bergen",
+    undertittel: "BKK → AMS → CPH → BGO · kl. 12:05 → 2. sep kl. 09:40",
     type: "hjemkomst",
     farge: "violet",
   },

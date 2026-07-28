@@ -263,11 +263,11 @@ def _open_bkk_popup(page):
     bkk_btn = page.locator("g[role='button'][aria-label*='Bangkok']")
     assert bkk_btn.count() > 0
     bkk_btn.first.click()
-    page.wait_for_selector("text=Suvarnabhumi", timeout=3000)
+    page.wait_for_selector("text=Suvarnabhumi Airport", timeout=3000)
 
 def t_kart_popup_bkk_opens(page):
     _open_bkk_popup(page)
-    assert page.get_by_text("Suvarnabhumi").count() > 0
+    assert page.get_by_text("Suvarnabhumi Airport").count() > 0
 
 def t_kart_popup_bkk_hotel_link_exists(page):
     _open_bkk_popup(page)
@@ -299,7 +299,7 @@ def t_kart_popup_bkk_close(page):
     close = page.locator("button[aria-label='Lukk']").first
     close.click()
     page.wait_for_timeout(400)
-    assert page.get_by_text("Suvarnabhumi").count() == 0
+    assert page.get_by_text("Suvarnabhumi Airport").count() == 0
 
 def _open_samui_popup(page):
     goto(page)
@@ -576,27 +576,27 @@ def t_iata_bkk_present(page):
 
 def t_tidslinje_avreise_visible(page):
     goto(page)
-    assert page.get_by_text("Avreise fra CPH", exact=False).count() > 0
+    assert page.get_by_text("Avreise fra Bergen", exact=False).count() > 0
 
 def t_tidslinje_hjemreise_visible(page):
     goto(page)
-    assert page.get_by_text("Hjemreise til CPH", exact=False).count() > 0
+    assert page.get_by_text("Hjemreise til Bergen", exact=False).count() > 0
 
 def t_kart_interactive_bkk_click(page):
     goto(page)
     bkk = page.locator("g[role='button'][aria-label*='Bangkok']")
     assert bkk.count() > 0
     bkk.first.click()
-    page.wait_for_selector("text=Suvarnabhumi", timeout=3000)
+    page.wait_for_selector("text=Suvarnabhumi Airport", timeout=3000)
 
 def t_kart_close_button_works(page):
     goto(page)
     bkk = page.locator("g[role='button'][aria-label*='Bangkok']")
     bkk.first.click()
-    page.wait_for_selector("text=Suvarnabhumi", timeout=3000)
+    page.wait_for_selector("text=Suvarnabhumi Airport", timeout=3000)
     page.locator("button[aria-label='Lukk']").first.click()
     page.wait_for_timeout(400)
-    assert page.get_by_text("Suvarnabhumi").count() == 0
+    assert page.get_by_text("Suvarnabhumi Airport").count() == 0
 
 def t_saily_esim_in_checklist(page):
     goto(page)
@@ -637,6 +637,59 @@ def t_hotel_link_count_mandarin(page):
     goto(page)
     links = page.locator("a[href*='mandarin-hotel-managed-by-centre-point']")
     assert links.count() >= 2, f"Expected >= 2 Mandarin links, got {links.count()}"
+
+
+# ─── SECTION 10: Title + Lounger + WCAG ──────────────────────────────────────
+
+def t_title_thailand_2026(page):
+    goto(page)
+    h1 = page.locator("h1")
+    assert h1.count() > 0
+    assert "Thailand 2026" in h1.first.inner_text(), f"H1 is '{h1.first.inner_text()}'"
+
+def t_no_min_ferie(page):
+    goto(page)
+    assert page.get_by_text("Min Ferie", exact=False).count() == 0, "'Min Ferie' should be gone"
+
+def t_document_title_updated(page):
+    goto(page)
+    title = page.title()
+    assert "Thailand 2026" in title and "Min Ferie" not in title, f"Tab title: '{title}'"
+
+def t_lounger_section_present(page):
+    goto(page)
+    assert page.get_by_text("Lounger på flyplassene", exact=False).count() > 0
+
+def t_lounger_loungekey(page):
+    goto(page)
+    assert page.get_by_text("LoungeKey", exact=False).count() > 0
+
+def t_lounger_mastercard(page):
+    goto(page)
+    assert page.get_by_text("Mastercard", exact=False).count() > 0
+
+def t_lounger_lounge_links(page):
+    goto(page)
+    links = page.locator("a[href*='prioritypass.com']")
+    assert links.count() >= 4, f"Expected >= 4 lounge links, got {links.count()}"
+
+def t_lounger_cph_eventyr(page):
+    goto(page)
+    assert page.get_by_text("Eventyr", exact=False).count() > 0
+
+def t_lounger_bkk_miracle(page):
+    goto(page)
+    assert page.get_by_text("Miracle", exact=False).count() > 0
+
+def t_lounger_links_secure(page):
+    goto(page)
+    links = page.locator("a[href*='prioritypass.com']")
+    count = links.count()
+    assert count > 0
+    for i in range(count):
+        link = links.nth(i)
+        assert link.get_attribute("target") == "_blank", f"Lounge link {i} missing target=_blank"
+        assert "noopener" in (link.get_attribute("rel") or ""), f"Lounge link {i} missing noopener"
 
 
 # ─── Test registry ────────────────────────────────────────────────────────────
@@ -738,8 +791,8 @@ ALL_TESTS = [
     ("S8.10 — Ingen JS-feil i konsoll", t_no_console_errors, "Regresjon"),
     ("S8.11 — IATA BGO synlig", t_iata_bgo_present, "Regresjon"),
     ("S8.12 — IATA BKK synlig", t_iata_bkk_present, "Regresjon"),
-    ("S8.13 — Avreise fra CPH synlig", t_tidslinje_avreise_visible, "Regresjon"),
-    ("S8.14 — Hjemreise til CPH synlig", t_tidslinje_hjemreise_visible, "Regresjon"),
+    ("S8.13 — Avreise fra Bergen synlig", t_tidslinje_avreise_visible, "Regresjon"),
+    ("S8.14 — Hjemreise til Bergen synlig", t_tidslinje_hjemreise_visible, "Regresjon"),
     ("S8.15 — Kart BKK-klikk åpner popup", t_kart_interactive_bkk_click, "Regresjon"),
     ("S8.16 — Kart lukk-knapp fungerer", t_kart_close_button_works, "Regresjon"),
     ("S8.17 — Saily eSIM i sjekklisten", t_saily_esim_in_checklist, "Regresjon"),
@@ -752,6 +805,18 @@ ALL_TESTS = [
     ("S9.02 — Minimum 4 Agoda hotellsider", t_minimum_agoda_hotel_links, "Lenketelling"),
     ("S9.03 — Bangkok I: >= 2 Hope Land lenker", t_hotel_link_count_bkk, "Lenketelling"),
     ("S9.04 — Bangkok II: >= 2 Mandarin lenker", t_hotel_link_count_mandarin, "Lenketelling"),
+
+    # Section 10: Tittel + Lounger + WCAG (10)
+    ("S10.01 — Tittel er Thailand 2026", t_title_thailand_2026, "Tittel & Lounger"),
+    ("S10.02 — 'Min Ferie' er fjernet", t_no_min_ferie, "Tittel & Lounger"),
+    ("S10.03 — Sidetittel (tab) oppdatert", t_document_title_updated, "Tittel & Lounger"),
+    ("S10.04 — Lounge-seksjon finnes", t_lounger_section_present, "Tittel & Lounger"),
+    ("S10.05 — LoungeKey nevnt", t_lounger_loungekey, "Tittel & Lounger"),
+    ("S10.06 — Mastercard nevnt", t_lounger_mastercard, "Tittel & Lounger"),
+    ("S10.07 — Priority Pass lounge-lenker finnes", t_lounger_lounge_links, "Tittel & Lounger"),
+    ("S10.08 — CPH Eventyr Lounge synlig", t_lounger_cph_eventyr, "Tittel & Lounger"),
+    ("S10.09 — BKK Miracle Lounge synlig", t_lounger_bkk_miracle, "Tittel & Lounger"),
+    ("S10.10 — Lounge-lenker har target=_blank + noopener", t_lounger_links_secure, "Tittel & Lounger"),
 ]
 
 
