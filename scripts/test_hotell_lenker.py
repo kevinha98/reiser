@@ -60,6 +60,15 @@ def goto(page, scroll=True):
         page.wait_for_timeout(300)
 
 
+def goto_tab(page, tab_id):
+    """Navigate to the app and switch to the given tab (forside/lounger/budsjett/sjekkliste)."""
+    goto(page)
+    page.locator(f"#tab-{tab_id}").click()
+    # AnimatePresence mode="wait" plays an exit animation before mounting the new panel
+    page.wait_for_selector(f"#panel-{tab_id}", timeout=5000)
+    page.wait_for_timeout(600)
+
+
 # ─── SECTION 1: Page loads ────────────────────────────────────────────────────
 
 def t_page_loads(page):
@@ -548,11 +557,11 @@ def t_svg_kart_rendered(page):
     assert svg.count() > 0
 
 def t_budget_total_visible(page):
-    goto(page)
+    goto_tab(page, "budsjett")
     assert page.get_by_text("20 632", exact=False).count() > 0
 
 def t_sjekkliste_present(page):
-    goto(page)
+    goto_tab(page, "sjekkliste")
     assert page.get_by_text("Sjekkliste", exact=True).count() > 0
 
 def t_reiseplan_present(page):
@@ -599,11 +608,11 @@ def t_kart_close_button_works(page):
     assert page.get_by_text("Suvarnabhumi Airport").count() == 0
 
 def t_saily_esim_in_checklist(page):
-    goto(page)
+    goto_tab(page, "sjekkliste")
     assert page.get_by_text("Saily", exact=False).count() > 0, "Saily eSIM not found in checklist"
 
 def t_gopro_not_in_checklist(page):
-    goto(page)
+    goto_tab(page, "sjekkliste")
     assert page.get_by_text("GoPro", exact=False).count() == 0, "GoPro should have been removed"
 
 def t_benihana_event_visible(page):
@@ -657,32 +666,32 @@ def t_document_title_updated(page):
     assert "Thailand 2026" in title and "Min Ferie" not in title, f"Tab title: '{title}'"
 
 def t_lounger_section_present(page):
-    goto(page)
+    goto_tab(page, "lounger")
     assert page.get_by_text("Lounger på flyplassene", exact=False).count() > 0
 
 def t_lounger_loungekey(page):
-    goto(page)
+    goto_tab(page, "lounger")
     assert page.get_by_text("LoungeKey", exact=False).count() > 0
 
 def t_lounger_mastercard(page):
-    goto(page)
+    goto_tab(page, "lounger")
     assert page.get_by_text("Mastercard", exact=False).count() > 0
 
 def t_lounger_lounge_links(page):
-    goto(page)
+    goto_tab(page, "lounger")
     links = page.locator("a[href*='prioritypass.com']")
     assert links.count() >= 4, f"Expected >= 4 lounge links, got {links.count()}"
 
 def t_lounger_cph_eventyr(page):
-    goto(page)
+    goto_tab(page, "lounger")
     assert page.get_by_text("Eventyr", exact=False).count() > 0
 
 def t_lounger_bkk_miracle(page):
-    goto(page)
+    goto_tab(page, "lounger")
     assert page.get_by_text("Miracle", exact=False).count() > 0
 
 def t_lounger_links_secure(page):
-    goto(page)
+    goto_tab(page, "lounger")
     links = page.locator("a[href*='prioritypass.com']")
     count = links.count()
     assert count > 0
@@ -690,6 +699,71 @@ def t_lounger_links_secure(page):
         link = links.nth(i)
         assert link.get_attribute("target") == "_blank", f"Lounge link {i} missing target=_blank"
         assert "noopener" in (link.get_attribute("rel") or ""), f"Lounge link {i} missing noopener"
+
+
+# ─── SECTION 11: Tabs + lounge-anbefalinger ──────────────────────────────────
+
+def t_tabs_present(page):
+    goto(page)
+    tabs = page.locator("[role='tab']")
+    assert tabs.count() == 4, f"Expected 4 tabs, got {tabs.count()}"
+
+def t_tab_forside_default(page):
+    goto(page)
+    forside = page.locator("#tab-forside")
+    assert forside.get_attribute("aria-selected") == "true", "Forside should be the default tab"
+
+def t_tab_forside_shows_destinasjoner(page):
+    goto(page)
+    # Default tab shows destinations
+    assert page.get_by_text("Bangkok", exact=False).count() > 0
+
+def t_tab_lounger_switch(page):
+    goto_tab(page, "lounger")
+    lounger = page.locator("#tab-lounger")
+    assert lounger.get_attribute("aria-selected") == "true"
+    assert page.get_by_text("Lounger på flyplassene", exact=False).count() > 0
+
+def t_tab_budsjett_switch(page):
+    goto_tab(page, "budsjett")
+    budsjett = page.locator("#tab-budsjett")
+    assert budsjett.get_attribute("aria-selected") == "true"
+
+def t_tab_sjekkliste_switch(page):
+    goto_tab(page, "sjekkliste")
+    sjekk = page.locator("#tab-sjekkliste")
+    assert sjekk.get_attribute("aria-selected") == "true"
+
+def t_tab_lounger_hidden_on_forside(page):
+    goto(page)
+    # Lounger content should NOT be visible on the default forside tab
+    assert page.get_by_text("Lounger på flyplassene", exact=False).count() == 0
+
+def t_bgo_not_in_lounger(page):
+    goto_tab(page, "lounger")
+    # BGO lounge card was removed; the lounger tab should not list Bergen airport
+    assert page.get_by_text("Bergen Flesland", exact=False).count() == 0
+
+def t_lounger_recommended_badge(page):
+    goto_tab(page, "lounger")
+    # "Vårt valg" badge marks the recommended lounge per airport (3 airports)
+    assert page.get_by_text("Vårt valg", exact=False).count() >= 3, \
+        f"Expected >= 3 'Vårt valg' badges, got {page.get_by_text('Vårt valg', exact=False).count()}"
+
+def t_lounger_ams_crown(page):
+    goto_tab(page, "lounger")
+    assert page.get_by_text("KLM Crown Lounge 52", exact=False).count() > 0
+
+def t_lounger_bkk_coral(page):
+    goto_tab(page, "lounger")
+    assert page.get_by_text("Coral Finest", exact=False).count() > 0
+
+def t_lounger_rasjonale_present(page):
+    goto_tab(page, "lounger")
+    # Each recommendation includes a Norwegian rationale
+    assert page.get_by_text("CPHs beste lounge", exact=False).count() > 0
+    assert page.get_by_text("World Business Class", exact=False).count() > 0
+
 
 
 # ─── Test registry ────────────────────────────────────────────────────────────
@@ -817,6 +891,20 @@ ALL_TESTS = [
     ("S10.08 — CPH Eventyr Lounge synlig", t_lounger_cph_eventyr, "Tittel & Lounger"),
     ("S10.09 — BKK Miracle Lounge synlig", t_lounger_bkk_miracle, "Tittel & Lounger"),
     ("S10.10 — Lounge-lenker har target=_blank + noopener", t_lounger_links_secure, "Tittel & Lounger"),
+
+    # Section 11: Tabs + lounge-anbefalinger (12)
+    ("S11.01 — 4 faner finnes", t_tabs_present, "Tabs & anbefalinger"),
+    ("S11.02 — Forside er standardfane", t_tab_forside_default, "Tabs & anbefalinger"),
+    ("S11.03 — Forside viser destinasjoner", t_tab_forside_shows_destinasjoner, "Tabs & anbefalinger"),
+    ("S11.04 — Bytt til Lounger-fane", t_tab_lounger_switch, "Tabs & anbefalinger"),
+    ("S11.05 — Bytt til Budsjett-fane", t_tab_budsjett_switch, "Tabs & anbefalinger"),
+    ("S11.06 — Bytt til Sjekkliste-fane", t_tab_sjekkliste_switch, "Tabs & anbefalinger"),
+    ("S11.07 — Lounger skjult på forside", t_tab_lounger_hidden_on_forside, "Tabs & anbefalinger"),
+    ("S11.08 — BGO fjernet fra Lounger", t_bgo_not_in_lounger, "Tabs & anbefalinger"),
+    ("S11.09 — 'Vårt valg'-merke på anbefalte lounger", t_lounger_recommended_badge, "Tabs & anbefalinger"),
+    ("S11.10 — AMS KLM Crown Lounge 52 anbefalt", t_lounger_ams_crown, "Tabs & anbefalinger"),
+    ("S11.11 — BKK Coral Finest anbefalt", t_lounger_bkk_coral, "Tabs & anbefalinger"),
+    ("S11.12 — Anbefalings-rasjonale synlig", t_lounger_rasjonale_present, "Tabs & anbefalinger"),
 ]
 
 
