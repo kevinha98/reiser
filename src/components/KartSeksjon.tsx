@@ -127,7 +127,8 @@ const THAILAND_PATH =
 
 const RUTE_PATH = "M 430,155 C 450,200 500,240 510,295 C 510,295 460,330 340,375"
 const RETUR_PATH = "M 340,375 Q 320,260 430,155"
-const FLY_PATH = "M 42,22 Q 180,-20 430,155"
+const EUROPA_PATH = "M 22,12 L 44,26 L 34,48"
+const FLY_PATH = "M 34,48 Q 200,-5 430,155"
 
 // ─── International itinerary ──────────────────────────────────────────────────
 
@@ -308,18 +309,41 @@ export function KartSeksjon() {
               Andaman Sea
             </text>
 
-            {/* CPH departure dot */}
+            {/* European departure chain: BGO -> CPH -> AMS */}
             <g opacity="1">
-              <circle cx="42" cy="22" r="3" fill="rgba(148,163,184,0.45)" />
-              <text x="52" y="18" fill="rgba(148,163,184,0.65)" fontSize="10" fontFamily="DM Sans, sans-serif" fontWeight="500">
+              {/* BGO */}
+              <circle cx="22" cy="12" r="3" fill="rgba(148,163,184,0.45)" />
+              <text x="30" y="10" fill="rgba(148,163,184,0.65)" fontSize="9" fontFamily="DM Sans, sans-serif" fontWeight="500">
+                BGO
+              </text>
+              {/* CPH */}
+              <circle cx="44" cy="26" r="3" fill="rgba(148,163,184,0.45)" />
+              <text x="52" y="24" fill="rgba(148,163,184,0.65)" fontSize="9" fontFamily="DM Sans, sans-serif" fontWeight="500">
                 CPH
               </text>
-              <text x="52" y="28" fill="rgba(100,116,139,0.55)" fontSize="8" fontFamily="DM Sans, sans-serif">
+              {/* AMS */}
+              <circle cx="34" cy="48" r="3" fill="rgba(148,163,184,0.45)" />
+              <text x="42" y="52" fill="rgba(148,163,184,0.65)" fontSize="9" fontFamily="DM Sans, sans-serif" fontWeight="500">
+                AMS
+              </text>
+              <text x="42" y="62" fill="rgba(100,116,139,0.55)" fontSize="8" fontFamily="DM Sans, sans-serif">
                 11. aug · KL 0843
               </text>
             </g>
 
-            {/* Flight arc CPH -> Bangkok */}
+            {/* European hops BGO -> CPH -> AMS */}
+            <motion.path
+              d={EUROPA_PATH}
+              fill="none"
+              stroke="rgba(148,163,184,0.4)"
+              strokeWidth="1.25"
+              strokeDasharray="4 4"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: 1.2, delay: 0.2, ease: "easeInOut" }}
+            />
+
+            {/* Flight arc AMS -> Bangkok */}
             <motion.path
               d={FLY_PATH}
               fill="none"
@@ -328,7 +352,7 @@ export function KartSeksjon() {
               strokeDasharray="6 5"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 2.0, delay: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 2.0, delay: 0.9, ease: "easeInOut" }}
             />
             <motion.text
               x="195"
@@ -337,7 +361,7 @@ export function KartSeksjon() {
               textAnchor="middle"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.75 }}
-              transition={{ duration: 0.4, delay: 2.1 }}
+              transition={{ duration: 0.4, delay: 2.6 }}
             >
               ✈
             </motion.text>
