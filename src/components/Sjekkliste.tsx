@@ -1,19 +1,28 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, Circle, Plus, Trash2, RotateCcw } from 'lucide-react'
+import { CheckCircle2, Circle, Plus, Trash2, RotateCcw, Eye, EyeOff } from 'lucide-react'
 import type { SjekklisteElement } from '../data'
 import { STANDARD_SJEKKLISTE } from '../data'
+import { useReisefase } from '../context/reisefase-context'
 
 const STORAGE_KEY = 'min-ferie-sjekkliste-v2'
 
 function lastFraStorage(): SjekklisteElement[] {
+  const standard = STANDARD_SJEKKLISTE.map((el) => ({ ...el, fullfort: false }))
   try {
     const lagret = localStorage.getItem(STORAGE_KEY)
-    if (lagret) return JSON.parse(lagret)
+    if (!lagret) return standard
+    const parsed: SjekklisteElement[] = JSON.parse(lagret)
+    // Fletting: standardelementene er fasit for innhold, men behold avkryssing fra lagring.
+    const statusById = new Map(parsed.map((el) => [el.id, el.fullfort]))
+    const standardIds = new Set(STANDARD_SJEKKLISTE.map((el) => el.id))
+    const flettet = standard.map((el) => ({ ...el, fullfort: statusById.get(el.id) ?? false }))
+    const egne = parsed.filter((el) => !standardIds.has(el.id))
+    return [...flettet, ...egne]
   } catch {
     // localStorage utilgjengelig eller korrupt — fall tilbake til standardlisten
   }
-  return STANDARD_SJEKKLISTE.map((el) => ({ ...el, fullfort: false }))
+  return standard
 }
 
 function lagreTilStorage(liste: SjekklisteElement[]) {
@@ -78,6 +87,20 @@ function SjekklisteRad({ element, onToggle, onSlett }: SjekklisteRadProps) {
         }`}
       >
         {element.tekst}
+        {element.lenke && (
+          <>
+            {' '}
+            <a
+              href={element.lenke}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="text-amber-400 hover:text-amber-300 underline underline-offset-2"
+            >
+              {element.lenkeTekst ?? 'Lenke'} →
+            </a>
+          </>
+        )}
       </span>
 
       <button
@@ -97,6 +120,8 @@ export function Sjekkliste() {
   const [nyttElement, setNyttElement] = useState('')
   const [nyKategori, setNyKategori] = useState('Annet')
   const [visLeggTil, setVisLeggTil] = useState(false)
+  const [visFerdigeForOppgaver, setVisFerdigeForOppgaver] = useState(false)
+  const { fase } = useReisefase()
 
   useEffect(() => {
     lagreTilStorage(liste)
@@ -139,15 +164,24 @@ export function Sjekkliste() {
   const total = filtrert.length
   const fremgang = total > 0 ? (fullfort / total) * 100 : 0
 
+  // Under reisen: ferdige "før avreise"-oppgaver er ikke lenger relevante og skjules som standard
+  const erForOppgave = (el: SjekklisteElement) => (el.fase ?? 'før') === 'før'
+  const ferdigeForCount = filtrert.filter((el) => erForOppgave(el) && el.fullfort).length
+  const kanDekluttre = fase !== 'før' && ferdigeForCount > 0
+  const synlige =
+    kanDekluttre && !visFerdigeForOppgaver
+      ? filtrert.filter((el) => !(erForOppgave(el) && el.fullfort))
+      : filtrert
+
   // Group by category for display
   const gruppert = useMemo(() => {
     const grupper: Record<string, SjekklisteElement[]> = {}
-    filtrert.forEach((el) => {
+    synlige.forEach((el) => {
       if (!grupper[el.kategori]) grupper[el.kategori] = []
       grupper[el.kategori].push(el)
     })
     return grupper
-  }, [filtrert])
+  }, [synlige])
 
   return (
     <section className="px-4 mb-20 max-w-5xl mx-auto">
@@ -205,6 +239,19 @@ export function Sjekkliste() {
           </motion.button>
         ))}
       </div>
+
+      {/* Under reisen: veksle synlighet for ferdige før-avreise-oppgaver */}
+      {kanDekluttre && (
+        <button
+          onClick={() => setVisFerdigeForOppgaver((v) => !v)}
+          className="flex items-center gap-2 text-xs text-slate-500 hover:text-slate-300 transition-colors mb-4 -mt-1 cursor-pointer"
+        >
+          {visFerdigeForOppgaver ? <EyeOff size={13} /> : <Eye size={13} />}
+          {visFerdigeForOppgaver
+            ? `Skjul ${ferdigeForCount} ferdige før-avreise-oppgaver`
+            : `Vis ${ferdigeForCount} ferdige før-avreise-oppgaver`}
+        </button>
+      )}
 
       {/* Checklist grouped by category */}
       <div className="glass rounded-2xl overflow-hidden">

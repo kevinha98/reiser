@@ -8,6 +8,10 @@ import { Tidslinje } from "./components/Tidslinje"
 import { Lounger } from "./components/Lounger"
 import { Budsjett } from "./components/Budsjett"
 import { Sjekkliste } from "./components/Sjekkliste"
+import { NaKort } from "./components/NaKort"
+import { DatoSimulator } from "./components/DatoSimulator"
+import { ReisefaseProvider } from "./context/Reisefase"
+import { useReisefase } from "./context/reisefase-context"
 
 type TabId = "forside" | "lounger" | "budsjett" | "sjekkliste"
 
@@ -18,8 +22,9 @@ const TABS: { id: TabId; label: string; Icon: typeof Map }[] = [
   { id: "sjekkliste", label: "Sjekkliste", Icon: ListChecks },
 ]
 
-export default function App() {
-  const [tab, setTab] = useState<TabId>("forside")
+function AppInnhold() {
+  const { fase } = useReisefase()
+  const [tab, setTab] = useState<TabId>(() => (fase === "etter" ? "budsjett" : "forside"))
 
   return (
     <div className="min-h-dvh" style={{ background: "#080b10" }}>
@@ -94,6 +99,7 @@ export default function App() {
             >
               {tab === "forside" && (
                 <>
+                  <NaKort onNaviger={setTab} />
                   <Destinasjoner />
                   <KartSeksjon />
                   <Tidslinje />
@@ -110,6 +116,16 @@ export default function App() {
           <p className="text-slate-500 text-xs">Thailand · 2026</p>
         </footer>
       </div>
+
+      <DatoSimulator />
     </div>
+  )
+}
+
+export default function App() {
+  return (
+    <ReisefaseProvider>
+      <AppInnhold />
+    </ReisefaseProvider>
   )
 }

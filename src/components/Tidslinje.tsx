@@ -1,5 +1,6 @@
 ﻿import { motion } from "framer-motion"
 import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed } from "lucide-react"
+import { useReisefase } from "../context/reisefase-context"
 
 interface Aktivitet {
   type: "skredder" | "muaythai" | "dagstur" | "restaurant"
@@ -11,6 +12,7 @@ interface Aktivitet {
 
 interface ReiseEvent {
   dato: string
+  isoDato: string
   dagNr: number
   tittel: string
   undertittel?: string
@@ -23,6 +25,7 @@ interface ReiseEvent {
 const TIDSLINJE: ReiseEvent[] = [
   {
     dato: "Tir 11. aug",
+    isoDato: "2026-08-11",
     dagNr: 0,
     tittel: "Avreise fra Bergen",
     undertittel: "BGO → CPH → AMS → BKK · kl. 05:50 · Business Class",
@@ -31,6 +34,7 @@ const TIDSLINJE: ReiseEvent[] = [
   },
   {
     dato: "Ons 12. aug",
+    isoDato: "2026-08-12",
     dagNr: 2,
     tittel: "Ankomst Bangkok",
     undertittel: "Innsjekk · Hope Land Hotel Sukhumvit 8",
@@ -53,6 +57,7 @@ const TIDSLINJE: ReiseEvent[] = [
   },
   {
     dato: "Lør 15. aug",
+    isoDato: "2026-08-15",
     dagNr: 5,
     tittel: "Fly til Koh Samui",
     undertittel: "Lamai Coconut Beach Resort · 7 netter",
@@ -88,6 +93,7 @@ const TIDSLINJE: ReiseEvent[] = [
   },
   {
     dato: "Lør 22. aug",
+    isoDato: "2026-08-22",
     dagNr: 12,
     tittel: "Fly til Phuket",
     undertittel: "Chanalai Flora Resort, Kata Beach · 7 netter",
@@ -111,6 +117,7 @@ const TIDSLINJE: ReiseEvent[] = [
   },
   {
     dato: "Lør 29. aug",
+    isoDato: "2026-08-29",
     dagNr: 19,
     tittel: "HKT -> BKK",
     undertittel: "kl. 12:55 → 14:30 · Mandarin Hotel Centre Point",
@@ -132,6 +139,7 @@ const TIDSLINJE: ReiseEvent[] = [
   },
   {
     dato: "Man 31. aug",
+    isoDato: "2026-08-31",
     dagNr: 21,
     tittel: "Benihana · Anantara Riverside",
     undertittel: "Avskjedskveld i Bangkok",
@@ -155,6 +163,7 @@ const TIDSLINJE: ReiseEvent[] = [
   },
   {
     dato: "Tir 1. sep",
+    isoDato: "2026-09-01",
     dagNr: 22,
     tittel: "Hjemreise til Bergen",
     undertittel: "BKK → AMS → CPH → BGO · kl. 12:05 → 2. sep kl. 09:40",
@@ -229,6 +238,17 @@ function AktivitetKort({ a }: { a: Aktivitet }) {
 }
 
 export function Tidslinje() {
+  const { nå, fase } = useReisefase()
+
+  // Gjeldende etappe = siste hendelse som har inntruffet (kun mens reisen pågår / er over)
+  let aktivIndex = -1
+  if (fase !== "før") {
+    const iDag = new Date(nå.getFullYear(), nå.getMonth(), nå.getDate()).getTime()
+    TIDSLINJE.forEach((e, i) => {
+      if (new Date(e.isoDato).getTime() <= iDag) aktivIndex = i
+    })
+  }
+
   return (
     <section className="px-4 mb-16 max-w-5xl mx-auto">
       <motion.div
@@ -258,6 +278,7 @@ export function Tidslinje() {
           {TIDSLINJE.map((event, i) => {
             const f = FARGE_MAP[event.farge]
             const erSiste = i === TIDSLINJE.length - 1
+            const erNå = i === aktivIndex
             const harAktiviteter = event.aktiviteter && event.aktiviteter.length > 0
 
             return (
@@ -270,7 +291,14 @@ export function Tidslinje() {
                 className="flex gap-4"
               >
                 <div className="flex flex-col items-center">
-                  <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-0.5 ring-4 ${f.dot} ${f.ring}`} />
+                  {erNå ? (
+                    <span className="relative flex h-3 w-3 flex-shrink-0 mt-0.5">
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-60 animate-ping" />
+                      <span className="relative inline-flex h-3 w-3 rounded-full bg-amber-400 ring-4 ring-amber-400/40" />
+                    </span>
+                  ) : (
+                    <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-0.5 ring-4 ${f.dot} ${f.ring}`} />
+                  )}
                   {!erSiste && (
                     <div className={`w-px flex-1 my-1 ${f.linje} min-h-[32px]`} />
                   )}
@@ -294,6 +322,18 @@ export function Tidslinje() {
                     >
                       {event.dato} · Dag {event.dagNr}
                     </span>
+                    {erNå && (
+                      <span
+                        className="inline-flex items-center text-[9px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded-full"
+                        style={{
+                          background: "rgba(245,223,168,0.18)",
+                          color: "#f5dfa8",
+                          border: "1px solid rgba(245,223,168,0.4)",
+                        }}
+                      >
+                        Nå
+                      </span>
+                    )}
                   </div>
                   <h3
                     className="text-white text-base font-medium mb-0.5"

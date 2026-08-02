@@ -33,6 +33,9 @@ export interface SjekklisteElement {
   tekst: string
   kategori: string
   fullfort: boolean
+  fase?: 'før' | 'under'   // 'før' (standard) = kun relevant før avreise; 'under' = relevant også underveis
+  lenke?: string
+  lenkeTekst?: string
 }
 
 // ─── Reisedatoer ──────────────────────────────────────────────────────────────
@@ -197,7 +200,7 @@ export const STANDARD_SJEKKLISTE: Omit<SjekklisteElement, 'fullfort'>[] = [
   { id: 'pass-gyldig', tekst: 'Pass gyldig (min. 6 mnd etter hjemkomst)', kategori: 'Dokumenter' },
   { id: 'reiseforsikring', tekst: 'Reiseforsikring tegnet', kategori: 'Dokumenter' },
   { id: 'kopi-pass', tekst: 'Kopi av pass + forsikring lagret digitalt', kategori: 'Dokumenter' },
-  { id: 'valuta', tekst: 'Bestille thai baht / sørge for tilgang til minibank', kategori: 'Dokumenter' },
+  { id: 'valuta', tekst: 'Ta ut / veksle kontanter — DNB-kort i minibank (belast i THB) eller SuperRich. Unngå Forex (~12 % påslag)', kategori: 'Dokumenter', fase: 'under', lenke: 'https://www.superrichthailand.com/', lenkeTekst: 'SuperRich Thailand' },
 
   // Helse
   { id: 'vaksiner', tekst: 'Sjekke vaksinestatus (Hepatitt A/B, tyfus)', kategori: 'Helse' },

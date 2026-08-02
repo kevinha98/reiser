@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
 import { Armchair, Plane, KeyRound, CreditCard, Ticket, ChevronRight, Info, Sparkles } from "lucide-react"
+import { useReisefase } from "../context/reisefase-context"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -18,6 +19,7 @@ interface Flyplass {
   iata: string
   navn: string
   fase: string
+  dato: string
   farge: string
   lounger: Lounge[]
   notat?: string
@@ -30,6 +32,7 @@ const FLYPLASSER: Flyplass[] = [
     iata: "CPH",
     navn: "Copenhagen Kastrup",
     fase: "Utreise · 11. aug · opphold 4t 15m",
+    dato: "2026-08-11",
     farge: "#f59e0b",
     notat:
       "KLM Europe Business (CPH→AMS) gir kontraktslounge — vanligvis Eventyr eller Aspire. God tid med 4t 15m opphold.",
@@ -61,6 +64,7 @@ const FLYPLASSER: Flyplass[] = [
     iata: "AMS",
     navn: "Amsterdam Schiphol",
     fase: "Utreise opphold 4t 20m · Retur 1t 55m",
+    dato: "2026-08-11",
     farge: "#34d399",
     notat:
       "På retur er 1t 55m knapt — da er Crown Lounge 40 (Schengen) for CPH-flighten enklest.",
@@ -92,6 +96,7 @@ const FLYPLASSER: Flyplass[] = [
     iata: "BKK",
     navn: "Suvarnabhumi",
     fase: "Retur · 1. sep · avgang 12:05",
+    dato: "2026-09-01",
     farge: "#38bdf8",
     notat:
       "KLM World Business Class (BKK→AMS) bruker kontraktslounge — sjekk ved gaten. LoungeKey/Mastercard gir tilgang til begge under uansett.",
@@ -143,7 +148,7 @@ function TilgangMerke({ t }: { t: Tilgang }) {
 
 // ─── Airport card ─────────────────────────────────────────────────────────────
 
-function FlyplassKort({ f, delay }: { f: Flyplass; delay: number }) {
+function FlyplassKort({ f, delay, erNeste }: { f: Flyplass; delay: number; erNeste: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16, scale: 0.98 }}
@@ -152,9 +157,11 @@ function FlyplassKort({ f, delay }: { f: Flyplass; delay: number }) {
       transition={{ type: "spring", duration: 0.5, bounce: 0.1, delay }}
       className="rounded-2xl p-5"
       style={{
-        background: "rgba(255,255,255,0.025)",
-        border: `1px solid ${f.farge}22`,
-        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
+        background: erNeste ? "rgba(245,223,168,0.05)" : "rgba(255,255,255,0.025)",
+        border: erNeste ? "1px solid rgba(245,223,168,0.4)" : `1px solid ${f.farge}22`,
+        boxShadow: erNeste
+          ? "inset 0 1px 0 rgba(255,255,255,0.05), 0 0 30px rgba(245,223,168,0.08)"
+          : "inset 0 1px 0 rgba(255,255,255,0.05)",
         backdropFilter: "blur(12px)",
         fontFamily: "'DM Sans', sans-serif",
       }}
@@ -171,6 +178,19 @@ function FlyplassKort({ f, delay }: { f: Flyplass; delay: number }) {
           <div className="flex items-baseline gap-2">
             <span className="text-white font-mono font-bold text-sm">{f.iata}</span>
             <span className="text-slate-400 text-xs truncate">{f.navn}</span>
+            {erNeste && (
+              <span
+                className="ml-auto inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded-full flex-shrink-0"
+                style={{
+                  background: "rgba(245,223,168,0.18)",
+                  color: "#f5dfa8",
+                  border: "1px solid rgba(245,223,168,0.4)",
+                }}
+              >
+                <Plane size={9} strokeWidth={2} />
+                Neste stopp
+              </span>
+            )}
           </div>
           <p className="text-slate-600 text-[10px] mt-0.5">{f.fase}</p>
         </div>
@@ -251,6 +271,18 @@ function FlyplassKort({ f, delay }: { f: Flyplass; delay: number }) {
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export function Lounger() {
+  const { nå, fase } = useReisefase()
+
+  // Neste relevante flyplass = første med dato >= i dag (kun mens reisen ikke er over)
+  let nesteIata: string | null = null
+  if (fase !== "etter") {
+    const iDag = new Date(nå.getFullYear(), nå.getMonth(), nå.getDate()).getTime()
+    const kommende = FLYPLASSER
+      .filter((f) => new Date(f.dato).getTime() >= iDag)
+      .sort((a, b) => new Date(a.dato).getTime() - new Date(b.dato).getTime())
+    nesteIata = kommende[0]?.iata ?? null
+  }
+
   return (
     <section className="py-20 px-4">
       <div className="max-w-5xl mx-auto">
@@ -302,7 +334,7 @@ export function Lounger() {
         {/* Airport grid — asymmetric 2-col */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {FLYPLASSER.map((f, i) => (
-            <FlyplassKort key={f.iata} f={f} delay={i * 0.08} />
+            <FlyplassKort key={f.iata} f={f} delay={i * 0.08} erNeste={f.iata === nesteIata} />
           ))}
         </div>
 

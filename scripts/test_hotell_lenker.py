@@ -69,6 +69,21 @@ def goto_tab(page, tab_id):
     page.wait_for_timeout(600)
 
 
+def goto_dato(page, iso):
+    """Navigate to the app with a simulated date (?dato=YYYY-MM-DD)."""
+    page.goto(f"{BASE}?dato={iso}")
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(400)
+
+
+def goto_dato_tab(page, iso, tab_id):
+    """Simulate a date and switch to the given tab."""
+    goto_dato(page, iso)
+    page.locator(f"#tab-{tab_id}").click()
+    page.wait_for_selector(f"#panel-{tab_id}", timeout=5000)
+    page.wait_for_timeout(600)
+
+
 # ─── SECTION 1: Page loads ────────────────────────────────────────────────────
 
 def t_page_loads(page):
@@ -765,6 +780,57 @@ def t_lounger_rasjonale_present(page):
     assert page.get_by_text("World Business Class", exact=False).count() > 0
 
 
+# ─── SECTION 12: Reisefase / oppslagstavle ───────────────────────────────────
+
+def t_nakort_for_avreise(page):
+    goto(page)
+    # Nå-kortet øverst på forsiden viser nedtelling før reisen
+    assert page.get_by_text("til avreise", exact=False).count() > 0
+
+def t_kontant_oppgave_superrich(page):
+    goto_tab(page, "sjekkliste")
+    assert page.get_by_text("Unngå Forex", exact=False).count() > 0, "Kontant-anbefaling mangler"
+    lenke = page.locator("a[href*='superrichthailand.com']")
+    assert lenke.count() > 0, "SuperRich-lenke mangler"
+    assert lenke.first.get_attribute("target") == "_blank"
+    assert "noopener" in (lenke.first.get_attribute("rel") or "")
+
+def t_simulator_skjult_default(page):
+    goto(page)
+    assert page.get_by_text("Simuler dato", exact=False).count() == 0, "Simulator skal være skjult uten ?sim"
+
+def t_simulator_synlig_med_sim(page):
+    page.goto(f"{BASE}?sim=1")
+    page.wait_for_load_state("networkidle")
+    page.wait_for_timeout(300)
+    assert page.get_by_text("Simuler dato", exact=False).count() > 0, "Simulator skal vises med ?sim=1"
+
+def t_header_dag_under_reisen(page):
+    goto_dato(page, "2026-08-18")
+    assert page.get_by_text("Dag 8 av 22", exact=False).count() > 0
+
+def t_nakort_akkurat_na(page):
+    goto_dato(page, "2026-08-18")
+    assert page.get_by_text("Akkurat nå", exact=False).count() > 0
+
+def t_tidslinje_na_merke(page):
+    goto_dato(page, "2026-08-18")
+    assert page.get_by_text("Nå", exact=True).count() >= 1, "Tidslinjen mangler 'Nå'-markering"
+
+def t_lounger_neste_stopp(page):
+    goto_dato_tab(page, "2026-08-18", "lounger")
+    assert page.get_by_text("Neste stopp", exact=False).count() >= 1
+
+def t_etter_reisen_budsjett_default(page):
+    goto_dato(page, "2026-09-03")
+    budsjett = page.locator("#tab-budsjett")
+    assert budsjett.get_attribute("aria-selected") == "true", "Budsjett skal være standardfane etter reisen"
+
+def t_etter_reisen_vel_hjemme(page):
+    goto_dato(page, "2026-09-03")
+    assert page.get_by_text("Vel hjemme", exact=False).count() > 0
+
+
 
 # ─── Test registry ────────────────────────────────────────────────────────────
 
@@ -905,6 +971,18 @@ ALL_TESTS = [
     ("S11.10 — AMS KLM Crown Lounge 52 anbefalt", t_lounger_ams_crown, "Tabs & anbefalinger"),
     ("S11.11 — BKK Coral Finest anbefalt", t_lounger_bkk_coral, "Tabs & anbefalinger"),
     ("S11.12 — Anbefalings-rasjonale synlig", t_lounger_rasjonale_present, "Tabs & anbefalinger"),
+
+    # Section 12: Reisefase / oppslagstavle (10)
+    ("S12.01 — Nå-kort viser nedtelling før avreise", t_nakort_for_avreise, "Reisefase"),
+    ("S12.02 — Kontant-oppgave m/ SuperRich-lenke", t_kontant_oppgave_superrich, "Reisefase"),
+    ("S12.03 — Dato-simulator skjult som standard", t_simulator_skjult_default, "Reisefase"),
+    ("S12.04 — Dato-simulator synlig med ?sim=1", t_simulator_synlig_med_sim, "Reisefase"),
+    ("S12.05 — Header viser 'Dag X av 22' under reisen", t_header_dag_under_reisen, "Reisefase"),
+    ("S12.06 — Nå-kort viser 'Akkurat nå' under reisen", t_nakort_akkurat_na, "Reisefase"),
+    ("S12.07 — Tidslinje markerer 'Nå'", t_tidslinje_na_merke, "Reisefase"),
+    ("S12.08 — Lounger fremhever 'Neste stopp'", t_lounger_neste_stopp, "Reisefase"),
+    ("S12.09 — Budsjett er standardfane etter reisen", t_etter_reisen_budsjett_default, "Reisefase"),
+    ("S12.10 — Header viser 'Vel hjemme' etter reisen", t_etter_reisen_vel_hjemme, "Reisefase"),
 ]
 
 

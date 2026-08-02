@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Plane, CalendarDays, Star } from 'lucide-react'
+import { CalendarDays, Star, MapPin, Home } from 'lucide-react'
 import { REISEDATOER } from '../data'
+import { useReisefase } from '../context/reisefase-context'
 
-function beregnNedtelling(målDato: string) {
-  const nå = new Date()
+function beregnNedtelling(målDato: string, nå: Date) {
   const mål = new Date(målDato)
   const diff = mål.getTime() - nå.getTime()
 
@@ -50,16 +49,8 @@ function NedtellingEnhet({ verdi, etikett, forsinkelse }: NedtellingEnhetProps) 
 }
 
 export function Header() {
-  const [nedtelling, setNedtelling] = useState(beregnNedtelling(REISEDATOER.avreiseDato))
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setNedtelling(beregnNedtelling(REISEDATOER.avreiseDato))
-    }, 1000)
-    return () => clearInterval(id)
-  }, [])
-
-  const avreist = nedtelling === null
+  const { nå, fase, dagNr, totalDager, gjeldende } = useReisefase()
+  const nedtelling = beregnNedtelling(REISEDATOER.avreiseDato, nå)
 
   return (
     <header className="relative overflow-hidden pt-20 pb-14 px-4">
@@ -101,8 +92,8 @@ export function Header() {
           {REISEDATOER.avreiseFly} · {REISEDATOER.totaltNetter} netter
         </motion.p>
 
-        {/* Countdown or travelling indicator */}
-        {!avreist ? (
+        {/* Countdown (før) · Dag X (under) · Vel hjemme (etter) */}
+        {fase === 'før' && nedtelling ? (
           <div>
             <motion.p
               initial={{ opacity: 0 }}
@@ -122,19 +113,35 @@ export function Header() {
               <NedtellingEnhet verdi={nedtelling.sekunder} etikett="sek" forsinkelse={0.5} />
             </div>
           </div>
-        ) : (
+        ) : fase === 'under' ? (
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center gap-3 glass-gold rounded-2xl px-8 py-4"
+            className="inline-flex items-center gap-3 glass-gold rounded-2xl px-7 py-4"
           >
             <motion.div
-              animate={{ x: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+              animate={{ y: [0, -4, 0] }}
+              transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
             >
-              <Plane size={20} className="text-amber-400" />
+              <MapPin size={18} className="text-amber-400" strokeWidth={2} />
             </motion.div>
-            <span className="text-amber-200 font-medium">Du er på ferie!</span>
+            <div className="text-left">
+              <p className="text-amber-200 font-semibold leading-tight">
+                Dag {dagNr} av {totalDager}
+              </p>
+              <p className="text-amber-100/70 text-xs mt-0.5">
+                {gjeldende ? `Du er på ${gjeldende.navn}` : 'På reise'}
+              </p>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ scale: 0.85, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="inline-flex items-center gap-3 glass rounded-2xl px-7 py-4"
+          >
+            <Home size={18} className="text-slate-300" strokeWidth={1.75} />
+            <span className="text-slate-200 font-medium">Vel hjemme! Håper turen var fantastisk.</span>
           </motion.div>
         )}
       </div>
