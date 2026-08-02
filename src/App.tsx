@@ -7,19 +7,19 @@ import { KartSeksjon } from "./components/KartSeksjon"
 import { Tidslinje } from "./components/Tidslinje"
 import { Lounger } from "./components/Lounger"
 import { Budsjett } from "./components/Budsjett"
-import { Sjekkliste } from "./components/Sjekkliste"
+import { Huskeliste } from "./components/Huskeliste"
 import { NaKort } from "./components/NaKort"
 import { DatoSimulator } from "./components/DatoSimulator"
 import { ReisefaseProvider } from "./context/Reisefase"
 import { useReisefase } from "./context/reisefase-context"
 
-type TabId = "forside" | "lounger" | "budsjett" | "sjekkliste"
+type TabId = "forside" | "lounger" | "budsjett" | "huskeliste"
 
 const TABS: { id: TabId; label: string; Icon: typeof Map }[] = [
   { id: "forside", label: "Forside", Icon: Map },
   { id: "lounger", label: "Lounger", Icon: Armchair },
   { id: "budsjett", label: "Budsjett", Icon: Wallet },
-  { id: "sjekkliste", label: "Sjekkliste", Icon: ListChecks },
+  { id: "huskeliste", label: "Huskeliste", Icon: ListChecks },
 ]
 
 function AppInnhold() {
@@ -107,7 +107,7 @@ function AppInnhold() {
               )}
               {tab === "lounger" && <Lounger />}
               {tab === "budsjett" && <Budsjett />}
-              {tab === "sjekkliste" && <Sjekkliste />}
+              {tab === "huskeliste" && <Huskeliste />}
             </motion.div>
           </AnimatePresence>
         </main>

@@ -28,12 +28,10 @@ export interface Utgift {
   destinasjon?: string
 }
 
-export interface SjekklisteElement {
+export interface HuskelisteElement {
   id: string
   tekst: string
   kategori: string
-  fullfort: boolean
-  fase?: 'før' | 'under'   // 'før' (standard) = kun relevant før avreise; 'under' = relevant også underveis
   lenke?: string
   lenkeTekst?: string
 }
@@ -184,7 +182,7 @@ export const UTGIFTER: Utgift[] = [
 
 // ─── Standard sjekkliste ──────────────────────────────────────────────────────
 
-export const STANDARD_SJEKKLISTE: Omit<SjekklisteElement, 'fullfort'>[] = [
+export const HUSKELISTE: HuskelisteElement[] = [
   // Transport
   { id: 'fly-bestilt', tekst: 'Fly CPH ↔ BKK bestilt', kategori: 'Transport' },
   { id: 'fly-samui', tekst: 'Fly Koh Samui (15. aug)', kategori: 'Transport' },
@@ -200,7 +198,7 @@ export const STANDARD_SJEKKLISTE: Omit<SjekklisteElement, 'fullfort'>[] = [
   { id: 'pass-gyldig', tekst: 'Pass gyldig (min. 6 mnd etter hjemkomst)', kategori: 'Dokumenter' },
   { id: 'reiseforsikring', tekst: 'Reiseforsikring tegnet', kategori: 'Dokumenter' },
   { id: 'kopi-pass', tekst: 'Kopi av pass + forsikring lagret digitalt', kategori: 'Dokumenter' },
-  { id: 'valuta', tekst: 'Ta ut / veksle kontanter — DNB-kort i minibank (belast i THB) eller SuperRich. Unngå Forex (~12 % påslag)', kategori: 'Dokumenter', fase: 'under', lenke: 'https://www.superrichthailand.com/', lenkeTekst: 'SuperRich Thailand' },
+  { id: 'valuta', tekst: 'Ta ut / veksle kontanter — DNB-kort i minibank (belast i THB) eller SuperRich. Unngå Forex (~12 % påslag)', kategori: 'Dokumenter', lenke: 'https://www.superrichthailand.com/', lenkeTekst: 'SuperRich Thailand' },
 
   // Helse
   { id: 'vaksiner', tekst: 'Sjekke vaksinestatus (Hepatitt A/B, tyfus)', kategori: 'Helse' },

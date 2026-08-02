@@ -5,7 +5,7 @@ import { kortDato } from '../lib/reisefase'
 import { REISEDATOER } from '../data'
 import type { LucideIcon } from 'lucide-react'
 
-type Fane = 'forside' | 'lounger' | 'budsjett' | 'sjekkliste'
+type Fane = 'forside' | 'lounger' | 'budsjett' | 'huskeliste'
 
 interface Handling {
   etikett: string
@@ -53,7 +53,7 @@ export function NaKort({ onNaviger }: { onNaviger: (f: Fane) => void }) {
     undertittel = REISEDATOER.avreiseFly
     Ikon = Plane
     handlinger = [
-      { etikett: 'Sjekkliste', fane: 'sjekkliste', Icon: ListChecks },
+      { etikett: 'Huskeliste', fane: 'huskeliste', Icon: ListChecks },
       { etikett: 'Utreise-lounger', fane: 'lounger', Icon: Armchair },
     ]
   } else if (fase === 'under') {

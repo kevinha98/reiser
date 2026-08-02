@@ -61,7 +61,7 @@ def goto(page, scroll=True):
 
 
 def goto_tab(page, tab_id):
-    """Navigate to the app and switch to the given tab (forside/lounger/budsjett/sjekkliste)."""
+    """Navigate to the app and switch to the given tab (forside/lounger/budsjett/huskeliste)."""
     goto(page)
     page.locator(f"#tab-{tab_id}").click()
     # AnimatePresence mode="wait" plays an exit animation before mounting the new panel
@@ -575,9 +575,9 @@ def t_budget_total_visible(page):
     goto_tab(page, "budsjett")
     assert page.get_by_text("20 632", exact=False).count() > 0
 
-def t_sjekkliste_present(page):
-    goto_tab(page, "sjekkliste")
-    assert page.get_by_text("Sjekkliste", exact=True).count() > 0
+def t_huskeliste_present(page):
+    goto_tab(page, "huskeliste")
+    assert page.get_by_text("Huskeliste", exact=True).count() > 0
 
 def t_reiseplan_present(page):
     goto(page)
@@ -623,11 +623,11 @@ def t_kart_close_button_works(page):
     assert page.get_by_text("Suvarnabhumi Airport").count() == 0
 
 def t_saily_esim_in_checklist(page):
-    goto_tab(page, "sjekkliste")
+    goto_tab(page, "huskeliste")
     assert page.get_by_text("Saily", exact=False).count() > 0, "Saily eSIM not found in checklist"
 
 def t_gopro_not_in_checklist(page):
-    goto_tab(page, "sjekkliste")
+    goto_tab(page, "huskeliste")
     assert page.get_by_text("GoPro", exact=False).count() == 0, "GoPro should have been removed"
 
 def t_benihana_event_visible(page):
@@ -688,9 +688,9 @@ def t_lounger_loungekey(page):
     goto_tab(page, "lounger")
     assert page.get_by_text("LoungeKey", exact=False).count() > 0
 
-def t_lounger_mastercard(page):
+def t_lounger_no_mastercard(page):
     goto_tab(page, "lounger")
-    assert page.get_by_text("Mastercard", exact=False).count() > 0
+    assert page.get_by_text("Mastercard", exact=False).count() == 0, "Mastercard skal være fjernet (= LoungeKey)"
 
 def t_lounger_lounge_links(page):
     goto_tab(page, "lounger")
@@ -744,10 +744,10 @@ def t_tab_budsjett_switch(page):
     budsjett = page.locator("#tab-budsjett")
     assert budsjett.get_attribute("aria-selected") == "true"
 
-def t_tab_sjekkliste_switch(page):
-    goto_tab(page, "sjekkliste")
-    sjekk = page.locator("#tab-sjekkliste")
-    assert sjekk.get_attribute("aria-selected") == "true"
+def t_tab_huskeliste_switch(page):
+    goto_tab(page, "huskeliste")
+    huske = page.locator("#tab-huskeliste")
+    assert huske.get_attribute("aria-selected") == "true"
 
 def t_tab_lounger_hidden_on_forside(page):
     goto(page)
@@ -788,7 +788,7 @@ def t_nakort_for_avreise(page):
     assert page.get_by_text("til avreise", exact=False).count() > 0
 
 def t_kontant_oppgave_superrich(page):
-    goto_tab(page, "sjekkliste")
+    goto_tab(page, "huskeliste")
     assert page.get_by_text("Unngå Forex", exact=False).count() > 0, "Kontant-anbefaling mangler"
     lenke = page.locator("a[href*='superrichthailand.com']")
     assert lenke.count() > 0, "SuperRich-lenke mangler"
@@ -926,7 +926,7 @@ ALL_TESTS = [
     ("S8.05 — Phuket i Destinasjoner", t_destinasjoner_phuket_visible, "Regresjon"),
     ("S8.06 — SVG-rutekart rendret", t_svg_kart_rendered, "Regresjon"),
     ("S8.07 — Budsjett totalsum 20 632", t_budget_total_visible, "Regresjon"),
-    ("S8.08 — Sjekkliste-seksjon finnes", t_sjekkliste_present, "Regresjon"),
+    ("S8.08 — Huskeliste-seksjon finnes", t_huskeliste_present, "Regresjon"),
     ("S8.09 — Reiseplan-seksjon finnes", t_reiseplan_present, "Regresjon"),
     ("S8.10 — Ingen JS-feil i konsoll", t_no_console_errors, "Regresjon"),
     ("S8.11 — IATA BGO synlig", t_iata_bgo_present, "Regresjon"),
@@ -935,8 +935,8 @@ ALL_TESTS = [
     ("S8.14 — Hjemreise til Bergen synlig", t_tidslinje_hjemreise_visible, "Regresjon"),
     ("S8.15 — Kart BKK-klikk åpner popup", t_kart_interactive_bkk_click, "Regresjon"),
     ("S8.16 — Kart lukk-knapp fungerer", t_kart_close_button_works, "Regresjon"),
-    ("S8.17 — Saily eSIM i sjekklisten", t_saily_esim_in_checklist, "Regresjon"),
-    ("S8.18 — GoPro fjernet fra sjekklisten", t_gopro_not_in_checklist, "Regresjon"),
+    ("S8.17 — Saily eSIM i huskelisten", t_saily_esim_in_checklist, "Regresjon"),
+    ("S8.18 — GoPro fjernet fra huskelisten", t_gopro_not_in_checklist, "Regresjon"),
     ("S8.19 — Benihana-arrangement synlig", t_benihana_event_visible, "Regresjon"),
     ("S8.20 — Koh Tao dagstur synlig", t_koh_tao_dagstur_visible, "Regresjon"),
 
@@ -952,7 +952,7 @@ ALL_TESTS = [
     ("S10.03 — Sidetittel (tab) oppdatert", t_document_title_updated, "Tittel & Lounger"),
     ("S10.04 — Lounge-seksjon finnes", t_lounger_section_present, "Tittel & Lounger"),
     ("S10.05 — LoungeKey nevnt", t_lounger_loungekey, "Tittel & Lounger"),
-    ("S10.06 — Mastercard nevnt", t_lounger_mastercard, "Tittel & Lounger"),
+    ("S10.06 — Mastercard fjernet (= LoungeKey)", t_lounger_no_mastercard, "Tittel & Lounger"),
     ("S10.07 — Priority Pass lounge-lenker finnes", t_lounger_lounge_links, "Tittel & Lounger"),
     ("S10.08 — CPH Eventyr Lounge synlig", t_lounger_cph_eventyr, "Tittel & Lounger"),
     ("S10.09 — BKK Miracle Lounge synlig", t_lounger_bkk_miracle, "Tittel & Lounger"),
@@ -964,7 +964,7 @@ ALL_TESTS = [
     ("S11.03 — Forside viser destinasjoner", t_tab_forside_shows_destinasjoner, "Tabs & anbefalinger"),
     ("S11.04 — Bytt til Lounger-fane", t_tab_lounger_switch, "Tabs & anbefalinger"),
     ("S11.05 — Bytt til Budsjett-fane", t_tab_budsjett_switch, "Tabs & anbefalinger"),
-    ("S11.06 — Bytt til Sjekkliste-fane", t_tab_sjekkliste_switch, "Tabs & anbefalinger"),
+    ("S11.06 — Bytt til Huskeliste-fane", t_tab_huskeliste_switch, "Tabs & anbefalinger"),
     ("S11.07 — Lounger skjult på forside", t_tab_lounger_hidden_on_forside, "Tabs & anbefalinger"),
     ("S11.08 — BGO fjernet fra Lounger", t_bgo_not_in_lounger, "Tabs & anbefalinger"),
     ("S11.09 — 'Vårt valg'-merke på anbefalte lounger", t_lounger_recommended_badge, "Tabs & anbefalinger"),

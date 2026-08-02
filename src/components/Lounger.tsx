@@ -1,10 +1,10 @@
 import { motion } from "framer-motion"
-import { Armchair, Plane, KeyRound, CreditCard, Ticket, ChevronRight, Info, Sparkles } from "lucide-react"
+import { Armchair, Plane, KeyRound, Ticket, ChevronRight, Info, Sparkles } from "lucide-react"
 import { useReisefase } from "../context/reisefase-context"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Tilgang = "business" | "loungekey" | "mastercard"
+type Tilgang = "business" | "loungekey"
 
 interface Lounge {
   navn: string
@@ -40,7 +40,7 @@ const FLYPLASSER: Flyplass[] = [
       {
         navn: "Eventyr Lounge",
         lokasjon: "Etter security · non-Schengen",
-        tilgang: ["business", "loungekey", "mastercard"],
+        tilgang: ["business", "loungekey"],
         url: "https://www.prioritypass.com/en-GB/lounges/denmark/copenhagen-kastrup/cph1-eventyr-lounge",
         anbefalt: true,
         rasjonale:
@@ -49,13 +49,13 @@ const FLYPLASSER: Flyplass[] = [
       {
         navn: "Aspire Lounge",
         lokasjon: "Terminal 3",
-        tilgang: ["loungekey", "mastercard"],
+        tilgang: ["loungekey"],
         url: "https://www.prioritypass.com/en-GB/lounges/denmark/copenhagen-kastrup/cop2-aspire-lounge",
       },
       {
         navn: "Carlsberg Aviator Lounge",
         lokasjon: "Terminal 2",
-        tilgang: ["loungekey", "mastercard"],
+        tilgang: ["loungekey"],
         url: "https://www.prioritypass.com/en-GB/lounges/denmark/copenhagen-kastrup/cop1-carlsberg-aviator-lounge",
       },
     ],
@@ -81,13 +81,13 @@ const FLYPLASSER: Flyplass[] = [
       {
         navn: "Aspire Lounge 26",
         lokasjon: "Non-Schengen",
-        tilgang: ["loungekey", "mastercard"],
+        tilgang: ["loungekey"],
         url: "https://www.prioritypass.com/en-GB/lounges/netherlands/amsterdam-schiphol/ams2-aspire-lounge-no-26",
       },
       {
         navn: "Aspire Lounge 41",
         lokasjon: "Schengen",
-        tilgang: ["loungekey", "mastercard"],
+        tilgang: ["loungekey"],
         url: "https://www.prioritypass.com/en-GB/lounges/netherlands/amsterdam-schiphol/ams-aspire-lounge-no-41",
       },
     ],
@@ -99,12 +99,12 @@ const FLYPLASSER: Flyplass[] = [
     dato: "2026-09-01",
     farge: "#38bdf8",
     notat:
-      "KLM World Business Class (BKK→AMS) bruker kontraktslounge — sjekk ved gaten. LoungeKey/Mastercard gir tilgang til begge under uansett.",
+      "KLM World Business Class (BKK→AMS) bruker kontraktslounge — sjekk ved gaten. LoungeKey gir tilgang til begge under uansett.",
     lounger: [
       {
         navn: "The Coral Finest Business Lounge (Cocoon)",
         lokasjon: "Concourse · airside",
-        tilgang: ["loungekey", "mastercard"],
+        tilgang: ["loungekey"],
         url: "https://www.prioritypass.com/en-GB/lounges/thailand/suvarnabhumi/bkk25-the-coral-finest-business-class-lounge-cocoon",
         anbefalt: true,
         rasjonale:
@@ -113,7 +113,7 @@ const FLYPLASSER: Flyplass[] = [
       {
         navn: "Miracle Business Class Lounge",
         lokasjon: "Flere concourser · airside",
-        tilgang: ["loungekey", "mastercard"],
+        tilgang: ["loungekey"],
         url: "https://www.prioritypass.com/en-GB/lounges/thailand/suvarnabhumi/bkk26-miracle-business-class-lounge",
       },
     ],
@@ -125,7 +125,6 @@ const FLYPLASSER: Flyplass[] = [
 const TILGANG_META: Record<Tilgang, { label: string; farge: string; Icon: typeof Ticket }> = {
   business: { label: "Business Class", farge: "#f59e0b", Icon: Ticket },
   loungekey: { label: "LoungeKey", farge: "#38bdf8", Icon: KeyRound },
-  mastercard: { label: "Mastercard", farge: "#eb6b2e", Icon: CreditCard },
 }
 
 function TilgangMerke({ t }: { t: Tilgang }) {
@@ -314,7 +313,7 @@ export function Lounger() {
             Lounger på flyplassene
           </h2>
           <p className="text-slate-500 text-sm max-w-lg" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-            Tilgang via seteklasse, LoungeKey eller Mastercard Airport Experiences. Verifisert mot Priority Pass / Collinson-nettverket, 2026.
+            Tilgang via seteklasse eller LoungeKey. Verifisert mot Priority Pass / Collinson-nettverket, 2026.
           </p>
         </motion.div>
 
@@ -328,7 +327,6 @@ export function Lounger() {
         >
           <TilgangMerke t="business" />
           <TilgangMerke t="loungekey" />
-          <TilgangMerke t="mastercard" />
         </motion.div>
 
         {/* Airport grid — asymmetric 2-col */}
@@ -347,7 +345,7 @@ export function Lounger() {
           className="text-slate-700 text-[10px] mt-4"
           style={{ fontFamily: "'DM Sans', sans-serif" }}
         >
-          Loungeadgang og åpningstider kan endres — bekreft alltid i LoungeKey-/Mastercard-appen før avreise. Business-lounge avhenger av gjeldende kontrakt ved gaten.
+          Loungeadgang og åpningstider kan endres — bekreft alltid i LoungeKey-appen før avreise. Business-lounge avhenger av gjeldende kontrakt ved gaten.
         </motion.p>
       </div>
     </section>
