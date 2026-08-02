@@ -61,7 +61,7 @@ def goto(page, scroll=True):
 
 
 def goto_tab(page, tab_id):
-    """Navigate to the app and switch to the given tab (forside/lounger/budsjett/huskeliste)."""
+    """Navigate to the app and switch to the given tab (forside/lounger/aktiviteter/budsjett/huskeliste)."""
     goto(page)
     page.locator(f"#tab-{tab_id}").click()
     # AnimatePresence mode="wait" plays an exit animation before mounting the new panel
@@ -721,7 +721,7 @@ def t_lounger_links_secure(page):
 def t_tabs_present(page):
     goto(page)
     tabs = page.locator("[role='tab']")
-    assert tabs.count() == 4, f"Expected 4 tabs, got {tabs.count()}"
+    assert tabs.count() == 5, f"Expected 5 tabs, got {tabs.count()}"
 
 def t_tab_forside_default(page):
     goto(page)
@@ -748,6 +748,26 @@ def t_tab_huskeliste_switch(page):
     goto_tab(page, "huskeliste")
     huske = page.locator("#tab-huskeliste")
     assert huske.get_attribute("aria-selected") == "true"
+
+def t_tab_aktiviteter_switch(page):
+    goto_tab(page, "aktiviteter")
+    akt = page.locator("#tab-aktiviteter")
+    assert akt.get_attribute("aria-selected") == "true"
+    assert page.get_by_text("Muay Thai", exact=False).count() > 0
+    assert page.get_by_text("Skredder", exact=False).count() > 0
+
+def t_aktiviteter_muaythai_gyms(page):
+    goto_tab(page, "aktiviteter")
+    assert page.get_by_text("Punch It Gym", exact=False).count() > 0
+
+def t_aktiviteter_skredder_ranking(page):
+    goto_tab(page, "aktiviteter")
+    assert page.get_by_text("Billigst", exact=False).count() > 0
+
+def t_aktiviteter_hidden_on_forside(page):
+    goto(page)
+    # The dedicated tailor comparison card ('Billigst' badge) lives only on the aktiviteter tab
+    assert page.get_by_text("Billigst", exact=False).count() == 0
 
 def t_tab_lounger_hidden_on_forside(page):
     goto(page)
@@ -958,8 +978,8 @@ ALL_TESTS = [
     ("S10.09 — BKK Miracle Lounge synlig", t_lounger_bkk_miracle, "Tittel & Lounger"),
     ("S10.10 — Lounge-lenker har target=_blank + noopener", t_lounger_links_secure, "Tittel & Lounger"),
 
-    # Section 11: Tabs + lounge-anbefalinger (12)
-    ("S11.01 — 4 faner finnes", t_tabs_present, "Tabs & anbefalinger"),
+    # Section 11: Tabs + lounge-anbefalinger (17)
+    ("S11.01 — 5 faner finnes", t_tabs_present, "Tabs & anbefalinger"),
     ("S11.02 — Forside er standardfane", t_tab_forside_default, "Tabs & anbefalinger"),
     ("S11.03 — Forside viser destinasjoner", t_tab_forside_shows_destinasjoner, "Tabs & anbefalinger"),
     ("S11.04 — Bytt til Lounger-fane", t_tab_lounger_switch, "Tabs & anbefalinger"),
@@ -971,6 +991,10 @@ ALL_TESTS = [
     ("S11.10 — AMS KLM Crown Lounge 52 anbefalt", t_lounger_ams_crown, "Tabs & anbefalinger"),
     ("S11.11 — BKK Coral Finest anbefalt", t_lounger_bkk_coral, "Tabs & anbefalinger"),
     ("S11.12 — Anbefalings-rasjonale synlig", t_lounger_rasjonale_present, "Tabs & anbefalinger"),
+    ("S11.13 — Bytt til Aktiviteter-fane (Muay Thai + Skredder)", t_tab_aktiviteter_switch, "Tabs & anbefalinger"),
+    ("S11.14 — Muay Thai-gym (Punch It Gym) synlig", t_aktiviteter_muaythai_gyms, "Tabs & anbefalinger"),
+    ("S11.15 — Skredder-rangering ('Billigst') synlig", t_aktiviteter_skredder_ranking, "Tabs & anbefalinger"),
+    ("S11.16 — Skredder-kort skjult på forside", t_aktiviteter_hidden_on_forside, "Tabs & anbefalinger"),
 
     # Section 12: Reisefase / oppslagstavle (10)
     ("S12.01 — Nå-kort viser nedtelling før avreise", t_nakort_for_avreise, "Reisefase"),

@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion'
-import { Plane, MapPin, Hotel, Wallet, ListChecks, Armchair, Sparkles, ArrowRight } from 'lucide-react'
+import { Plane, MapPin, Hotel, Wallet, ListChecks, Armchair, Ticket, Sparkles, ArrowRight } from 'lucide-react'
 import { useReisefase } from '../context/reisefase-context'
 import { kortDato } from '../lib/reisefase'
 import { REISEDATOER } from '../data'
 import type { LucideIcon } from 'lucide-react'
 
-type Fane = 'forside' | 'lounger' | 'budsjett' | 'huskeliste'
+type Fane = 'forside' | 'lounger' | 'aktiviteter' | 'budsjett' | 'huskeliste'
 
 interface Handling {
   etikett: string
@@ -54,6 +54,7 @@ export function NaKort({ onNaviger }: { onNaviger: (f: Fane) => void }) {
     Ikon = Plane
     handlinger = [
       { etikett: 'Huskeliste', fane: 'huskeliste', Icon: ListChecks },
+      { etikett: 'Aktiviteter', fane: 'aktiviteter', Icon: Ticket },
       { etikett: 'Utreise-lounger', fane: 'lounger', Icon: Armchair },
     ]
   } else if (fase === 'under') {
@@ -73,6 +74,7 @@ export function NaKort({ onNaviger }: { onNaviger: (f: Fane) => void }) {
       Ikon = Plane
     }
     handlinger = [
+      { etikett: 'Aktiviteter', fane: 'aktiviteter', Icon: Ticket },
       { etikett: 'Lounger', fane: 'lounger', Icon: Armchair },
       { etikett: 'Budsjett', fane: 'budsjett', Icon: Wallet },
     ]

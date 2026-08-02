@@ -31,7 +31,7 @@ const DESTINASJONER: Destinasjon[] = [
     by: "Koh Samui",
     hotell: "Lamai Coconut Beach Resort",
     farge: "#38bdf8",
-    tips: "Punch It Gym er i samme Lamai-omradet som hotellet. Flat rute langs strandveien — mulig morgenjog.",
+    tips: "Punch It Gym er i samme Lamai-området som hotellet. Flat rute langs strandveien — mulig morgenjogg.",
     gyms: [
       {
         navn: "Punch It Gym",
@@ -44,7 +44,7 @@ const DESTINASJONER: Destinasjon[] = [
         notat: "Flatt underlag langs kystveien. Perfekt morgenjog 06:00–07:30 for 08:30-klassen.",
         bookingUrl: "https://www.klook.com/activity/127117-koh-samui-muay-thai-boxing-introduction-class-for-beginners/",
         klasser: ["Gruppe 90 min", "Privat 1t", "Nybegynner"],
-        program: "Man–fre + son kl. 08:30 og 18:00. Lordag stengt.",
+        program: "Man–fre + søn kl. 08:30 og 18:00. Lørdag stengt.",
       },
     ],
   },
@@ -53,7 +53,7 @@ const DESTINASJONER: Destinasjon[] = [
     by: "Phuket",
     hotell: "Chanalai Flora Resort, Kata Beach",
     farge: "#34d399",
-    tips: "Tiger Muay Thai er naermest. Jogging dit er mulig men krever Kata Hill (60 m stigning). Jobb dit som warm-up, ta Grab hjem.",
+    tips: "Tiger Muay Thai er nærmest. Jogging dit er mulig, men krever Kata Hill (60 m stigning). Jogg dit som oppvarming, ta Grab hjem.",
     gyms: [
       {
         navn: "Tiger Muay Thai",
@@ -63,10 +63,10 @@ const DESTINASJONER: Destinasjon[] = [
         pris: "Fra 600 THB / klasse",
         jogge: "mulig",
         joggeTid: "35–40 min inkl. Kata Hill (60 m stigning)",
-        notat: "Et av Phukets storste turistgym. Apent man–lor. Grab hjem anbefales etter trening.",
+        notat: "Et av Phukets største turistgym. Åpent man–lør. Grab hjem anbefales etter trening.",
         bookingUrl: "https://tigermuaythai.com/",
         klasser: ["Gruppe", "Nybegynner", "MMA", "1-til-1"],
-        program: "Man–fre 06:00–19:00. Lordag 07:00–18:00.",
+        program: "Man–fre 06:00–19:00. Lørdag 07:00–18:00.",
       },
       {
         navn: "RC Rachai Muay Thai",
@@ -139,7 +139,7 @@ export function MuayThai() {
             className="text-slate-500 text-sm max-w-lg"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
-            Gyms naer hotellene med reisedistanse og joggbarhet.
+            Gyms nær hotellene med reisedistanse og joggbarhet.
           </p>
         </motion.div>
 

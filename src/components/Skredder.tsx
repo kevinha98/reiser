@@ -39,7 +39,7 @@ const SKREDDERE: Skredder[] = [
       'Velg 2-ply poplin eller oxford-bomull — holder formen',
       'Semi-spread krage er tryggeste valg for norsk bruk',
       'Mål-attest: brystkrets, midjeomfang, skulder, ermlengde',
-      'Bestill 2–3 skjorter på én gang — rabatt og ett malsett',
+      'Bestill 2–3 skjorter på én gang — rabatt og ett målsett',
       'Leveringstid 24–48 t — nok tid i begge Bangkok-opphold',
     ],
   },
@@ -449,7 +449,7 @@ export function Skredder() {
             className="text-slate-500 text-sm max-w-lg"
             style={{ fontFamily: "'DM Sans', sans-serif" }}
           >
-            Skreddersydde klær er en av Thailands beste kjøp. Her er prisnivaa og
+            Skreddersydde klær er en av Thailands beste kjøp. Her er prisnivå og
             praktisk info per destinasjon.
           </p>
         </motion.div>
