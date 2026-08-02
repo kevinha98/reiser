@@ -50,7 +50,7 @@ function NedtellingEnhet({ verdi, etikett, forsinkelse }: NedtellingEnhetProps) 
 
 export function Header() {
   const { nå, fase, dagNr, totalDager, gjeldende } = useReisefase()
-  const nedtelling = beregnNedtelling(REISEDATOER.avreiseDato, nå)
+  const nedtelling = beregnNedtelling(REISEDATOER.avreiseTidspunkt, nå)
 
   return (
     <header className="relative overflow-hidden pt-20 pb-14 px-4">

@@ -850,6 +850,17 @@ def t_etter_reisen_vel_hjemme(page):
     goto_dato(page, "2026-09-03")
     assert page.get_by_text("Vel hjemme", exact=False).count() > 0
 
+def t_nedtelling_konsistent(page):
+    # 4. aug → 6 hele døgn til avgang 11. aug 05:50. Header-nedtelling og Nå-kort skal vise samme tall.
+    goto_dato(page, "2026-08-04")
+    assert page.get_by_text("Avreise om", exact=False).count() > 0, "Header-nedtelling mangler"
+    assert page.get_by_text("6 dager til avreise", exact=False).count() > 0, "Nå-kort viser feil antall dager"
+
+def t_nedtelling_i_morgen(page):
+    # 10. aug: under 24 t igjen til avgang neste morgen → 'Avreise i morgen!'
+    goto_dato(page, "2026-08-10")
+    assert page.get_by_text("Avreise i morgen", exact=False).count() > 0
+
 
 
 # ─── Test registry ────────────────────────────────────────────────────────────
@@ -996,7 +1007,7 @@ ALL_TESTS = [
     ("S11.15 — Skredder-rangering ('Billigst') synlig", t_aktiviteter_skredder_ranking, "Tabs & anbefalinger"),
     ("S11.16 — Skredder-kort skjult på forside", t_aktiviteter_hidden_on_forside, "Tabs & anbefalinger"),
 
-    # Section 12: Reisefase / oppslagstavle (10)
+    # Section 12: Reisefase / oppslagstavle (12)
     ("S12.01 — Nå-kort viser nedtelling før avreise", t_nakort_for_avreise, "Reisefase"),
     ("S12.02 — Kontant-oppgave m/ SuperRich-lenke", t_kontant_oppgave_superrich, "Reisefase"),
     ("S12.03 — Dato-simulator skjult som standard", t_simulator_skjult_default, "Reisefase"),
@@ -1007,6 +1018,8 @@ ALL_TESTS = [
     ("S12.08 — Lounger fremhever 'Neste stopp'", t_lounger_neste_stopp, "Reisefase"),
     ("S12.09 — Budsjett er standardfane etter reisen", t_etter_reisen_budsjett_default, "Reisefase"),
     ("S12.10 — Header viser 'Vel hjemme' etter reisen", t_etter_reisen_vel_hjemme, "Reisefase"),
+    ("S12.11 — Nedtelling konsistent med Nå-kort (6 dager)", t_nedtelling_konsistent, "Reisefase"),
+    ("S12.12 — 'Avreise i morgen' siste døgn før avgang", t_nedtelling_i_morgen, "Reisefase"),
 ]
 
 

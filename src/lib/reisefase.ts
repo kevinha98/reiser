@@ -8,7 +8,7 @@ export interface Reisefase {
   nå: Date
   dagNr: number            // 1 = avreisedag (11. aug). <=0 før avreise
   totalDager: number       // avreise → siste dag i Thailand, inklusive
-  dagerTil: number         // hele dager igjen til avreise (0 når reisen har startet)
+  dagerTil: number         // hele døgn igjen til avgangen (samme som nedtellingens dager-tall)
   gjeldende?: Destinasjon   // destinasjonen man er på akkurat nå
   neste?: Destinasjon       // neste destinasjon som ikke har startet ennå
   gjeldendeIndex: number    // indeks i DESTINASJONER, -1 hvis ingen
@@ -22,12 +22,15 @@ function tilMidnatt(d: Date): Date {
 
 /** Beregner hvor i reisen man er ut fra en gitt "nå"-dato. */
 export function beregnReisefase(nå: Date): Reisefase {
-  const avreise = tilMidnatt(new Date(REISEDATOER.avreiseDato))
-  const sisteDag = tilMidnatt(new Date(REISEDATOER.hjemkomstDato)) // 1. sep — siste dag i Thailand
+  // Dato-strenger uten klokkeslett tolkes som UTC av JS — legg til T00:00:00 så de blir lokale.
+  const avreise = tilMidnatt(new Date(`${REISEDATOER.avreiseDato}T00:00:00`))
+  const sisteDag = tilMidnatt(new Date(`${REISEDATOER.hjemkomstDato}T00:00:00`)) // 1. sep — siste dag i Thailand
   const iDag = tilMidnatt(nå)
+  const avreiseTidspunkt = new Date(REISEDATOER.avreiseTidspunkt) // datetime uten Z = lokal tid
 
   const totalDager = Math.round((sisteDag.getTime() - avreise.getTime()) / MS_PER_DAG) + 1
-  const dagerTil = Math.max(0, Math.round((avreise.getTime() - iDag.getTime()) / MS_PER_DAG))
+  // Hele døgn igjen til selve avgangen — nøyaktig samme tall som nedtellingen i headeren.
+  const dagerTil = Math.max(0, Math.floor((avreiseTidspunkt.getTime() - nå.getTime()) / MS_PER_DAG))
   const dagNr = Math.round((iDag.getTime() - avreise.getTime()) / MS_PER_DAG) + 1
 
   let fase: Fase

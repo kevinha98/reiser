@@ -40,6 +40,7 @@ export interface HuskelisteElement {
 
 export const REISEDATOER = {
   avreiseDato: '2026-08-11',   // tirsdag
+  avreiseTidspunkt: '2026-08-11T05:50:00', // faktisk BGO-avgang, lokal tid — brukes av nedtellingen
   hjemkomstDato: '2026-09-01', // tirsdag
   avreiseFly: 'BGO → BKK • 11. aug kl. 05:50 → 12. aug kl. 09:30',
   hjemkomstFly: 'BKK → BGO • 1. sep kl. 12:05 → 2. sep kl. 09:40',

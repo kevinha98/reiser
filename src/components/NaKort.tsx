@@ -49,7 +49,7 @@ export function NaKort({ onNaviger }: { onNaviger: (f: Fane) => void }) {
 
   if (fase === 'før') {
     eyebrow = 'Før avreise'
-    tittel = dagerTil === 0 ? 'Avreise i dag!' : `${dagerTil} ${dagerTil === 1 ? 'dag' : 'dager'} til avreise`
+    tittel = dagerTil === 0 ? 'Avreise i morgen!' : `${dagerTil} ${dagerTil === 1 ? 'dag' : 'dager'} til avreise`
     undertittel = REISEDATOER.avreiseFly
     Ikon = Plane
     handlinger = [
