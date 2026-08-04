@@ -1,5 +1,6 @@
 ﻿import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { AlertTriangle } from "lucide-react"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -37,6 +38,8 @@ interface FlygLeg {
   klasse?: string
   opphold?: string
   seter?: string
+  kritisk?: boolean       // fly som absolutt må rekkes
+  streikRisiko?: boolean  // SAS-leg som kan rammes av streiken
 }
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -133,16 +136,16 @@ const FLY_PATH = "M 34,48 Q 200,-5 430,155"
 // ─── International itinerary ──────────────────────────────────────────────────
 
 const UTREISE: FlygLeg[] = [
-  { iata: "BGO", by: "Bergen", avgang: "05:50", fly: "SK 2861", flyselskap: "SAS", klasse: "Economy" },
+  { iata: "BGO", by: "Bergen", avgang: "05:50", fly: "SK 2861", flyselskap: "SAS", klasse: "Economy", streikRisiko: true },
   { iata: "CPH", by: "Copenhagen", ankomst: "07:15", avgang: "11:30", fly: "KL 1270", flyselskap: "KLM", klasse: "Business", opphold: "4t 15m" },
-  { iata: "AMS", by: "Amsterdam", ankomst: "12:55", avgang: "17:15", fly: "KL 0843", flyselskap: "KLM", klasse: "Business", opphold: "4t 20m", seter: "2D, 2F" },
+  { iata: "AMS", by: "Amsterdam", ankomst: "12:55", avgang: "17:15", fly: "KL 0843", flyselskap: "KLM", klasse: "Business", opphold: "4t 20m", seter: "2D, 2F", kritisk: true },
   { iata: "BKK", by: "Bangkok", ankomst: "09:30 (+1)" },
 ]
 
 const HJEMREISE: FlygLeg[] = [
   { iata: "BKK", by: "Bangkok", avgang: "12:05", fly: "KL 0844", flyselskap: "KLM", klasse: "Flex" },
   { iata: "AMS", by: "Amsterdam", ankomst: "19:10", avgang: "21:05", fly: "KL 1279", flyselskap: "KLM", klasse: "Flex", opphold: "1t 55m" },
-  { iata: "CPH", by: "Copenhagen", ankomst: "22:30", avgang: "08:15 (+1)", fly: "SK 2862", flyselskap: "SAS", klasse: "Business Flex", opphold: "neste dag" },
+  { iata: "CPH", by: "Copenhagen", ankomst: "22:30", avgang: "08:15 (+1)", fly: "SK 2862", flyselskap: "SAS", klasse: "Business Flex", opphold: "neste dag", streikRisiko: true },
   { iata: "BGO", by: "Bergen", ankomst: "09:40" },
 ]
 
@@ -199,6 +202,28 @@ function FlygKort({ tittel, ben }: { tittel: string; ben: FlygLeg[] }) {
                   {leg.opphold && (
                     <span className="text-slate-700 text-[10px]">⏱ {leg.opphold} opphold</span>
                   )}
+                </div>
+              )}
+              {leg.kritisk && (
+                <div
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-md px-2 py-1"
+                  style={{ background: "rgba(245,158,11,0.14)", border: "1px solid rgba(245,158,11,0.45)" }}
+                >
+                  <AlertTriangle size={11} style={{ color: "#f5b23a" }} strokeWidth={2} />
+                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "#f5d08a" }}>
+                    Kritisk — må rekkes
+                  </span>
+                </div>
+              )}
+              {leg.streikRisiko && (
+                <div
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-md px-2 py-1"
+                  style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.35)" }}
+                >
+                  <AlertTriangle size={11} style={{ color: "rgba(248,113,113,0.9)" }} strokeWidth={2} />
+                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "rgba(252,165,165,0.95)" }}>
+                    SAS-streik-risiko
+                  </span>
                 </div>
               )}
             </div>
@@ -622,6 +647,46 @@ export function KartSeksjon() {
               >
                 Business Class (KL 0843 / KL 0844)
               </span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* SAS-streik-varsel */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ type: "spring", duration: 0.45, bounce: 0 }}
+          className="mt-8 rounded-2xl p-5"
+          style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.28)", fontFamily: "'DM Sans', sans-serif" }}
+        >
+          <div className="flex items-start gap-3">
+            <div
+              className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: "rgba(239,68,68,0.14)", border: "1px solid rgba(239,68,68,0.35)" }}
+            >
+              <AlertTriangle size={16} style={{ color: "rgba(248,113,113,0.95)" }} strokeWidth={2} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-white font-semibold text-sm mb-1">SAS-streik fra lørdag 8. august kl. 04:00</p>
+              <p className="text-slate-400 text-xs leading-relaxed mb-3">
+                Over 700 kabinansatte i SAS (Fellesforbundet + Parat) tas ut i streik etter nei i uravstemningen.
+                Partene møtes hos Riksmekleren torsdag 6. aug — streiken kan fortsatt avverges. Utreisen vår starter
+                med <span className="text-slate-200">SK 2861 (BGO → CPH)</span> 11. aug, og hjemreisen har
+                <span className="text-slate-200"> SK 2862 (CPH → BGO)</span> — begge er SAS og kan bli innstilt.
+              </p>
+              <div
+                className="rounded-xl px-3.5 py-3"
+                style={{ background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.30)" }}
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: "#f5d08a" }}>
+                  Kritisk fly å rekke
+                </p>
+                <p className="text-amber-100/90 text-xs leading-relaxed">
+                  <span className="font-semibold">KL 0843 · AMS → BKK kl. 17:15</span> (11. aug) er langdistanseflyet til Bangkok med KLM —
+                  dette MÅ rekkes. Ryker SAS-legen BGO → CPH, book om til CPH/AMS via annen rute i god tid så dere når 17:15-avgangen.
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>

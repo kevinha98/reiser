@@ -861,6 +861,17 @@ def t_nedtelling_i_morgen(page):
     goto_dato(page, "2026-08-10")
     assert page.get_by_text("Avreise i morgen", exact=False).count() > 0
 
+# ─── SECTION 13: SAS-streik / kritisk fly ────────────────────────────────────
+
+def t_sas_streik_varsel(page):
+    goto(page)
+    assert page.get_by_text("SAS-streik fra lørdag 8. august", exact=False).count() > 0, "SAS-streik-varsel mangler"
+
+def t_ams_1715_kritisk(page):
+    goto(page)
+    assert page.get_by_text("Kritisk fly", exact=False).count() > 0, "Kritisk-fly-fremheving mangler"
+    assert page.get_by_text("17:15", exact=False).count() > 0, "AMS 17:15-avgang mangler"
+
 
 
 # ─── Test registry ────────────────────────────────────────────────────────────
@@ -1020,6 +1031,10 @@ ALL_TESTS = [
     ("S12.10 — Header viser 'Vel hjemme' etter reisen", t_etter_reisen_vel_hjemme, "Reisefase"),
     ("S12.11 — Nedtelling konsistent med Nå-kort (6 dager)", t_nedtelling_konsistent, "Reisefase"),
     ("S12.12 — 'Avreise i morgen' siste døgn før avgang", t_nedtelling_i_morgen, "Reisefase"),
+
+    # Section 13: SAS-streik / kritisk fly (2)
+    ("S13.01 — SAS-streik-varsel synlig", t_sas_streik_varsel, "SAS-streik"),
+    ("S13.02 — AMS 17:15 fremhevet som kritisk", t_ams_1715_kritisk, "SAS-streik"),
 ]
 
 
