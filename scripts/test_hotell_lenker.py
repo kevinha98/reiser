@@ -872,6 +872,19 @@ def t_ams_1715_kritisk(page):
     assert page.get_by_text("Kritisk fly", exact=False).count() > 0, "Kritisk-fly-fremheving mangler"
     assert page.get_by_text("17:15", exact=False).count() > 0, "AMS 17:15-avgang mangler"
 
+# ─── SECTION 14: Logoer og flagg ──────────────────────────────────────
+
+def t_flagg_synlig(page):
+    goto(page)
+    assert page.locator("[aria-label='Flagg: Norge']").count() > 0, "Norsk flagg mangler"
+    assert page.locator("[aria-label='Flagg: Thailand']").count() > 0, "Thailandsk flagg mangler"
+    assert page.locator("[aria-label='Flagg: Nederland']").count() > 0, "Nederlandsk flagg mangler"
+
+def t_flyselskap_logo(page):
+    goto(page)
+    assert page.locator("[aria-label='Flyselskap: SAS']").count() > 0, "SAS-logo mangler"
+    assert page.locator("[aria-label='Flyselskap: KLM']").count() > 0, "KLM-logo mangler"
+
 
 
 # ─── Test registry ────────────────────────────────────────────────────────────
@@ -1035,6 +1048,10 @@ ALL_TESTS = [
     # Section 13: SAS-streik / kritisk fly (2)
     ("S13.01 — SAS-streik-varsel synlig", t_sas_streik_varsel, "SAS-streik"),
     ("S13.02 — AMS 17:15 fremhevet som kritisk", t_ams_1715_kritisk, "SAS-streik"),
+
+    # Section 14: Logoer og flagg (2)
+    ("S14.01 — Landflagg synlige på flyplasser", t_flagg_synlig, "Logoer & flagg"),
+    ("S14.02 — SAS- og KLM-logo synlige", t_flyselskap_logo, "Logoer & flagg"),
 ]
 
 

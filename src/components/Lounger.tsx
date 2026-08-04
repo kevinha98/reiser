@@ -1,6 +1,8 @@
 import { motion } from "framer-motion"
 import { Armchair, Plane, KeyRound, Ticket, ChevronRight, Info, Sparkles } from "lucide-react"
 import { useReisefase } from "../context/reisefase-context"
+import { Flagg } from "./Merker"
+import { landForIata } from "../lib/land"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -174,7 +176,8 @@ function FlyplassKort({ f, delay, erNeste }: { f: Flyplass; delay: number; erNes
           <Plane size={14} style={{ color: f.farge }} strokeWidth={1.5} />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-baseline gap-2">
+          <div className="flex items-center gap-2">
+            {landForIata(f.iata) && <Flagg land={landForIata(f.iata)!} />}
             <span className="text-white font-mono font-bold text-sm">{f.iata}</span>
             <span className="text-slate-400 text-xs truncate">{f.navn}</span>
             {erNeste && (

@@ -1,6 +1,8 @@
 ﻿import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { AlertTriangle } from "lucide-react"
+import { Flagg, Flyselskap } from "./Merker"
+import { landForIata } from "../lib/land"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -176,7 +178,8 @@ function FlygKort({ tittel, ben }: { tittel: string; ben: FlygLeg[] }) {
               )}
             </div>
             <div className="pb-4 flex-1 min-w-0">
-              <div className="flex items-baseline gap-2 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap">
+                {landForIata(leg.iata) && <Flagg land={landForIata(leg.iata)!} />}
                 <span className="text-white font-mono font-bold text-sm">{leg.iata}</span>
                 <span className="text-slate-400 text-xs">{leg.by}</span>
               </div>
@@ -189,8 +192,9 @@ function FlygKort({ tittel, ben }: { tittel: string; ben: FlygLeg[] }) {
                 )}
               </div>
               {leg.fly && (
-                <div className="mt-1.5 flex flex-wrap gap-x-2 gap-y-0.5">
-                  <span className="text-slate-500 text-[10px]">{leg.fly} · {leg.flyselskap}</span>
+                <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span className="text-slate-500 text-[10px]">{leg.fly}</span>
+                  {leg.flyselskap && <Flyselskap selskap={leg.flyselskap} />}
                   {leg.klasse && (
                     <span className="text-slate-600 text-[10px]">{leg.klasse}</span>
                   )}
