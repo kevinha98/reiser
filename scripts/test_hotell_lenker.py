@@ -867,10 +867,11 @@ def t_sas_streik_varsel(page):
     goto(page)
     assert page.get_by_text("SAS-streik fra lørdag 8. august", exact=False).count() > 0, "SAS-streik-varsel mangler"
 
-def t_ams_1715_kritisk(page):
+def t_cph_kritisk_connection(page):
     goto(page)
-    assert page.get_by_text("Kritisk fly", exact=False).count() > 0, "Kritisk-fly-fremheving mangler"
-    assert page.get_by_text("17:15", exact=False).count() > 0, "AMS 17:15-avgang mangler"
+    assert page.get_by_text("Kritisk connection", exact=False).count() > 0, "Kritisk-connection-fremheving mangler"
+    assert page.get_by_text("Må rekkes — innen 11:30", exact=False).count() > 0, "CPH må-rekkes-merke mangler"
+    assert page.get_by_text("KL 1270", exact=False).count() > 0, "KL 1270 (CPH → AMS) mangler"
 
 # ─── SECTION 14: Logoer og flagg ──────────────────────────────────────
 
@@ -1047,7 +1048,7 @@ ALL_TESTS = [
 
     # Section 13: SAS-streik / kritisk fly (2)
     ("S13.01 — SAS-streik-varsel synlig", t_sas_streik_varsel, "SAS-streik"),
-    ("S13.02 — AMS 17:15 fremhevet som kritisk", t_ams_1715_kritisk, "SAS-streik"),
+    ("S13.02 — CPH-connection (KL 1270) fremhevet som kritisk", t_cph_kritisk_connection, "SAS-streik"),
 
     # Section 14: Logoer og flagg (2)
     ("S14.01 — Landflagg synlige på flyplasser", t_flagg_synlig, "Logoer & flagg"),

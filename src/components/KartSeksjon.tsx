@@ -1,6 +1,6 @@
 ﻿import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { AlertTriangle } from "lucide-react"
+import { AlertTriangle, ShieldCheck } from "lucide-react"
 import { Flagg, Flyselskap } from "./Merker"
 import { landForIata } from "../lib/land"
 
@@ -40,8 +40,9 @@ interface FlygLeg {
   klasse?: string
   opphold?: string
   seter?: string
-  kritisk?: boolean       // fly som absolutt må rekkes
+  kritisk?: string        // gul "må rekkes"-merkelapp med egen tekst
   streikRisiko?: boolean  // SAS-leg som kan rammes av streiken
+  info?: string           // nøytral info-merkelapp (f.eks. langdistanse)
 }
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -139,8 +140,8 @@ const FLY_PATH = "M 34,48 Q 200,-5 430,155"
 
 const UTREISE: FlygLeg[] = [
   { iata: "BGO", by: "Bergen", avgang: "05:50", fly: "SK 2861", flyselskap: "SAS", klasse: "Economy", streikRisiko: true },
-  { iata: "CPH", by: "Copenhagen", ankomst: "07:15", avgang: "11:30", fly: "KL 1270", flyselskap: "KLM", klasse: "Business", opphold: "4t 15m" },
-  { iata: "AMS", by: "Amsterdam", ankomst: "12:55", avgang: "17:15", fly: "KL 0843", flyselskap: "KLM", klasse: "Business", opphold: "4t 20m", seter: "2D, 2F", kritisk: true },
+  { iata: "CPH", by: "Copenhagen", ankomst: "07:15", avgang: "11:30", fly: "KL 1270", flyselskap: "KLM", klasse: "Business", opphold: "4t 15m", kritisk: "Må rekkes — innen 11:30" },
+  { iata: "AMS", by: "Amsterdam", ankomst: "12:55", avgang: "17:15", fly: "KL 0843", flyselskap: "KLM", klasse: "Business", opphold: "4t 20m", seter: "2D, 2F", info: "Langdistanse til BKK" },
   { iata: "BKK", by: "Bangkok", ankomst: "09:30 (+1)" },
 ]
 
@@ -215,7 +216,17 @@ function FlygKort({ tittel, ben }: { tittel: string; ben: FlygLeg[] }) {
                 >
                   <AlertTriangle size={11} style={{ color: "#f5b23a" }} strokeWidth={2} />
                   <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "#f5d08a" }}>
-                    Kritisk — må rekkes
+                    {leg.kritisk}
+                  </span>
+                </div>
+              )}
+              {leg.info && (
+                <div
+                  className="mt-2 inline-flex items-center gap-1.5 rounded-md px-2 py-1"
+                  style={{ background: "rgba(148,163,184,0.12)", border: "1px solid rgba(148,163,184,0.30)" }}
+                >
+                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "rgba(203,213,225,0.9)" }}>
+                    {leg.info}
                   </span>
                 </div>
               )}
@@ -684,11 +695,61 @@ export function KartSeksjon() {
                 style={{ background: "rgba(245,158,11,0.10)", border: "1px solid rgba(245,158,11,0.30)" }}
               >
                 <p className="text-[11px] font-semibold uppercase tracking-wider mb-1" style={{ color: "#f5d08a" }}>
-                  Kritisk fly å rekke
+                  Kritisk connection å sikre
                 </p>
                 <p className="text-amber-100/90 text-xs leading-relaxed">
-                  <span className="font-semibold">KL 0843 · AMS → BKK kl. 17:15</span> (11. aug) er langdistanseflyet til Bangkok med KLM —
-                  dette MÅ rekkes. Ryker SAS-legen BGO → CPH, book om til CPH/AMS via annen rute i god tid så dere når 17:15-avgangen.
+                  Den avgjørende overgangen er <span className="font-semibold">KL 1270 · CPH → AMS kl. 11:30</span> — er du på
+                  KLM-kjeden i CPH, er <span className="font-semibold">AMS → BKK (KL 0843, 17:15)</span> en beskyttet overgang videre
+                  til Bangkok. Ryker SAS-legen BGO → CPH: <span className="font-semibold">ikke bare møt opp i AMS på egen hånd</span> —
+                  da kan hele billetten kanselleres (no-show-regelen). Ring SAS (21 89 64 00, Gold 24/7) og be dem omrute deg til
+                  CPH i tide til KL 1270 (11:30), eller bygge om billetten så KL 0843 forblir beskyttet.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Reservefly bestilt — streik-beredskap */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ type: "spring", duration: 0.45, bounce: 0 }}
+          className="mt-4 rounded-2xl p-5"
+          style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.28)", fontFamily: "'DM Sans', sans-serif" }}
+        >
+          <div className="flex items-start gap-3">
+            <div
+              className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: "rgba(34,197,94,0.14)", border: "1px solid rgba(34,197,94,0.35)" }}
+            >
+              <ShieldCheck size={16} style={{ color: "rgba(74,222,128,0.95)" }} strokeWidth={2} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-white font-semibold text-sm mb-1">Reservefly bestilt — streik-beredskap</p>
+              <p className="text-slate-400 text-xs leading-relaxed mb-3">
+                For å være uavhengig av SAS-streiken er det bestilt et Norwegian-fly <span className="text-slate-200">dagen før</span> som
+                får dere trygt til København. Overnatt i CPH og ta <span className="text-slate-200">KL 1270 (CPH → AMS 11:30)</span> den
+                11. aug som planlagt — helt uavhengig av SK 2861.
+              </p>
+              <div
+                className="rounded-xl px-3.5 py-3"
+                style={{ background: "rgba(34,197,94,0.10)", border: "1px solid rgba(34,197,94,0.28)" }}
+              >
+                <div className="flex items-center gap-2 mb-2.5">
+                  <Flyselskap selskap="Norwegian" />
+                  <span className="text-emerald-100/90 text-xs font-semibold">DY 968 · BGO → CPH</span>
+                </div>
+                <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[11px]">
+                  <span className="text-slate-400">Dato</span><span className="text-slate-200">10. aug 2026</span>
+                  <span className="text-slate-400">Avgang</span><span className="text-slate-200">14:50 · Bergen (BGO)</span>
+                  <span className="text-slate-400">Ankomst</span><span className="text-slate-200">16:10 · København (CPH)</span>
+                  <span className="text-slate-400">Klasse</span><span className="text-slate-200">Flex · seter reservert</span>
+                  <span className="text-slate-400">Ref.</span><span className="text-slate-100 font-semibold">XGY97I</span>
+                  <span className="text-slate-400">Reisende</span><span className="text-slate-200">Hilde Haugland · Kevin Ha</span>
+                </div>
+                <p className="text-emerald-100/80 text-[11px] leading-relaxed mt-2.5 pt-2.5" style={{ borderTop: "1px solid rgba(34,197,94,0.20)" }}>
+                  ⚠️ Husk: book hotell i København natt 10.→11. aug.
                 </p>
               </div>
             </div>

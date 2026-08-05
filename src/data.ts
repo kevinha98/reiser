@@ -114,12 +114,22 @@ export const UTGIFTER: Utgift[] = [
   {
     id: 'fly-bonus',
     kategori: 'transport',
-    navn: 'Fly CPH ↔ BKK — Business Class',
+    navn: 'Fly CPH → AMS → BKK (KLM Business, bonus)',
     totalt: 4857.10,
     perPerson: 2428.55,
     betaltAv: null,
     oppgjort: false,
-    merknad: '11. aug (avreise) / 1. sep (hjem)',
+    merknad: 'BGO→CPH→AMS→BKK 11. aug / retur 1. sep',
+  },
+  {
+    id: 'fly-reserve-dy',
+    kategori: 'transport',
+    navn: 'Reservefly BGO → CPH (Norwegian DY968, streik-beredskap)',
+    totalt: null,
+    perPerson: null,
+    betaltAv: null,
+    oppgjort: false,
+    merknad: '10. aug 14:50 → 16:10 · ref. XGY97I · Flex, seter reservert',
   },
   {
     id: 'fly-bkk',
@@ -185,13 +195,14 @@ export const UTGIFTER: Utgift[] = [
 
 export const HUSKELISTE: HuskelisteElement[] = [
   // Transport
-  { id: 'fly-bestilt', tekst: 'Fly CPH ↔ BKK bestilt', kategori: 'Transport' },
+  { id: 'fly-bestilt', tekst: 'Fly CPH → AMS → BKK bestilt (KLM Business, bonus)', kategori: 'Transport' },
+  { id: 'fly-reserve', tekst: 'Reservefly BGO → CPH bestilt (Norwegian DY968, 10. aug) — ref. XGY97I', kategori: 'Transport' },
   { id: 'fly-samui', tekst: 'Fly Koh Samui (15. aug)', kategori: 'Transport' },
   { id: 'fly-phuket', tekst: 'Fly Phuket (22. aug)', kategori: 'Transport' },
   { id: 'innreiseskjema', tekst: 'Innreiseskjema Thailand (Thailand Pass / e-arrival)', kategori: 'Transport' },
 
   // Overnatting
-  { id: 'hotell-cph', tekst: 'Hotell CPH (om nødvendig)', kategori: 'Overnatting' },
+  { id: 'hotell-cph', tekst: 'Hotell København natt 10.→11. aug (reservefly DY968 lander 16:10)', kategori: 'Overnatting' },
   { id: 'bekreft-hotell', tekst: 'Bekrefte alle hotellbookinger', kategori: 'Overnatting' },
   { id: 'checkin-tider', tekst: 'Sjekk innsjekk-/utsjekk-tider', kategori: 'Overnatting' },
 

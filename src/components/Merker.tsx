@@ -76,6 +76,7 @@ export function Flagg({ land, hoyde = 13 }: { land: LandKode; hoyde?: number }) 
 const SELSKAP: Record<string, { bg: string }> = {
   SAS: { bg: '#002F6C' }, // SAS marineblå
   KLM: { bg: '#007AC2' }, // KLM-blå
+  Norwegian: { bg: '#D81939' }, // Norwegian rød
 }
 
 export function Flyselskap({ selskap }: { selskap: string }) {
