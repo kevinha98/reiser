@@ -1,9 +1,9 @@
 ﻿import { motion } from "framer-motion"
-import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed } from "lucide-react"
+import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun } from "lucide-react"
 import { useReisefase } from "../context/reisefase-context"
 
 interface Aktivitet {
-  type: "skredder" | "muaythai" | "dagstur" | "restaurant"
+  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile"
   navn: string
   detaljer: string[]
   bookingUrl?: string
@@ -17,7 +17,7 @@ interface ReiseEvent {
   tittel: string
   undertittel?: string
   hotellUrl?: string
-  type: "fly" | "hotell" | "avreise" | "hjemkomst"
+  type: "fly" | "hotell" | "avreise" | "hjemkomst" | "dag"
   farge: "gold" | "ocean" | "jungle" | "violet"
   aktiviteter?: Aktivitet[]
 }
@@ -43,6 +43,17 @@ const TIDSLINJE: ReiseEvent[] = [
     farge: "gold",
     aktiviteter: [
       {
+        type: "hvile",
+        navn: "Jetlag & innsjekk",
+        farge: "#a78bfa",
+        detaljer: [
+          "Innsjekk på Hope Land Hotel Sukhumvit 8",
+          "Restitusjon etter reisen fra Bergen",
+          "5 timer tidsforskjell — Thailand ligger foran Norge",
+          "Rolig dag, ingen planlagte utflukter",
+        ],
+      },
+      {
         type: "skredder",
         navn: "Skredder",
         farge: "#f59e0b",
@@ -51,6 +62,39 @@ const TIDSLINJE: ReiseEvent[] = [
           "Dress 4 000–8 000 THB / Skjorte 700–1 500 THB",
           "Leveringstid 24–72 t — hent dag 3",
           "Be om to prøvinger og stoff-attest",
+        ],
+      },
+    ],
+  },
+  {
+    dato: "Tor 13. aug",
+    isoDato: "2026-08-13",
+    dagNr: 3,
+    tittel: "Terminal 21 & Chinatown",
+    undertittel: "Dagtid på Asok · kveldstid i Yaowarat",
+    type: "dag",
+    farge: "gold",
+    aktiviteter: [
+      {
+        type: "shopping",
+        navn: "Dagtid · Terminal 21",
+        farge: "#f59e0b",
+        detaljer: [
+          "Terminal 21 Asok · Sukhumvit Soi 19",
+          "BTS Nana → Asok, to stopp fra hotellet",
+          "Hver etasje er en by — Tokyo, London, Istanbul, San Francisco",
+          "Pier 21 food court i 5. etasje — retter fra 60–100 THB",
+        ],
+      },
+      {
+        type: "restaurant",
+        navn: "Kveldstid · Chinatown",
+        farge: "#fb7185",
+        detaljer: [
+          "Yaowarat Road · MRT Sukhumvit → Wat Mangkon, ca. 20 min",
+          "Gatekjøkkenene åpner rundt 18:00 — travlest 19:00–23:00",
+          "Nai Ek Roll Noodle, T&K Seafood, Guay Jub Ouan Pochana",
+          "Ta med kontanter — de fleste bodene tar ikke kort",
         ],
       },
     ],
@@ -172,6 +216,15 @@ const TIDSLINJE: ReiseEvent[] = [
   },
 ]
 
+const IKON_MAP: Record<Aktivitet["type"], typeof Scissors> = {
+  skredder: Scissors,
+  dagstur: Anchor,
+  restaurant: UtensilsCrossed,
+  shopping: ShoppingBag,
+  hvile: Moon,
+  muaythai: Dumbbell,
+}
+
 const FARGE_MAP = {
   gold: { dot: "bg-amber-400", ring: "ring-amber-400/30", tekst: "text-amber-300", linje: "bg-amber-400/30" },
   ocean: { dot: "bg-sky-400", ring: "ring-sky-400/30", tekst: "text-sky-300", linje: "bg-sky-400/30" },
@@ -180,7 +233,7 @@ const FARGE_MAP = {
 }
 
 function AktivitetKort({ a }: { a: Aktivitet }) {
-  const Icon = a.type === "skredder" ? Scissors : a.type === "dagstur" ? Anchor : a.type === "restaurant" ? UtensilsCrossed : Dumbbell
+  const Icon = IKON_MAP[a.type]
   return (
     <div
       className="rounded-xl px-3 py-2.5"
@@ -315,6 +368,9 @@ export function Tidslinje() {
                     )}
                     {event.type === "hotell" && (
                       <MapPin size={11} className={f.tekst} strokeWidth={1.5} />
+                    )}
+                    {event.type === "dag" && (
+                      <Sun size={11} className={f.tekst} strokeWidth={1.5} />
                     )}
                     <span
                       className={`text-xs font-medium uppercase tracking-wider ${f.tekst}`}
