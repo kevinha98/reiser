@@ -1,6 +1,6 @@
 ﻿import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { AlertTriangle } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import { Flagg, Flyselskap } from "./Merker"
 import { landForIata } from "../lib/land"
 
@@ -40,7 +40,6 @@ interface FlygLeg {
   klasse?: string
   opphold?: string
   seter?: string
-  kritisk?: string        // gul "må rekkes"-merkelapp med egen tekst
   info?: string           // nøytral info-merkelapp (f.eks. langdistanse)
 }
 
@@ -139,7 +138,7 @@ const FLY_PATH = "M 34,48 Q 200,-5 430,155"
 
 const UTREISE: FlygLeg[] = [
   { iata: "BGO", by: "Bergen", avgang: "05:50", fly: "SK 2861", flyselskap: "SAS", klasse: "Economy" },
-  { iata: "CPH", by: "Copenhagen", ankomst: "07:15", avgang: "11:30", fly: "KL 1270", flyselskap: "KLM", klasse: "Business", opphold: "4t 15m", kritisk: "Må rekkes — innen 11:30" },
+  { iata: "CPH", by: "Copenhagen", ankomst: "07:15", avgang: "11:30", fly: "KL 1270", flyselskap: "KLM", klasse: "Business", opphold: "4t 15m" },
   { iata: "AMS", by: "Amsterdam", ankomst: "12:55", avgang: "17:15", fly: "KL 0843", flyselskap: "KLM", klasse: "Business", opphold: "4t 20m", seter: "2D, 2F", info: "Langdistanse til BKK" },
   { iata: "BKK", by: "Bangkok", ankomst: "09:30 (+1)" },
 ]
@@ -153,86 +152,121 @@ const HJEMREISE: FlygLeg[] = [
 
 // ─── FlygKort sub-component ───────────────────────────────────────────────────
 
-function FlygKort({ tittel, ben }: { tittel: string; ben: FlygLeg[] }) {
+function FlygKort({
+  tittel,
+  ben,
+  startLukket = false,
+  sammendrag,
+}: {
+  tittel: string
+  ben: FlygLeg[]
+  startLukket?: boolean
+  sammendrag?: string
+}) {
+  const [apen, settApen] = useState(!startLukket)
+
   return (
-    <div className="glass rounded-2xl p-5" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-      <p className="text-slate-600 text-[10px] uppercase tracking-[0.2em] mb-5">{tittel}</p>
-      <div className="flex flex-col">
-        {ben.map((leg, i) => (
-          <div key={`${leg.iata}-${i}`} className="flex gap-3">
-            <div className="flex flex-col items-center flex-shrink-0 pt-0.5">
-              <div
-                className="w-2 h-2 rounded-full"
-                style={{
-                  background:
-                    i === 0 || i === ben.length - 1
-                      ? "rgba(148,163,184,0.6)"
-                      : "rgba(148,163,184,0.3)",
-                }}
-              />
-              {i < ben.length - 1 && (
-                <div
-                  className="w-px flex-1 my-1"
-                  style={{ background: "rgba(255,255,255,0.06)", minHeight: "40px" }}
-                />
-              )}
+    <div className="glass rounded-2xl p-5 self-start" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <button
+        type="button"
+        onClick={() => settApen((v) => !v)}
+        aria-expanded={apen}
+        className="w-full flex items-center gap-3 text-left"
+      >
+        <p className="text-slate-600 text-[10px] uppercase tracking-[0.2em]">{tittel}</p>
+        <ChevronDown
+          size={14}
+          strokeWidth={1.5}
+          className="ml-auto flex-shrink-0 text-slate-600"
+          style={{
+            transform: apen ? "rotate(180deg)" : "none",
+            transition: "transform 200ms ease-out",
+          }}
+        />
+      </button>
+
+      {!apen && sammendrag && (
+        <p className="text-slate-500 text-[11px] mt-3">{sammendrag}</p>
+      )}
+
+      <AnimatePresence initial={false}>
+        {apen && (
+          <motion.div
+            key="ben"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            style={{ overflow: "hidden" }}
+          >
+            <div className="flex flex-col pt-5">
+              {ben.map((leg, i) => (
+                <div key={`${leg.iata}-${i}`} className="flex gap-3">
+                  <div className="flex flex-col items-center flex-shrink-0 pt-0.5">
+                    <div
+                      className="w-2 h-2 rounded-full"
+                      style={{
+                        background:
+                          i === 0 || i === ben.length - 1
+                            ? "rgba(148,163,184,0.6)"
+                            : "rgba(148,163,184,0.3)",
+                      }}
+                    />
+                    {i < ben.length - 1 && (
+                      <div
+                        className="w-px flex-1 my-1"
+                        style={{ background: "rgba(255,255,255,0.06)", minHeight: "40px" }}
+                      />
+                    )}
+                  </div>
+                  <div className="pb-4 flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {landForIata(leg.iata) && <Flagg land={landForIata(leg.iata)!} />}
+                      <span className="text-white font-mono font-bold text-sm">{leg.iata}</span>
+                      <span className="text-slate-400 text-xs">{leg.by}</span>
+                    </div>
+                    <div className="flex gap-3 mt-0.5 flex-wrap">
+                      {leg.ankomst && (
+                        <span className="text-slate-500 text-[11px]">↓ {leg.ankomst}</span>
+                      )}
+                      {leg.avgang && (
+                        <span className="text-slate-400 text-[11px]">↑ {leg.avgang}</span>
+                      )}
+                    </div>
+                    {leg.fly && (
+                      <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <span className="text-slate-500 text-[10px]">{leg.fly}</span>
+                        {leg.flyselskap && <Flyselskap selskap={leg.flyselskap} />}
+                        {leg.klasse && (
+                          <span className="text-slate-600 text-[10px]">{leg.klasse}</span>
+                        )}
+                        {leg.seter && (
+                          <span className="text-[10px]" style={{ color: "rgba(245,158,11,0.7)" }}>
+                            Sete {leg.seter}
+                          </span>
+                        )}
+                        {leg.opphold && (
+                          <span className="text-slate-700 text-[10px]">⏱ {leg.opphold} opphold</span>
+                        )}
+                      </div>
+                    )}
+                    {leg.info && (
+                      <div
+                        className="mt-2 inline-flex items-center gap-1.5 rounded-md px-2 py-1"
+                        style={{ background: "rgba(148,163,184,0.12)", border: "1px solid rgba(148,163,184,0.30)" }}
+                      >
+                        <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "rgba(203,213,225,0.9)" }}>
+                          {leg.info}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="pb-4 flex-1 min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                {landForIata(leg.iata) && <Flagg land={landForIata(leg.iata)!} />}
-                <span className="text-white font-mono font-bold text-sm">{leg.iata}</span>
-                <span className="text-slate-400 text-xs">{leg.by}</span>
-              </div>
-              <div className="flex gap-3 mt-0.5 flex-wrap">
-                {leg.ankomst && (
-                  <span className="text-slate-500 text-[11px]">↓ {leg.ankomst}</span>
-                )}
-                {leg.avgang && (
-                  <span className="text-slate-400 text-[11px]">↑ {leg.avgang}</span>
-                )}
-              </div>
-              {leg.fly && (
-                <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <span className="text-slate-500 text-[10px]">{leg.fly}</span>
-                  {leg.flyselskap && <Flyselskap selskap={leg.flyselskap} />}
-                  {leg.klasse && (
-                    <span className="text-slate-600 text-[10px]">{leg.klasse}</span>
-                  )}
-                  {leg.seter && (
-                    <span className="text-[10px]" style={{ color: "rgba(245,158,11,0.7)" }}>
-                      Sete {leg.seter}
-                    </span>
-                  )}
-                  {leg.opphold && (
-                    <span className="text-slate-700 text-[10px]">⏱ {leg.opphold} opphold</span>
-                  )}
-                </div>
-              )}
-              {leg.kritisk && (
-                <div
-                  className="mt-2 inline-flex items-center gap-1.5 rounded-md px-2 py-1"
-                  style={{ background: "rgba(245,158,11,0.14)", border: "1px solid rgba(245,158,11,0.45)" }}
-                >
-                  <AlertTriangle size={11} style={{ color: "#f5b23a" }} strokeWidth={2} />
-                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "#f5d08a" }}>
-                    {leg.kritisk}
-                  </span>
-                </div>
-              )}
-              {leg.info && (
-                <div
-                  className="mt-2 inline-flex items-center gap-1.5 rounded-md px-2 py-1"
-                  style={{ background: "rgba(148,163,184,0.12)", border: "1px solid rgba(148,163,184,0.30)" }}
-                >
-                  <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: "rgba(203,213,225,0.9)" }}>
-                    {leg.info}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
@@ -662,7 +696,12 @@ export function KartSeksjon() {
           transition={{ type: "spring", duration: 0.45, bounce: 0, delay: 0.1 }}
           className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"
         >
-          <FlygKort tittel="Utreise · Tirsdag 11. aug" ben={UTREISE} />
+          <FlygKort
+            tittel="Utreise · Tirsdag 11. aug"
+            ben={UTREISE}
+            startLukket
+            sammendrag="BGO → CPH → AMS → BKK · fullført"
+          />
           <FlygKort tittel="Hjemreise · 1–2. sep" ben={HJEMREISE} />
         </motion.div>
 
