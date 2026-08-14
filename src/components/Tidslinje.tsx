@@ -1,9 +1,9 @@
 ﻿import { motion } from "framer-motion"
-import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun } from "lucide-react"
+import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun, Footprints } from "lucide-react"
 import { useReisefase } from "../context/reisefase-context"
 
 interface Aktivitet {
-  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly"
+  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly" | "jogg"
   navn: string
   detaljer: string[]
   bookingUrl?: string
@@ -122,6 +122,15 @@ const TIDSLINJE: ReiseEvent[] = [
     type: "fly",
     farge: "ocean",
     aktiviteter: [
+      {
+        type: "jogg",
+        navn: "Morgenjogg · Benjakitti",
+        farge: "#34d399",
+        detaljer: [
+          "Benjakitti Park kl. 06:00–08:00, før utsjekk og flyet",
+          "Ca. 2 km fra hotellet · løperunde rundt innsjøen med skyskrapere rundt",
+        ],
+      },
       {
         type: "fly",
         navn: "PG 145 · BKK → USM",
@@ -280,6 +289,7 @@ const IKON_MAP: Record<Aktivitet["type"], typeof Scissors> = {
   hvile: Moon,
   muaythai: Dumbbell,
   fly: Plane,
+  jogg: Footprints,
 }
 
 const FARGE_MAP = {
