@@ -48,20 +48,7 @@ const TIDSLINJE: ReiseEvent[] = [
         farge: "#a78bfa",
         detaljer: [
           "Innsjekk på Hope Land Hotel Sukhumvit 8",
-          "Restitusjon etter reisen fra Bergen",
-          "5 timer tidsforskjell — Thailand ligger foran Norge",
-          "Rolig dag, ingen planlagte utflukter",
-        ],
-      },
-      {
-        type: "skredder",
-        navn: "Skredder",
-        farge: "#f59e0b",
-        detaljer: [
-          "Gangavstand fra hotellet — Sukhumvit soi 7–11",
-          "Dress 4 000–8 000 THB / Skjorte 700–1 500 THB",
-          "Leveringstid 24–72 t — hent dag 3",
-          "Be om to prøvinger og stoff-attest",
+          "Rolig dag — 5 timer tidsforskjell fra Norge",
         ],
       },
     ],
@@ -80,10 +67,8 @@ const TIDSLINJE: ReiseEvent[] = [
         navn: "Dagtid · Terminal 21",
         farge: "#f59e0b",
         detaljer: [
-          "Terminal 21 Asok · Sukhumvit Soi 19",
-          "BTS Nana → Asok, to stopp fra hotellet",
-          "Hver etasje er en by — Tokyo, London, Istanbul, San Francisco",
-          "Pier 21 food court i 5. etasje — retter fra 60–100 THB",
+          "Asok · Sukhumvit Soi 19 — BTS Nana → Asok, to stopp",
+          "Hver etasje er en by · Pier 21 food court i 5. etasje",
         ],
       },
       {
@@ -92,10 +77,38 @@ const TIDSLINJE: ReiseEvent[] = [
         farge: "#fb7185",
         detaljer: [
           "Yaowarat Road · MRT Sukhumvit → Wat Mangkon, ca. 20 min",
-          "Gatekjøkkenene åpner rundt 18:00 — travlest 19:00–23:00",
-          "Nai Ek Roll Noodle, T&K Seafood, Guay Jub Ouan Pochana",
-          "Ta med kontanter — de fleste bodene tar ikke kort",
+          "Gatekjøkkenene åpner rundt 18:00 — ta med kontanter",
         ],
+      },
+    ],
+  },
+  {
+    dato: "Fre 14. aug",
+    isoDato: "2026-08-14",
+    dagNr: 4,
+    tittel: "Shoppingsentre i Siam",
+    undertittel: "MBK, Siam og CentralWorld · skreddermål",
+    type: "dag",
+    farge: "gold",
+    aktiviteter: [
+      {
+        type: "shopping",
+        navn: "MBK · Siam · CentralWorld",
+        farge: "#f59e0b",
+        detaljer: [
+          "BTS Nana → Siam — alle tre ligger i gangavstand via skywalk",
+          "MBK for billig elektronikk, Siam og CentralWorld for merkevarer",
+        ],
+      },
+      {
+        type: "skredder",
+        navn: "Alex Modern Tailor",
+        farge: "#f59e0b",
+        detaljer: [
+          "5 skjorter bestilt",
+          "Leveres til hotellet 29. aug kl. 18:00",
+        ],
+        bookingUrl: "https://sites.google.com/view/alexmoderntailor/home",
       },
     ],
   },
@@ -171,13 +184,13 @@ const TIDSLINJE: ReiseEvent[] = [
     aktiviteter: [
       {
         type: "skredder",
-        navn: "Skredder",
+        navn: "Alex Modern Tailor",
         farge: "#f59e0b",
         detaljer: [
-          "Hent klær fra soi 7–11",
-          "Ev. nytt mål for skjorter (700–1 500 THB)",
-          "Bestill 2–3 skjorter samlet for rabatt",
+          "5 skjorter leveres til hotellet kl. 18:00",
+          "Prøv alle før budet drar",
         ],
+        bookingUrl: "https://sites.google.com/view/alexmoderntailor/home",
       },
     ],
   },
@@ -259,7 +272,7 @@ function AktivitetKort({ a }: { a: Aktivitet }) {
             className="ml-auto text-[10px] transition-opacity hover:opacity-60"
             style={{ color: a.farge, fontFamily: "'DM Sans', sans-serif" }}
           >
-            Book →
+            {a.type === "skredder" ? "Nettside →" : "Book →"}
           </a>
         )}
       </div>
