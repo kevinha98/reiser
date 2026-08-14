@@ -3,7 +3,7 @@ import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag
 import { useReisefase } from "../context/reisefase-context"
 
 interface Aktivitet {
-  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile"
+  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly"
   navn: string
   detaljer: string[]
   bookingUrl?: string
@@ -123,6 +123,15 @@ const TIDSLINJE: ReiseEvent[] = [
     farge: "ocean",
     aktiviteter: [
       {
+        type: "fly",
+        navn: "PG 145 · BKK → USM",
+        farge: "#38bdf8",
+        detaljer: [
+          "kl. 13:40 → 14:45 · 1t 05m direkte",
+          "Bangkok Airways · Airbus A319 · Economy (Y)",
+        ],
+      },
+      {
         type: "muaythai",
         navn: "Muay Thai",
         farge: "#38bdf8",
@@ -175,6 +184,15 @@ const TIDSLINJE: ReiseEvent[] = [
     farge: "jungle",
     aktiviteter: [
       {
+        type: "fly",
+        navn: "PG 405 · USM → HKT",
+        farge: "#34d399",
+        detaljer: [
+          "kl. 12:10 → 13:10 · 1t 00m direkte",
+          "Bangkok Airways · ATR 42/72 · Economy (Y) · ankomst terminal D",
+        ],
+      },
+      {
         type: "muaythai",
         navn: "Muay Thai",
         farge: "#34d399",
@@ -198,6 +216,15 @@ const TIDSLINJE: ReiseEvent[] = [
     type: "fly",
     farge: "gold",
     aktiviteter: [
+      {
+        type: "fly",
+        navn: "PG 276 · HKT → BKK",
+        farge: "#f59e0b",
+        detaljer: [
+          "kl. 12:55 → 14:30 · 1t 35m direkte",
+          "Bangkok Airways · Airbus A319 · Economy (P) · avgang terminal D",
+        ],
+      },
       {
         type: "skredder",
         navn: "Alex Modern Tailor",
@@ -252,6 +279,7 @@ const IKON_MAP: Record<Aktivitet["type"], typeof Scissors> = {
   shopping: ShoppingBag,
   hvile: Moon,
   muaythai: Dumbbell,
+  fly: Plane,
 }
 
 const FARGE_MAP = {
