@@ -1,9 +1,9 @@
 ﻿import { motion } from "framer-motion"
-import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun, Footprints } from "lucide-react"
+import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun, Footprints, Flame } from "lucide-react"
 import { useReisefase } from "../context/reisefase-context"
 
 interface Aktivitet {
-  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly" | "jogg"
+  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly" | "tur" | "show"
   navn: string
   detaljer: string[]
   bookingUrl?: string
@@ -125,7 +125,7 @@ const TIDSLINJE: ReiseEvent[] = [
     farge: "ocean",
     aktiviteter: [
       {
-        type: "jogg",
+        type: "tur",
         navn: "Morgenjogg · Benjakitti",
         farge: "#34d399",
         detaljer: [
@@ -142,22 +142,39 @@ const TIDSLINJE: ReiseEvent[] = [
           "Bangkok Airways · Airbus A319 · Economy (Y)",
         ],
       },
+    ],
+  },
+  {
+    dato: "Søn 16. aug",
+    isoDato: "2026-08-16",
+    dagNr: 6,
+    tittel: "Første kveld i Lamai",
+    undertittel: "Gatelangs, middag på hotellet og fire show",
+    type: "dag",
+    farge: "ocean",
+    aktiviteter: [
       {
-        type: "muaythai",
-        navn: "Muay Thai",
+        type: "tur",
+        navn: "Gatelangs i Lamai",
         farge: "#38bdf8",
         detaljer: [
-          "Evolution Samui Retreat · kl. 07:00 man–fre",
-          "Utgår mandag 17. aug — Ang Thong-turen går samme morgen",
+          "Kveldstur langs hovedgata — barer, massasjesjapper og gatekjøkken",
         ],
-        bookingUrl: "https://www.evolutionsamuiretreat.com",
       },
       {
-        type: "hvile",
-        navn: "Ellers uplanlagt",
-        farge: "#a78bfa",
+        type: "restaurant",
+        navn: "Middag på hotellet",
+        farge: "#fb7185",
         detaljer: [
-          "Ingen faste avtaler utenom morgentreningen og Ang Thong",
+          "Middag på Lamai Coconut Beach Resort",
+        ],
+      },
+      {
+        type: "show",
+        navn: "Fire show",
+        farge: "#f59e0b",
+        detaljer: [
+          "Ildshow utover kvelden",
         ],
       },
     ],
@@ -294,7 +311,8 @@ const IKON_MAP: Record<Aktivitet["type"], typeof Scissors> = {
   hvile: Moon,
   muaythai: Dumbbell,
   fly: Plane,
-  jogg: Footprints,
+  tur: Footprints,
+  show: Flame,
 }
 
 const FARGE_MAP = {
