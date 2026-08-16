@@ -7,6 +7,7 @@ interface Aktivitet {
   navn: string
   detaljer: string[]
   bookingUrl?: string
+  lenkeTekst?: string     // standard er «Book →»
   farge: string
 }
 
@@ -109,6 +110,7 @@ const TIDSLINJE: ReiseEvent[] = [
           "Leveres til hotellet 29. aug kl. 18:00",
         ],
         bookingUrl: "https://sites.google.com/view/alexmoderntailor/home",
+        lenkeTekst: "Nettside →",
       },
     ],
   },
@@ -146,7 +148,7 @@ const TIDSLINJE: ReiseEvent[] = [
         farge: "#38bdf8",
         detaljer: [
           "Evolution Samui Retreat · kl. 07:00 man–fre",
-          "Fast morgenøkt gjennom hele oppholdet",
+          "Utgår mandag 17. aug — Ang Thong-turen går samme morgen",
         ],
         bookingUrl: "https://www.evolutionsamuiretreat.com",
       },
@@ -161,11 +163,11 @@ const TIDSLINJE: ReiseEvent[] = [
     ],
   },
   {
-    dato: "Søn 16. aug",
-    isoDato: "2026-08-16",
-    dagNr: 6,
+    dato: "Man 17. aug",
+    isoDato: "2026-08-17",
+    dagNr: 7,
     tittel: "Ang Thong",
-    undertittel: "Dagstur til nasjonalparken",
+    undertittel: "Båttur til nasjonalparken · Go Samui Tours",
     type: "dag",
     farge: "ocean",
     aktiviteter: [
@@ -174,11 +176,13 @@ const TIDSLINJE: ReiseEvent[] = [
         navn: "Mu Ko Ang Thong",
         farge: "#818cf8",
         detaljer: [
-          "42 øyer ca. 28 km nordvest for Samui — speedbåt bruker ~45 min",
-          "Dagsturer går fra Na Thon og Maenam, ca. 08:00–17:00",
-          "Emerald Lake på Koh Mae Ko og utsiktspunktet på Koh Wua Talap (~500 trinn)",
-          "Parkavgift 300 THB kommer som regel i tillegg til turprisen",
+          "Booket hos Go Samui Tours · ref. GST10792 · 2 voksne, uten kajakk",
+          "Henting på Lamai Coconut Beach Resort, rom 404",
+          "42 øyer ca. 28 km nordvest for Samui — Emerald Lake og utsiktspunktet på Koh Wua Talap",
+          "Parkavgift 300 THB — sjekk om den er inkludert i turprisen",
         ],
+        bookingUrl: "https://gosamuitours.com/angthong_island_tour.html",
+        lenkeTekst: "Turside →",
       },
     ],
   },
@@ -243,6 +247,7 @@ const TIDSLINJE: ReiseEvent[] = [
           "Prøv alle før budet drar",
         ],
         bookingUrl: "https://sites.google.com/view/alexmoderntailor/home",
+        lenkeTekst: "Nettside →",
       },
     ],
   },
@@ -326,7 +331,7 @@ function AktivitetKort({ a }: { a: Aktivitet }) {
             className="ml-auto text-[10px] transition-opacity hover:opacity-60"
             style={{ color: a.farge, fontFamily: "'DM Sans', sans-serif" }}
           >
-            {a.type === "skredder" ? "Nettside →" : "Book →"}
+            {a.lenkeTekst ?? "Book →"}
           </a>
         )}
       </div>
