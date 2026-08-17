@@ -14,7 +14,7 @@ interface Aktivitet {
 interface ReiseEvent {
   dato: string
   isoDato: string
-  dagNr: number
+  dagNr?: number          // utelates for hendelser som spenner over flere dager
   tittel: string
   undertittel?: string
   hotellUrl?: string
@@ -184,7 +184,7 @@ const TIDSLINJE: ReiseEvent[] = [
     isoDato: "2026-08-17",
     dagNr: 7,
     tittel: "Ang Thong",
-    undertittel: "Båttur til nasjonalparken · Go Samui Tours",
+    undertittel: "Go Samui Tours · henting 07:15, tilbake ca. 17:00",
     type: "dag",
     farge: "ocean",
     aktiviteter: [
@@ -195,11 +195,43 @@ const TIDSLINJE: ReiseEvent[] = [
         detaljer: [
           "Booket hos Go Samui Tours · ref. GST10792 · 2 voksne, uten kajakk",
           "Henting på Lamai Coconut Beach Resort, rom 404",
-          "42 øyer ca. 28 km nordvest for Samui — Emerald Lake og utsiktspunktet på Koh Wua Talap",
-          "Parkavgift 300 THB — sjekk om den er inkludert i turprisen",
+          "Frokost og buffetlunsj om bord · parkavgift 300 THB kommer trolig i tillegg",
         ],
         bookingUrl: "https://gosamuitours.com/angthong_island_tour.html",
         lenkeTekst: "Turside →",
+      },
+      {
+        type: "tur",
+        navn: "Dagsprogram",
+        farge: "#38bdf8",
+        detaljer: [
+          "07:15 · Henting på hotellet → Nathon Pier",
+          "08:30 · Avgang Nathon Pier, frokost om bord",
+          "09:50 · Wua Talap — utsiktssti og strand",
+          "12:30 · Buffetlunsj om bord",
+          "13:30 · Mae Ko — Emerald Lake",
+          "15:30 · Retur, tilbake på Samui ca. 17:00",
+        ],
+      },
+    ],
+  },
+  {
+    dato: "Tir 18. – fre 21. aug",
+    isoDato: "2026-08-18",
+    tittel: "Muay Thai hver morgen",
+    undertittel: "Evolution Samui Retreat · fire økter på rad",
+    type: "dag",
+    farge: "ocean",
+    aktiviteter: [
+      {
+        type: "muaythai",
+        navn: "Evolution Samui Retreat",
+        farge: "#38bdf8",
+        detaljer: [
+          "Morgentrening kl. 07:00, tirsdag til og med fredag",
+        ],
+        bookingUrl: "https://www.evolutionsamuiretreat.com",
+        lenkeTekst: "Nettside →",
       },
     ],
   },
@@ -466,7 +498,8 @@ export function Tidslinje() {
                       className={`text-xs font-medium uppercase tracking-wider ${f.tekst}`}
                       style={{ fontFamily: "'DM Sans', sans-serif" }}
                     >
-                      {event.dato} · Dag {event.dagNr}
+                      {event.dato}
+                      {event.dagNr !== undefined && <> · Dag {event.dagNr}</>}
                     </span>
                     {erNå && (
                       <span
