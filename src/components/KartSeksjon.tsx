@@ -118,7 +118,7 @@ const STOPP: RuteStop[] = [
         netter: 7,
         hotell: "Chanalai Flora Resort, Kata Beach",
         hotellUrl: "https://www.agoda.com/chanalai-flora-resort/hotel/phuket-th.html",
-        ankomst: "PG 405 · USM → HKT · 22. aug kl. 13:10",
+        ankomst: "PG 405 · USM → HKT · 22. aug kl. 13:25",
         avgang: "PG 276 · HKT → BKK · 29. aug kl. 12:55",
       },
     ],
