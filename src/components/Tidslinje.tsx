@@ -1,9 +1,9 @@
 ﻿import { motion } from "framer-motion"
-import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun, Footprints, Flame } from "lucide-react"
+import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun, Footprints } from "lucide-react"
 import { useReisefase } from "../context/reisefase-context"
 
 interface Aktivitet {
-  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly" | "tur" | "show"
+  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly" | "tur"
   navn: string
   detaljer: string[]
   bookingUrl?: string
@@ -142,6 +142,17 @@ const TIDSLINJE: ReiseEvent[] = [
           "Bangkok Airways · Airbus A319 · Economy (Y)",
         ],
       },
+      {
+        type: "hvile",
+        navn: "Hverdagen i Lamai",
+        farge: "#a78bfa",
+        detaljer: [
+          "Stranden, massasje og lunsj på stranden",
+          "Middag på Eating Time",
+        ],
+        bookingUrl: "https://www.tripadvisor.com/Restaurant_Review-g1188000-d8836184-Reviews-Eating_Time-Lamai_Beach_Maret_Ko_Samui_Surat_Thani_Province.html",
+        lenkeTekst: "Anmeldelser →",
+      },
     ],
   },
   {
@@ -163,17 +174,10 @@ const TIDSLINJE: ReiseEvent[] = [
       },
       {
         type: "restaurant",
-        navn: "Middag på hotellet",
+        navn: "Middag & fire show",
         farge: "#fb7185",
         detaljer: [
           "Middag på Lamai Coconut Beach Resort",
-        ],
-      },
-      {
-        type: "show",
-        navn: "Fire show",
-        farge: "#f59e0b",
-        detaljer: [
           "Ildshow utover kvelden",
         ],
       },
@@ -236,6 +240,26 @@ const TIDSLINJE: ReiseEvent[] = [
     ],
   },
   {
+    dato: "Ons 19. aug",
+    isoDato: "2026-08-19",
+    dagNr: 9,
+    tittel: "Overlap Stone",
+    undertittel: "Utsiktspunkt i åsene over Lamai",
+    type: "dag",
+    farge: "ocean",
+    aktiviteter: [
+      {
+        type: "tur",
+        navn: "Overlap Stone",
+        farge: "#38bdf8",
+        detaljer: [
+          "Enorm balanserende stein i åsen bak Lamai",
+          "Panorama over østkysten fra toppen",
+        ],
+      },
+    ],
+  },
+  {
     dato: "Lør 22. aug",
     isoDato: "2026-08-22",
     dagNr: 12,
@@ -250,19 +274,19 @@ const TIDSLINJE: ReiseEvent[] = [
         navn: "PG 405 · USM → HKT",
         farge: "#34d399",
         detaljer: [
-          "kl. 12:10 → 13:10 · 1t 00m direkte",
+          "kl. 12:25 → 13:10 · direkte",
           "Bangkok Airways · ATR 42/72 · Economy (Y) · ankomst terminal D",
         ],
       },
       {
         type: "muaythai",
-        navn: "Naka Muay Thai",
+        navn: "Chang Muay Thai",
         farge: "#34d399",
         detaljer: [
-          "Soi Kwonton, sidegate til Patak Road — ca. 2 km nord for hotellet",
-          "Morgenøkt 08:00–10:00 · man–lør, stengt søndag",
+          "116/9 Khok Tanod Road — samme gate som hotellet",
+          "Morgenøkt fra 08:00 · privattime 1t = 600 THB, utstyr inkludert",
         ],
-        bookingUrl: "https://www.nakamuaythai.com/",
+        bookingUrl: "https://changmuaythai.com/",
         lenkeTekst: "Nettside →",
       },
     ],
@@ -343,7 +367,6 @@ const IKON_MAP: Record<Aktivitet["type"], typeof Scissors> = {
   muaythai: Dumbbell,
   fly: Plane,
   tur: Footprints,
-  show: Flame,
 }
 
 const FARGE_MAP = {

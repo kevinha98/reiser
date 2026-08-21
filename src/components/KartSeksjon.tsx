@@ -96,7 +96,7 @@ const STOPP: RuteStop[] = [
         hotell: "Lamai Coconut Beach Resort",
         hotellUrl: "https://www.agoda.com/lamai-coconut-beach-resort/hotel/koh-samui-th.html",
         ankomst: "PG 145 · BKK → USM · 15. aug kl. 14:45",
-        avgang: "PG 405 · USM → HKT · 22. aug kl. 12:10",
+        avgang: "PG 405 · USM → HKT · 22. aug kl. 12:25",
       },
     ],
     beskrivelse: "Tropisk paradisøy — hvite strender, turkist hav og snorkling",
