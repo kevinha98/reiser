@@ -274,7 +274,7 @@ const TIDSLINJE: ReiseEvent[] = [
         navn: "PG 405 · USM → HKT",
         farge: "#34d399",
         detaljer: [
-          "kl. 12:25 → 13:25 · 1t 00m direkte",
+          "Forsinket: 12:50 → 13:40 (opprinnelig 12:25 → 13:25)",
           "Bangkok Airways · ATR 42/72 · Economy (Y) · ankomst terminal D",
         ],
       },
