@@ -292,6 +292,34 @@ const TIDSLINJE: ReiseEvent[] = [
     ],
   },
   {
+    dato: "Søn 23. aug",
+    isoDato: "2026-08-23",
+    dagNr: 13,
+    tittel: "Big Buddha",
+    undertittel: "Opp gjennom jungelen om formiddagen · basseng resten av dagen",
+    type: "dag",
+    farge: "jungle",
+    aktiviteter: [
+      {
+        type: "tur",
+        navn: "Morgentur · Big Buddha",
+        farge: "#34d399",
+        detaljer: [
+          "Start 07:30 — smal sti opp gjennom jungelen, mye røtter og stein",
+          "9,96 km og 344 høydemeter på 2t 16m · 5 km i bilveien ned igjen",
+        ],
+      },
+      {
+        type: "hvile",
+        navn: "Bassenget",
+        farge: "#a78bfa",
+        detaljer: [
+          "Resten av dagen på hotellet",
+        ],
+      },
+    ],
+  },
+  {
     dato: "Lør 29. aug",
     isoDato: "2026-08-29",
     dagNr: 19,
