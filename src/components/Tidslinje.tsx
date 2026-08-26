@@ -362,6 +362,16 @@ const TIDSLINJE: ReiseEvent[] = [
     farge: "gold",
     aktiviteter: [
       {
+        type: "dagstur",
+        navn: "Siste dagene i Bangkok",
+        farge: "#f59e0b",
+        detaljer: [
+          "Shopping og ICONSIAM på vestbredden av Chao Phraya",
+          "Elvetur på Chao Phraya og Wat Arun",
+          "Rooftop-middag over byen",
+        ],
+      },
+      {
         type: "restaurant",
         navn: "Benihana",
         farge: "#f59e0b",
