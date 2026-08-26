@@ -1,9 +1,9 @@
 ﻿import { motion } from "framer-motion"
-import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun, Footprints } from "lucide-react"
+import { Plane, MapPin, Scissors, Dumbbell, Anchor, UtensilsCrossed, ShoppingBag, Moon, Sun, Footprints, PartyPopper } from "lucide-react"
 import { useReisefase } from "../context/reisefase-context"
 
 interface Aktivitet {
-  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly" | "tur"
+  type: "skredder" | "muaythai" | "dagstur" | "restaurant" | "shopping" | "hvile" | "fly" | "tur" | "fest"
   navn: string
   detaljer: string[]
   bookingUrl?: string
@@ -352,23 +352,50 @@ const TIDSLINJE: ReiseEvent[] = [
     ],
   },
   {
+    dato: "Søn 30. aug",
+    isoDato: "2026-08-30",
+    dagNr: 20,
+    tittel: "Bursdag i Bangkok",
+    undertittel: "Shopping på dagtid · rooftop-middag om kvelden",
+    hotellUrl: "https://www.agoda.com/mandarin-hotel-managed-by-centre-point/hotel/bangkok-th.html",
+    type: "dag",
+    farge: "gold",
+    aktiviteter: [
+      {
+        type: "shopping",
+        navn: "Shopping",
+        farge: "#f59e0b",
+        detaljer: [
+          "ICONSIAM på vestbredden av Chao Phraya",
+        ],
+      },
+      {
+        type: "fest",
+        navn: "Bursdagsmiddag",
+        farge: "#f472b6",
+        detaljer: [
+          "Rooftop-middag høyt over Bangkok",
+        ],
+      },
+    ],
+  },
+  {
     dato: "Man 31. aug",
     isoDato: "2026-08-31",
     dagNr: 21,
-    tittel: "Benihana · Anantara Riverside",
-    undertittel: "Avskjedskveld i Bangkok",
+    tittel: "Wat Arun & Benihana",
+    undertittel: "Elva på dagtid · avskjedskveld ved Chao Phraya",
     hotellUrl: "https://www.agoda.com/mandarin-hotel-managed-by-centre-point/hotel/bangkok-th.html",
     type: "hotell",
     farge: "gold",
     aktiviteter: [
       {
         type: "dagstur",
-        navn: "Siste dagene i Bangkok",
-        farge: "#f59e0b",
+        navn: "Wat Arun & elva",
+        farge: "#818cf8",
         detaljer: [
-          "Shopping og ICONSIAM på vestbredden av Chao Phraya",
-          "Elvetur på Chao Phraya og Wat Arun",
-          "Rooftop-middag over byen",
+          "Elvesightseeing på Chao Phraya",
+          "Wat Arun på vestbredden — samme side som Anantara Riverside",
         ],
       },
       {
@@ -405,6 +432,7 @@ const IKON_MAP: Record<Aktivitet["type"], typeof Scissors> = {
   muaythai: Dumbbell,
   fly: Plane,
   tur: Footprints,
+  fest: PartyPopper,
 }
 
 const FARGE_MAP = {
