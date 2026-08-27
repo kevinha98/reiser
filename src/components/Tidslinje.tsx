@@ -356,16 +356,26 @@ const TIDSLINJE: ReiseEvent[] = [
     isoDato: "2026-08-30",
     dagNr: 20,
     tittel: "Bursdag i Bangkok",
-    undertittel: "Shopping på dagtid · rooftop-middag om kvelden",
+    undertittel: "Morgentur, marked og rooftop-middag",
     hotellUrl: "https://www.agoda.com/mandarin-hotel-managed-by-centre-point/hotel/bangkok-th.html",
     type: "dag",
     farge: "gold",
     aktiviteter: [
       {
+        type: "tur",
+        navn: "Morgentur · Lumphini Park",
+        farge: "#34d399",
+        detaljer: [
+          "Bangkoks klassiske morgenpark — 2,5 km rundt innsjøen",
+          "Ca. 2 km fra hotellet langs Rama IV",
+        ],
+      },
+      {
         type: "shopping",
-        navn: "Shopping",
+        navn: "Chatuchak & ICONSIAM",
         farge: "#f59e0b",
         detaljer: [
+          "Chatuchak helgemarked — MRT Kamphaeng Phet, kun lørdag og søndag",
           "ICONSIAM på vestbredden av Chao Phraya",
         ],
       },
