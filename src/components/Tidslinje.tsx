@@ -279,15 +279,12 @@ const TIDSLINJE: ReiseEvent[] = [
         ],
       },
       {
-        type: "muaythai",
-        navn: "Chang Muay Thai",
-        farge: "#34d399",
+        type: "hvile",
+        navn: "Hverdagen på Kata",
+        farge: "#a78bfa",
         detaljer: [
-          "116/9 Khok Tanod Road — samme gate som hotellet",
-          "Morgenøkt fra 08:00 · privattime 1t = 600 THB, utstyr inkludert",
+          "Dagene gikk stort sett med til å ligge på resortet",
         ],
-        bookingUrl: "https://changmuaythai.com/",
-        lenkeTekst: "Nettside →",
       },
     ],
   },
@@ -320,6 +317,74 @@ const TIDSLINJE: ReiseEvent[] = [
     ],
   },
   {
+    dato: "Tir 25. – ons 26. aug",
+    isoDato: "2026-08-25",
+    tittel: "Muay Thai & terskeløkt",
+    undertittel: "Chang Gym to morgener · terskeløkt onsdag",
+    type: "dag",
+    farge: "jungle",
+    aktiviteter: [
+      {
+        type: "muaythai",
+        navn: "Chang Muay Thai",
+        farge: "#34d399",
+        detaljer: [
+          "To økter — tirsdag 25. og onsdag 26.",
+          "116/9 Khok Tanod Road, samme gate som hotellet",
+        ],
+        bookingUrl: "https://changmuaythai.com/",
+        lenkeTekst: "Nettside →",
+      },
+      {
+        type: "tur",
+        navn: "Terskeløkt",
+        farge: "#34d399",
+        detaljer: [
+          "Onsdag 26. august",
+        ],
+      },
+    ],
+  },
+  {
+    dato: "Tor 27. aug",
+    isoDato: "2026-08-27",
+    dagNr: 17,
+    tittel: "Hviledag",
+    undertittel: "Ingenting på programmet",
+    type: "dag",
+    farge: "jungle",
+    aktiviteter: [
+      {
+        type: "hvile",
+        navn: "Ren hviledag",
+        farge: "#a78bfa",
+        detaljer: [
+          "Resort og basseng hele dagen",
+        ],
+      },
+    ],
+  },
+  {
+    dato: "Fre 28. aug",
+    isoDato: "2026-08-28",
+    dagNr: 18,
+    tittel: "Black Rock Viewpoint",
+    undertittel: "Morgentur til Pa Hin Dum ved Nai Harn",
+    type: "dag",
+    farge: "jungle",
+    aktiviteter: [
+      {
+        type: "tur",
+        navn: "Black Rock · Nai Harn",
+        farge: "#34d399",
+        detaljer: [
+          "Pa Hin Dum — utsiktspunktet over Nai Harn, sør på øya",
+          "11,00 km på 2t 11m · snitt 11:53/km, beste km 6:54",
+        ],
+      },
+    ],
+  },
+  {
     dato: "Lør 29. aug",
     isoDato: "2026-08-29",
     dagNr: 19,
@@ -329,6 +394,14 @@ const TIDSLINJE: ReiseEvent[] = [
     type: "fly",
     farge: "gold",
     aktiviteter: [
+      {
+        type: "tur",
+        navn: "Terskeløkt",
+        farge: "#34d399",
+        detaljer: [
+          "Lørdag morgen, før avreise til Bangkok",
+        ],
+      },
       {
         type: "fly",
         navn: "PG 276 · HKT → BKK",
