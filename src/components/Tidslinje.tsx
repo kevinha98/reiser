@@ -317,10 +317,10 @@ const TIDSLINJE: ReiseEvent[] = [
     ],
   },
   {
-    dato: "Tir 25. – ons 26. aug",
-    isoDato: "2026-08-25",
+    dato: "Man 24. – ons 26. aug",
+    isoDato: "2026-08-24",
     tittel: "Muay Thai & terskeløkt",
-    undertittel: "Chang Gym to morgener · terskeløkt onsdag",
+    undertittel: "Chang Gym to morgener · terskeløkt mandag",
     type: "dag",
     farge: "jungle",
     aktiviteter: [
@@ -329,7 +329,7 @@ const TIDSLINJE: ReiseEvent[] = [
         navn: "Chang Muay Thai",
         farge: "#34d399",
         detaljer: [
-          "To økter — tirsdag 25. og onsdag 26.",
+          "To morgenøkter — mandag 24. og onsdag 26.",
           "116/9 Khok Tanod Road, samme gate som hotellet",
         ],
         bookingUrl: "https://changmuaythai.com/",
@@ -340,7 +340,7 @@ const TIDSLINJE: ReiseEvent[] = [
         navn: "Terskeløkt",
         farge: "#34d399",
         detaljer: [
-          "Onsdag 26. august",
+          "Mandag 24. august",
         ],
       },
     ],
