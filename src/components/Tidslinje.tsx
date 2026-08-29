@@ -51,6 +51,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Innsjekk på Hope Land Hotel Sukhumvit 8",
           "Rolig dag — 5 timer tidsforskjell fra Norge",
         ],
+        bookingUrl: "https://www.agoda.com/hope-land-hotel-sukhumvit-8/hotel/bangkok-th.html",
+        lenkeTekst: "Hotell →",
       },
     ],
   },
@@ -71,6 +73,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Kjøpesenter på Asok bygget som en flyplass — hver etasje er en egen by",
           "To BTS-stopp fra hotellet · Pier 21 food court i 5. etasje",
         ],
+        bookingUrl: "https://www.terminal21.co.th/",
+        lenkeTekst: "Nettside →",
       },
       {
         type: "restaurant",
@@ -80,6 +84,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Yaowarat Road — Bangkoks Chinatown, 20 min unna med MRT",
           "Gatekjøkken og neonskilt fra 18:00 og utover",
         ],
+        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Yaowarat+Road+Chinatown+Bangkok",
+        lenkeTekst: "Kart →",
       },
     ],
   },
@@ -100,6 +106,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "BTS Nana → Siam — alle tre ligger i gangavstand via skywalk",
           "MBK for billig elektronikk, Siam og CentralWorld for merkevarer",
         ],
+        bookingUrl: "https://www.mbk-center.co.th/",
+        lenkeTekst: "MBK →",
       },
       {
         type: "skredder",
@@ -132,6 +140,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Benjakitti Park kl. 06:00–08:00, før utsjekk og flyet",
           "Ca. 2 km fra hotellet · løperunde rundt innsjøen med skyskrapere rundt",
         ],
+        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Benjakitti+Park+Bangkok",
+        lenkeTekst: "Kart →",
       },
       {
         type: "fly",
@@ -141,6 +151,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "kl. 13:40 → 14:45 · 1t 05m direkte",
           "Bangkok Airways · Airbus A319 · Economy (Y)",
         ],
+        bookingUrl: "https://www.bangkokair.com/",
+        lenkeTekst: "Bangkok Airways →",
       },
       {
         type: "hvile",
@@ -171,6 +183,8 @@ const TIDSLINJE: ReiseEvent[] = [
         detaljer: [
           "Kveldstur langs hovedgata — barer, massasjesjapper og gatekjøkken",
         ],
+        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Lamai+Beach+Road+Koh+Samui",
+        lenkeTekst: "Kart →",
       },
       {
         type: "restaurant",
@@ -180,6 +194,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Middag på Lamai Coconut Beach Resort",
           "Ildshow utover kvelden",
         ],
+        bookingUrl: "https://www.agoda.com/lamai-coconut-beach-resort/hotel/koh-samui-th.html",
+        lenkeTekst: "Hotell →",
       },
     ],
   },
@@ -256,6 +272,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Enorm balanserende stein i åsen bak Lamai",
           "Panorama over østkysten fra toppen",
         ],
+        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Overlap+Stone+Koh+Samui",
+        lenkeTekst: "Kart →",
       },
     ],
   },
@@ -277,6 +295,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Forsinket: 12:50 → 13:40 (opprinnelig 12:25 → 13:25)",
           "Bangkok Airways · ATR 42/72 · Economy (Y) · ankomst terminal D",
         ],
+        bookingUrl: "https://www.bangkokair.com/",
+        lenkeTekst: "Bangkok Airways →",
       },
       {
         type: "hvile",
@@ -285,6 +305,8 @@ const TIDSLINJE: ReiseEvent[] = [
         detaljer: [
           "Dagene gikk stort sett med til å ligge på resortet",
         ],
+        bookingUrl: "https://www.agoda.com/chanalai-flora-resort/hotel/phuket-th.html",
+        lenkeTekst: "Hotell →",
       },
     ],
   },
@@ -305,6 +327,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Start 07:30 — smal sti opp gjennom jungelen, mye røtter og stein",
           "9,96 km og 344 høydemeter på 2t 16m · 5 km i bilveien ned igjen",
         ],
+        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Big+Buddha+Phuket",
+        lenkeTekst: "Kart →",
       },
       {
         type: "hvile",
@@ -381,6 +405,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Pa Hin Dum — utsiktspunktet over Nai Harn, sør på øya",
           "11,00 km på 2t 11m · snitt 11:53/km, beste km 6:54",
         ],
+        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Black+Rock+Viewpoint+Nai+Harn+Phuket",
+        lenkeTekst: "Kart →",
       },
     ],
   },
@@ -410,6 +436,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "kl. 12:55 → 14:30 · 1t 35m direkte",
           "Bangkok Airways · Airbus A319 · Economy (P) · avgang terminal D",
         ],
+        bookingUrl: "https://www.bangkokair.com/",
+        lenkeTekst: "Bangkok Airways →",
       },
       {
         type: "skredder",
@@ -442,6 +470,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Bangkoks klassiske morgenpark — 2,5 km rundt innsjøen",
           "Ca. 2 km fra hotellet langs Rama IV",
         ],
+        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Lumphini+Park+Bangkok",
+        lenkeTekst: "Kart →",
       },
       {
         type: "shopping",
@@ -451,6 +481,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Chatuchak helgemarked — MRT Kamphaeng Phet, kun lørdag og søndag",
           "ICONSIAM på vestbredden av Chao Phraya",
         ],
+        bookingUrl: "https://www.iconsiam.com/",
+        lenkeTekst: "ICONSIAM →",
       },
       {
         type: "fest",
@@ -480,6 +512,8 @@ const TIDSLINJE: ReiseEvent[] = [
           "Elvesightseeing på Chao Phraya",
           "Wat Arun på vestbredden — samme side som Anantara Riverside",
         ],
+        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Wat+Arun+Bangkok",
+        lenkeTekst: "Kart →",
       },
       {
         type: "restaurant",
