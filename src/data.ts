@@ -44,6 +44,8 @@ export const REISEDATOER = {
   hjemkomstDato: '2026-09-01', // tirsdag
   avreiseFly: 'BGO → BKK • 11. aug kl. 05:50 → 12. aug kl. 09:30',
   hjemkomstFly: 'BKK → BGO • 1. sep kl. 12:05 → 2. sep kl. 09:40',
+  // Headeren viser hele reisen, ikke bare utreisen — derfor hjemreisedatoen her
+  reiselinje: 'BGO → BKK • 11. aug kl. 05:50 · hjemreise 1. sep',
   totaltNetter: 20,
 }
 
