@@ -89,7 +89,7 @@ export function Header() {
           transition={{ duration: 0.4, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
           className="text-slate-300 text-sm sm:text-base mb-12 max-w-xl mx-auto leading-relaxed"
         >
-          {REISEDATOER.avreiseFly} · {REISEDATOER.totaltNetter} netter
+          {REISEDATOER.reiselinje} · {REISEDATOER.totaltNetter} netter
         </motion.p>
 
         {/* Countdown (før) · Dag X (under) · Vel hjemme (etter) */}
