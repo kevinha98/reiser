@@ -1,6 +1,6 @@
 ﻿import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Map, Armchair, Wallet, ListChecks, Ticket } from "lucide-react"
+import { Map, Armchair, Wallet, ListChecks } from "lucide-react"
 import { Header } from "./components/Header"
 import { Destinasjoner } from "./components/Destinasjoner"
 import { KartSeksjon } from "./components/KartSeksjon"
@@ -8,19 +8,16 @@ import { Tidslinje } from "./components/Tidslinje"
 import { Lounger } from "./components/Lounger"
 import { Budsjett } from "./components/Budsjett"
 import { Huskeliste } from "./components/Huskeliste"
-import { MuayThai } from "./components/MuayThai"
-import { Skredder } from "./components/Skredder"
 import { NaKort } from "./components/NaKort"
 import { DatoSimulator } from "./components/DatoSimulator"
 import { ReisefaseProvider } from "./context/Reisefase"
 import { useReisefase } from "./context/reisefase-context"
 
-type TabId = "forside" | "lounger" | "aktiviteter" | "budsjett" | "huskeliste"
+type TabId = "forside" | "lounger" | "budsjett" | "huskeliste"
 
 const TABS: { id: TabId; label: string; Icon: typeof Map }[] = [
   { id: "forside", label: "Forside", Icon: Map },
   { id: "lounger", label: "Lounger", Icon: Armchair },
-  { id: "aktiviteter", label: "Aktiviteter", Icon: Ticket },
   { id: "budsjett", label: "Budsjett", Icon: Wallet },
   { id: "huskeliste", label: "Huskeliste", Icon: ListChecks },
 ]
@@ -109,12 +106,6 @@ function AppInnhold() {
                 </>
               )}
               {tab === "lounger" && <Lounger />}
-              {tab === "aktiviteter" && (
-                <>
-                  <MuayThai />
-                  <Skredder />
-                </>
-              )}
               {tab === "budsjett" && <Budsjett />}
               {tab === "huskeliste" && <Huskeliste />}
             </motion.div>
