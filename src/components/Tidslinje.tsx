@@ -502,22 +502,19 @@ const TIDSLINJE: ReiseEvent[] = [
     dato: "Man 31. aug",
     isoDato: "2026-08-31",
     dagNr: 21,
-    tittel: "Wat Arun & Benihana",
-    undertittel: "Elva på dagtid · avskjedskveld ved Chao Phraya",
+    tittel: "Kjøpesentre & Benihana",
+    undertittel: "Shopping på dagtid · avskjedskveld ved Chao Phraya",
     hotellUrl: "https://www.agoda.com/mandarin-hotel-managed-by-centre-point/hotel/bangkok-th.html",
     type: "hotell",
     farge: "gold",
     aktiviteter: [
       {
-        type: "dagstur",
-        navn: "Wat Arun & elva",
-        farge: "#818cf8",
+        type: "shopping",
+        navn: "Kjøpesenterrunde",
+        farge: "#f59e0b",
         detaljer: [
-          "Elvesightseeing på Chao Phraya",
-          "Wat Arun på vestbredden — samme side som Anantara Riverside",
+          "Siste hele dagen gikk med til å hoppe mellom kjøpesentre",
         ],
-        bookingUrl: "https://www.google.com/maps/search/?api=1&query=Wat+Arun+Bangkok",
-        lenkeTekst: "Kart →",
       },
       {
         type: "restaurant",
